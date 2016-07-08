@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sistema_facturacion;
+package facturacion;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -25,11 +25,8 @@ public class FacturacionController implements Initializable {
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //height -40
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
         System.out.println("You clicked me!");
-        label.setText("Hello World!"+width+"   "+height);
+        label.setText("Hello World!");
         
     }
     

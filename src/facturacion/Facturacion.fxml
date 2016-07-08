@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="facturacion.FacturacionController">
+    <children>
+        <Button fx:id="button" layoutX="83.0" layoutY="660.0" onAction="#handleButtonAction" text="Click Me!" />
+      <FlowPane prefHeight="25.0" prefWidth="200.0" />
+      <MenuBar id="menuBar" layoutX="-1.0" layoutY="2.0" prefHeight="33.0" prefWidth="1366.0">
+        <menus>
+            <Menu mnemonicParsing="false" text="Archivo">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Open" />
+              </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <Menu mnemonicParsing="false" text="Unspecified Menu">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                    </items>
+                  </Menu>
+              <MenuItem mnemonicParsing="false" text="Close" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                    <content>
+                      <CheckBox text="Click Me" />
+                    </content>
+                  </CustomMenuItem>
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                  <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+         <effect>
+            <InnerShadow color="#ff5722" />
+         </effect>
+      </MenuBar>
+      <Pane fx:id="panelDatos" layoutY="50.0" prefHeight="110.0" prefWidth="1366.0" styleClass="border-panel" stylesheets="@borders.css">
+         <children>
+            <Text layoutX="445.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="49.47998046875" />
+            <Pane layoutX="3.0" layoutY="11.0" prefHeight="40.0" prefWidth="1360.0">
+               <children>
+                  <CheckBox layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Proforma">
+                     <font>
+                        <Font size="14.0" />
+                     </font></CheckBox>
+                  <Text layoutX="160.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo:" />
+                  <Text layoutX="233.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="65.97332763671875" />
+                  <Text fill="#282525" layoutX="393.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="69.0" />
+                  <Text layoutX="339.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Hora:" />
+                  <Text layoutX="495.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Fecha:" />
+                  <Text layoutX="558.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="99.24560546875" />
+                  <Text layoutX="680.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Cliente:" />
+                  <Text layoutX="820.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="83.642578125" />
+                  <Text layoutX="1047.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="83.642578125" />
+                  <Text layoutX="944.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Vendedor:" />
+               </children>
+            </Pane>
+            <Pane layoutX="3.0" layoutY="59.0" prefHeight="40.0" prefWidth="1360.0">
+               <children>
+                  <CheckBox layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Consumidor Final">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </CheckBox>
+                  <Text layoutX="238.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Cliente:" />
+                  <TextField layoutX="305.0" layoutY="8.0" prefHeight="25.0" prefWidth="412.0" />
+                  <Text layoutX="760.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Cedula o Ruc:" />
+                  <TextField layoutX="887.0" layoutY="9.0" prefHeight="25.0" prefWidth="310.0" />
+                  <Button layoutX="1250.0" layoutY="8.0" mnemonicParsing="false" text="Nuevo" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+      <StackPane layoutX="570.0" layoutY="35.0" prefHeight="29.0" prefWidth="243.0" styleClass="bordered-titled" stylesheets="@borders.css">
+         <children>
+            <Text id="textoBorde" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="borde-texto" text="INFORMACION FACTURA">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </StackPane>
+      <Pane layoutY="188.0" prefHeight="432.0" prefWidth="1366.0" styleClass="border-panel">
+         <children>
+            <StackPane layoutX="625.0" layoutY="-12.0" prefHeight="29.0" prefWidth="132.0" styleClass="bordered-titled" stylesheets="@borders.css">
+               <children>
+                  <Text id="textoBorde" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="borde-texto" text="PRODUCTO">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </StackPane>
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>
