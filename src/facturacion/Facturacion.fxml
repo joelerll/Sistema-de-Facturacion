@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -11,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="facturacion.FacturacionController">
     <children>
-        <Button fx:id="button" layoutX="83.0" layoutY="660.0" onAction="#handleButtonAction" text="Click Me!" />
+        <Button fx:id="button" layoutX="22.0" layoutY="668.0" onAction="#handleButtonAction" text="Facturar" />
       <FlowPane prefHeight="25.0" prefWidth="200.0" />
       <MenuBar id="menuBar" layoutX="-1.0" layoutY="2.0" prefHeight="33.0" prefWidth="1366.0">
         <menus>
@@ -58,10 +60,6 @@
             <Text layoutX="445.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="49.47998046875" />
             <Pane layoutX="3.0" layoutY="11.0" prefHeight="40.0" prefWidth="1360.0">
                <children>
-                  <CheckBox layoutX="14.0" layoutY="19.0" mnemonicParsing="false" text="Proforma">
-                     <font>
-                        <Font size="14.0" />
-                     </font></CheckBox>
                   <Text layoutX="160.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo:" />
                   <Text layoutX="233.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="65.97332763671875" />
                   <Text fill="#282525" layoutX="393.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="69.0" />
@@ -72,6 +70,11 @@
                   <Text layoutX="820.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="83.642578125" />
                   <Text layoutX="1047.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="83.642578125" />
                   <Text layoutX="944.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Vendedor:" />
+                  <JFXCheckBox layoutX="14.0" layoutY="19.0" text="Proforma">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </JFXCheckBox>
                </children>
             </Pane>
             <Pane layoutX="3.0" layoutY="59.0" prefHeight="40.0" prefWidth="1360.0">
@@ -110,7 +113,30 @@
                   </Text>
                </children>
             </StackPane>
+            <ImageView fitHeight="218.0" fitWidth="200.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" />
+            <Pane layoutX="3.0" layoutY="221.0" prefHeight="46.0" prefWidth="1360.0">
+               <children>
+                  <Text layoutX="29.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Productos" />
+                  <Text layoutX="144.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo" />
+                  <TextField layoutX="213.0" layoutY="7.0" />
+                  <TextField layoutX="527.0" layoutY="7.0" prefHeight="25.0" prefWidth="387.0" />
+                  <Text layoutX="411.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descripcion" />
+                  <TextField layoutX="1023.0" layoutY="7.0" prefHeight="25.0" prefWidth="69.0" />
+                  <Text layoutX="931.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Unidades" />
+                  <Text layoutX="1111.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
+                  <TextField layoutX="1164.0" layoutY="7.0" prefHeight="25.0" prefWidth="69.0" />
+                  <JFXButton layoutX="1263.0" layoutY="7.0" text="Consultar" />
+               </children>
+            </Pane>
+            <Pane layoutX="191.0" layoutY="12.0" prefHeight="201.0" prefWidth="1171.0" styleClass="border-panel-interno" />
+            <Pane layoutX="3.0" layoutY="256.0" prefHeight="170.0" prefWidth="1360.0" styleClass="border-panel-interno" />
          </children>
       </Pane>
+      <Text layoutX="1291.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
+      <Text layoutX="1234.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50" wrappingWidth="132.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

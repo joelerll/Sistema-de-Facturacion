@@ -55,22 +55,6 @@ public class Sistema_Facturacion extends Application {
         launch(args);
     }
     
-    /** Places content in a bordered pane with a title. */
-  class BorderedTitledPane extends StackPane {
-    BorderedTitledPane(String titleString, Node content) {
-      Label title = new Label("  " + titleString + "  ");
-      title.getStyleClass().add("bordered-titled-title");
-      StackPane.setAlignment(title, Pos.TOP_CENTER);
-
-      StackPane contentPane = new StackPane();
-      content.getStyleClass().add("bordered-titled-content");
-      contentPane.getChildren().add(content);
-
-      getStyleClass().add("bordered-titled-border");
-      getChildren().addAll(title, contentPane);
-    }
-  }
-    
     /**
      * @autor Joel Rodriguez
      * @return The dimensions of the computer in an array
