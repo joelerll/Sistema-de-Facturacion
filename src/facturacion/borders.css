@@ -1,0 +1,33 @@
+.bordered-titled {
+  -fx-padding: 0 0 0 4;
+  -fx-background-color: -fx-background;
+}
+
+.borde-texto{
+	-fx-fill:#212121;
+}
+
+.border-panel {
+  -fx-border-color: #0288D1;
+  -fx-border-width: 4;
+}
+
+.border-panel-interno {
+  -fx-border-color: #B3E5FC;
+  -fx-border-width: 4;
+}
+
+.texto-informacion-factura{
+	-fx-font-size:13pt;
+}
+
+.imagen{
+	-fx-border-color:darkblue;
+	-fx-border-with:1;
+	-fx-border-style: dotted;
+}
+
+.panel-material
+{
+	-fx-background-color:#ffffff;
+}
