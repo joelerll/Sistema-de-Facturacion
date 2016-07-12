@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="facturacion.FacturacionController">
     <children>
-        <Button fx:id="button" layoutX="22.0" layoutY="668.0" onAction="#handleButtonAction" text="Facturar" />
+        <Button fx:id="button" layoutX="322.0" layoutY="657.0" onAction="#handleButtonAction" text="Facturar" />
       <FlowPane prefHeight="25.0" prefWidth="200.0" />
       <MenuBar id="menuBar" layoutX="-1.0" layoutY="2.0" prefHeight="33.0" prefWidth="1366.0">
         <menus>
@@ -102,29 +102,52 @@
             </Text>
          </children>
       </StackPane>
-      <Text layoutX="1291.0" layoutY="705.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
-      <Text layoutX="1234.0" layoutY="677.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50" wrappingWidth="132.0">
+      <Text layoutX="1243.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
+      <Pane layoutX="33.0" layoutY="183.0" prefHeight="443.0" prefWidth="1299.0" styleClass="panel-material">
+         <children>
+            <Pane layoutY="234.0" prefHeight="56.0" prefWidth="1288.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Producto" />
+                  <JFXButton layoutX="1170.0" layoutY="8.0" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Consultar" />
+                  <JFXTextField focusColor="#408ea8" layoutX="120.0" layoutY="7.0" maxWidth="189.0" minWidth="145.0" prefHeight="31.0" prefWidth="151.0" promptText="CODIGO" styleClass="root-borde">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <JFXTextField focusColor="#408ea8" layoutX="278.0" layoutY="5.0" maxWidth="621.0" minWidth="393.0" prefHeight="35.0" prefWidth="621.0" promptText="DESCRIPCION" styleClass="root-borde">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <JFXTextField focusColor="#408ea8" layoutX="910.0" layoutY="6.0" maxWidth="120.0" minWidth="81.0" prefHeight="31.0" prefWidth="120.0" promptText="UNIDADES">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+                  <JFXTextField focusColor="#408ea8" layoutX="1030.0" layoutY="7.0" maxWidth="132.0" minWidth="69.0" prefHeight="35.0" prefWidth="120.0" promptText="TOTAL">
+                     <font>
+                        <Font size="15.0" />
+                     </font></JFXTextField>
+               </children>
+            </Pane>
+            <Pane layoutX="14.0" layoutY="290.0" prefHeight="138.0" prefWidth="1274.0" styleClass="border-panel-internonn" />
+            <ImageView fitHeight="221.0" fitWidth="200.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+            <Pane layoutX="223.0" layoutY="18.0" prefHeight="204.0" prefWidth="1065.0" styleClass="border-panel-internonn">
+               <children>
+                  <DatePicker layoutX="738.0" layoutY="70.0" />
+               </children>
+            </Pane>
+         </children>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Pane>
+      <Text layoutX="1222.0" layoutY="673.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50" wrappingWidth="110.0">
          <font>
             <Font size="48.0" />
          </font>
       </Text>
-      <Pane layoutX="14.0" layoutY="171.0" prefHeight="443.0" prefWidth="1333.0" styleClass="panel-material">
-         <children>
-            <Pane layoutX="3.0" layoutY="243.0" prefHeight="46.0" prefWidth="1327.0">
-               <children>
-                  <Text layoutX="29.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Productos" />
-                  <Text layoutX="144.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo" />
-                  <Text layoutX="411.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descripcion" />
-                  <Text layoutX="931.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Unidades" />
-                  <Text layoutX="1111.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
-                  <JFXButton layoutX="1246.0" layoutY="11.0" text="Consultar" />
-                  <JFXTextField layoutX="211.0" layoutY="4.0" maxWidth="189.0" minWidth="189.0" prefHeight="31.0" prefWidth="189.0" />
-                  <JFXTextField layoutX="513.0" layoutY="3.0" maxWidth="413.0" minWidth="413.0" prefHeight="31.0" prefWidth="413.0" />
-                  <JFXTextField layoutX="1012.0" layoutY="3.0" maxWidth="90.0" minWidth="90.0" prefHeight="31.0" prefWidth="90.0" />
-                  <JFXTextField layoutX="1155.0" layoutY="3.0" maxWidth="110.0" minWidth="69.0" prefHeight="31.0" prefWidth="90.0" />
-               </children>
-            </Pane>
-         </children>
-      </Pane>
+      <JFXButton layoutX="45.0" layoutY="650.0" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Facturar" />
+      <Text layoutX="1133.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="IVA" />
+      <Text layoutX="866.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal con Descuento" />
+      <Text layoutX="738.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descuento" />
+      <Text layoutX="627.0" layoutY="706.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal" />
     </children>
 </AnchorPane>
