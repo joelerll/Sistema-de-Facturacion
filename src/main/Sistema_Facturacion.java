@@ -32,16 +32,7 @@ public class Sistema_Facturacion extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        AnchorPane titledContent;
-        Node content;
-        Label title = new Label("  " + "joel" + "  ");
-      StackPane.setAlignment(title, Pos.TOP_CENTER);
-      StackPane contentPane = new StackPane();
-      //getChildren().addAll(title, contentPane);
-      
-        //titledContent = new BorderedTitledPane("JOel", getContent());
-         //titledContent.getStyleClass().add("titled-address");
-        //titledContent.setPrefSize(800, 745);
+        stage.setTitle("Sistema de Facturacion");
         Parent root = FXMLLoader.load(getClass().getResource("/facturacion/Facturacion.fxml"));
         Scene scene = new Scene(root,(dimensionesPantalla())[0],(dimensionesPantalla())[1]-40);
         stage.setScene(scene);
@@ -57,7 +48,7 @@ public class Sistema_Facturacion extends Application {
     
     /**
      * @autor Joel Rodriguez
-     * @return The dimensions of the computer in an array
+     * @return Redimenciona la ventana
      * 
      */
     public double [] dimensionesPantalla()
