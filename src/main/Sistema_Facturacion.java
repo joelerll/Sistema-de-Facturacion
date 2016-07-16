@@ -7,8 +7,11 @@ package main;
  */
 
 
+import database.DBconnection;
+import database.SQL;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.math.BigDecimal;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +32,8 @@ import javafx.stage.Stage;
 public class Sistema_Facturacion extends Application {
     @FXML
     Pane panelDatos;
+    DBconnection db;
+    SQL insert=new SQL();
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -36,7 +41,10 @@ public class Sistema_Facturacion extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/facturacion/Facturacion.fxml"));
         Scene scene = new Scene(root,(dimensionesPantalla())[0],(dimensionesPantalla())[1]-40);
         stage.setScene(scene);
-        stage.show();
+        //db=new DBconnection();
+        //db.conectar();
+        insert.setEmpleado("0965565489","Joel Eduardo Rodriguez LLamuca","23:89","24:29",1,15);
+       stage.show();
     }
 
     /**

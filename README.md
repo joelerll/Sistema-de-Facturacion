@@ -1,5 +1,14 @@
 Proyecto de bases de datos, sistema de facturacion Readme
 ================================
+##Leer scrip sql
+1) Ingresar a sql 
+```sh
+$ mysql -u root -p
+```
+2) Ya dentro del sql command line usar
+```sh
+$ source /home/usuario_cambiar/archivo.sql
+```
 
 ##Dependencias
 *[Jfoenix](https://github.com/jfoenixadmin/JFoenix)

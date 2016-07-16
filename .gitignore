@@ -9,9 +9,11 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 
-
 ### Java ###
 *.class
+
+#Ignorar clave
+src/database/DBconnection.java:17:17
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
