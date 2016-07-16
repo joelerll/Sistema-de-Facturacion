@@ -13,7 +13,7 @@ CREATE TABLE Producto(
   Nombre_Producto CHAR(30) NOT NULL,
   Imagen LONGBLOB,
   Stock INTEGER NOT NULL,
-  Precio_Venta  DECIMAL(10,2) NOT NULL,
+  Precio_Venta FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (Id_Producto)
 )ENGINE = InnoDB;
 
@@ -75,7 +75,7 @@ CREATE TABLE Proveedor_Producto(
   Id_Proveedor CHAR(30) NOT NULL,
   Id_Producto CHAR(30) NOT NULL,
   Cantidad INTEGER NOT NULL,
-  Precio DECIMAL(10,2) NOT NULL,
+  Precio FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (Id_PP),
   FOREIGN KEY (Id_Proveedor) REFERENCES Proveedor(Id_Proveedor),
   FOREIGN KEY (Id_Producto) REFERENCES Producto(Id_Producto)
