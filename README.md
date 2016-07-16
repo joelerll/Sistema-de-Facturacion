@@ -10,6 +10,11 @@ $ mysql -u root -p
 $ source /home/usuario_cambiar/archivo.sql
 ```
 
+##Clave de root
+En el archivo src/database/DBconnection deben colocar su clase de root
+
+No olvidar borrarla para que no suban su clave
+
 ##Dependencias
 *[Jfoenix](https://github.com/jfoenixadmin/JFoenix)
 
