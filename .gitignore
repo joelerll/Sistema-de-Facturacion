@@ -26,6 +26,12 @@ src/database/DBconnection.java:17:17
 #Paquetes externos#
 !/libs/*
 
+#database
+!/database/*
+
+#paquete
+!/src/database/*
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 /Sistema de Facturacion/nbproject/private/
