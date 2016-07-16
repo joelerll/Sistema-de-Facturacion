@@ -81,17 +81,18 @@
             </Pane>
             <Pane layoutX="258.0" layoutY="70.0" prefHeight="398.0" prefWidth="1027.0" styleClass="border-panel-internonn">
                <children>
-                  <TableView layoutX="3.0" layoutY="3.0" prefHeight="392.0" prefWidth="1021.0">
+                  <TableView layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
                     <columns>
-                        <TableColumn prefWidth="62.0" text="Nro" />
-                        <TableColumn prefWidth="117.0" text="CODIGO" />
-                      <TableColumn prefWidth="499.0" text="DESCRIPCION" />
-                        <TableColumn prefWidth="56.0" text="STOCK" />
-                        <TableColumn prefWidth="106.0" text="CANTIDAD" />
-                      <TableColumn prefWidth="99.0" text="P. UNITARIO" />
-                        <TableColumn prefWidth="74.0" text="TOTAL" />
+                        <TableColumn prefWidth="81.0" text="Nro" />
+                        <TableColumn prefWidth="98.0" text="CODIGO" />
+                      <TableColumn prefWidth="448.0" text="DESCRIPCION" />
+                        <TableColumn prefWidth="72.0" text="STOCK" />
+                        <TableColumn prefWidth="90.0" text="CANTIDAD" />
+                      <TableColumn prefWidth="108.0" text="P. UNITARIO" />
+                        <TableColumn prefWidth="98.0" text="TOTAL" />
                     </columns>
                   </TableView>
+                  <ScrollBar layoutX="1007.0" layoutY="3.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="17.0" />
                </children></Pane>
             <Pane layoutX="14.0" layoutY="70.0" prefHeight="392.0" prefWidth="234.0" styleClass="border-panel-internonn">
                <children>
