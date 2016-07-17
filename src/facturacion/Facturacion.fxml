@@ -81,18 +81,18 @@
             </Pane>
             <Pane layoutX="258.0" layoutY="70.0" prefHeight="398.0" prefWidth="1027.0" styleClass="border-panel-internonn">
                <children>
-                  <TableView layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
+                  <TableView fx:id="tabla" layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
                     <columns>
-                        <TableColumn prefWidth="81.0" text="Nro" />
-                        <TableColumn prefWidth="98.0" text="CODIGO" />
-                      <TableColumn prefWidth="448.0" text="DESCRIPCION" />
-                        <TableColumn prefWidth="72.0" text="STOCK" />
-                        <TableColumn prefWidth="90.0" text="CANTIDAD" />
-                      <TableColumn prefWidth="108.0" text="P. UNITARIO" />
-                        <TableColumn prefWidth="98.0" text="TOTAL" />
+                        <TableColumn fx:id="TableColumnNro" prefWidth="81.0" text="Nro" />
+                        <TableColumn fx:id="TableColumnCodigo" prefWidth="98.0" text="CODIGO" />
+                      <TableColumn fx:id="TableColumnDescripcion" prefWidth="448.0" text="DESCRIPCION" />
+                        <TableColumn fx:id="TableColumnStrok" prefWidth="72.0" text="STOCK" />
+                        <TableColumn fx:id="TableColumnCantidad" prefWidth="90.0" text="CANTIDAD" />
+                      <TableColumn fx:id="TableColumnPUnitario" prefWidth="108.0" text="P. UNITARIO" />
+                        <TableColumn fx:id="TableColumnTotal" prefWidth="98.0" text="TOTAL" />
                     </columns>
                   </TableView>
-                  <ScrollBar layoutX="1007.0" layoutY="3.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="17.0" />
+                  <ScrollBar fx:id="ScrollBar" layoutX="1007.0" layoutY="3.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="17.0" />
                </children></Pane>
             <Pane layoutX="14.0" layoutY="70.0" prefHeight="392.0" prefWidth="234.0" styleClass="border-panel-internonn">
                <children>
@@ -136,9 +136,8 @@
                <children>
                   <Text layoutX="144.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Factura:" />
                   <Text fill="#282525" layoutX="479.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="69.0" />
-                  <Text layoutX="432.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Hora:" />
-                  <Text layoutX="560.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Fecha:" />
-                  <Text layoutX="618.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="99.24560546875" />
+                  <Text layoutX="378.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Hora:" />
+                  <Text layoutX="503.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Fecha:" />
                   <Text layoutX="739.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Cliente:" />
                   <Text layoutX="872.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="132.3275146484375" />
                   <Text layoutX="1028.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Vendedor:" />
@@ -148,7 +147,15 @@
                      </font>
                   </JFXCheckBox>
                   <JFXComboBox layoutX="1135.0" layoutY="8.0" prefHeight="25.0" prefWidth="151.0" />
-                  <Label layoutX="282.0" layoutY="9.0" prefHeight="20.0" prefWidth="137.0" />
+                  <Label fx:id="codigoFactura" layoutX="293.0" layoutY="12.0" prefHeight="20.0" prefWidth="73.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
+                  <Label fx:id="fecha" layoutX="568.0" layoutY="12.0" prefHeight="19.0" prefWidth="139.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>

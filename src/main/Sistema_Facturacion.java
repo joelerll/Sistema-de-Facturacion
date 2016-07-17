@@ -32,19 +32,18 @@ import javafx.stage.Stage;
 public class Sistema_Facturacion extends Application {
     @FXML
     Pane panelDatos;
-    DBconnection db;
-    SQL insert=new SQL();
     
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Sistema de Facturacion");
-        Parent root = FXMLLoader.load(getClass().getResource("/facturacion/Facturacion.fxml"));
-        Scene scene = new Scene(root,(dimensionesPantalla())[0],(dimensionesPantalla())[1]-40);
-        stage.setScene(scene);
-        //db=new DBconnection();
-        //db.conectar();
-        insert.setEmpleado("0965565489","Joel Eduardo Rodriguez LLamuca","23:89","24:29",1,15);
-       stage.show();
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("/facturacion/Facturacion.fxml"));
+            Scene scene = new Scene(root,(dimensionesPantalla())[0],(dimensionesPantalla())[1]-40);
+            stage.setScene(scene);
+        }catch (Exception e){
+            System.out.println("No cargo Facturacion.xml");
+        }
+        stage.show();
     }
 
     /**

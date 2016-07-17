@@ -14,6 +14,7 @@ CREATE TABLE Producto(
   Imagen LONGBLOB,
   Stock INTEGER NOT NULL,
   Precio_Venta FLOAT UNSIGNED NOT NULL,
+  Precio_Inicial FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (Id_Producto)
 )ENGINE = InnoDB;
 
@@ -42,8 +43,8 @@ CREATE TABLE Empleado(
 )ENGINE = InnoDB;
 
 CREATE TABLE Item(
-  Id_Item Char(30) NOT NULL,
-  Precio  DECIMAL(10,2) NOT NULL,
+  Id_Item Char(30) NOT NULL UNIQUE,
+  Precio  FLOAT UNSIGNED NOT NULL,
   Nombre CHAR(30) NOT NULL,
   Descripcion Char(200),
   PRIMARY KEY (Id_Item)
@@ -52,7 +53,7 @@ CREATE TABLE Item(
 CREATE TABLE Gastos(
   Id_Gasto CHAR(30) NOT NULL UNIQUE,
   Fecha DATE NOT NULL,
-  Total  DECIMAL(10,2) NOT NULL,
+  Total  FLOAT UNSIGNED NOT NULL,
   Cedula_Empl CHAR(30) NOT NULL,
   PRIMARY KEY (Id_Gasto),
   CONSTRAINT FOREIGN KEY (Cedula_Empl) REFERENCES Empleado(Cedula_Empl)
@@ -61,7 +62,7 @@ CREATE TABLE Gastos(
 CREATE TABLE Factura(
   Id_Orden CHAR (30) NOT NULL UNIQUE,
   Tipo CHAR (30) NOT NULL,
-  Valor  DECIMAL(10,2) NOT NULL,
+  Valor  FLOAt UNSIGNED NOT NULL,
   Fecha DATE NOT NULL,
   Cedula_C CHAR(30) NOT NULL,
   Cedula_Empl CHAR(30) NOT NULL,
@@ -71,7 +72,7 @@ CREATE TABLE Factura(
 )ENGINE = InnoDB;
 
 CREATE TABLE Proveedor_Producto(
-  Id_PP CHAR(30) NOT NULL UNIQUE,
+  Id_PP CHAR(30) NOT NULL,
   Id_Proveedor CHAR(30) NOT NULL,
   Id_Producto CHAR(30) NOT NULL,
   Cantidad INTEGER NOT NULL,
@@ -83,7 +84,7 @@ CREATE TABLE Proveedor_Producto(
 
 
 CREATE TABLE Producto_Grupos(
-  Id_PerteneceA CHAR(30) NOT NULL UNIQUE,
+  Id_PerteneceA CHAR(30) NOT NULL,
   Id_Producto CHAR(30) NOT NULL,
   Id_Grupo CHAR(30) NOT NULL,
   PRIMARY KEY (Id_PerteneceA),

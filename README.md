@@ -9,6 +9,7 @@ $ mysql -u root -p
 ```sh
 $ source /home/usuario_cambiar/archivo.sql
 ```
+*[Base de datos basada en el modelo](https://drive.google.com/file/d/0B0qJgPsHuaudY05LZGFka3pqRUk/view?usp=sharing)
 
 ##Clave de root
 En el archivo src/database/DBconnection deben colocar su clase de root
