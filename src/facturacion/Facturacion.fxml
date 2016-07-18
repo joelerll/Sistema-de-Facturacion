@@ -122,13 +122,13 @@
          <children>
             <Pane layoutY="14.0" prefHeight="40.0" prefWidth="1299.0">
                <children>
-                  <JFXCheckBox layoutX="21.0" layoutY="10.0" text="Consumidor Final">
+                  <JFXCheckBox fx:id="consumidorFinal" layoutX="21.0" layoutY="10.0" onAction="#consumidorFinalCheck" text="Consumidor Final">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </JFXCheckBox>
-                  <JFXTextField layoutX="218.0" layoutY="5.0" maxWidth="511.0" minWidth="437.0" prefHeight="38.0" prefWidth="511.0" promptText="CLIENTE NOMBRE" styleClass="texto-informacion-factura" />
-                  <JFXTextField layoutX="747.0" layoutY="5.0" maxWidth="355.0" minWidth="316.0" prefHeight="38.0" prefWidth="355.0" promptText="CEDULA O RUC" styleClass="texto-informacion-factura" />
+                  <JFXTextField fx:id="clienteNombre" layoutX="218.0" layoutY="5.0" maxWidth="511.0" minWidth="437.0" onAction="#nombresAutocompletado" prefHeight="38.0" prefWidth="511.0" promptText="CLIENTE NOMBRE" styleClass="texto-informacion-factura" />
+                  <JFXTextField fx:id="clienteCedula" layoutX="747.0" layoutY="5.0" maxWidth="355.0" minWidth="316.0" prefHeight="38.0" prefWidth="355.0" promptText="CEDULA O RUC" styleClass="texto-informacion-factura" />
                   <JFXButton layoutX="1148.0" layoutY="-1.0" prefHeight="40.0" prefWidth="139.0" styleClass="custom-button" text="Nuevo Cliente" />
                </children>
             </Pane>
