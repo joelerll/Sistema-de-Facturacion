@@ -31,26 +31,14 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Cliente">
               <items>
-                <MenuItem mnemonicParsing="false" text="Editar" />
-                  <MenuItem mnemonicParsing="false" text="Ingresar" />
+                <MenuItem fx:id="mnuClienteBuscar" mnemonicParsing="false" onAction="#buscarCliente" text="Editar" />
+                  <MenuItem fx:id="mnuClienteIngresar" mnemonicParsing="false" onAction="#crearCliente" text="Ingresar" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Proveedores">
               <items>
                   <MenuItem mnemonicParsing="false" text="Editar" />
                 <MenuItem mnemonicParsing="false" text="Ingresar" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Empleado">
-              <items>
-                  <MenuItem mnemonicParsing="false" text="Editar" />
-                <MenuItem mnemonicParsing="false" text="Ingesar" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Estadisticas">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Ventas" />
-                  <MenuItem mnemonicParsing="false" text="Gastos" />
               </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Ayuda">
