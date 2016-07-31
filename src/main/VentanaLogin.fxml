@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.VentanaLoginController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <JFXTextField fx:id="tfUsuario" layoutX="207.0" layoutY="117.0" promptText="Usuario" />
+            <JFXPasswordField fx:id="tfPassword" layoutX="207.0" layoutY="214.0" promptText="Contrasena" />
+            <JFXButton fx:id="btnIngresar" buttonType="RAISED" layoutX="104.0" layoutY="315.0" onAction="#ingresarMenuPrincipal" style="-fx-background-color: C4BEBE;" text="Ingresar" />
+            <JFXButton fx:id="btnCrearUsuario" buttonType="RAISED" layoutX="418.0" layoutY="315.0" onAction="#crearUsuario" style="-fx-background-color: C4BEBE;" text="Crear Usuario" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

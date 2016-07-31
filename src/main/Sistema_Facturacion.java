@@ -37,11 +37,11 @@ public class Sistema_Facturacion extends Application {
     public void start(Stage stage) throws Exception {
         stage.setTitle("Sistema de Facturacion");
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("SegundaVentana.fxml"));
-            Scene scene = new Scene(root,(dimensionesPantalla())[0],(dimensionesPantalla())[1]-40);
+            Parent root = FXMLLoader.load(getClass().getResource("VentanaLogin.fxml"));
+            Scene scene = new Scene(root,600,400);
             stage.setScene(scene);
         }catch (Exception e){
-            System.out.println("No cargo Facturacion.xml");
+            System.out.println("No cargo VentanaLogin.xml");
         }
         stage.show();
     }

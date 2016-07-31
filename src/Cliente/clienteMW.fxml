@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.ClienteMWController">
+   <children>
+      <JFXButton fx:id="btnRegresar" alignment="CENTER" buttonType="RAISED" layoutX="264.0" layoutY="269.0" onAction="#regresarMenuPrincipal" style="-fx-background-color: #C4BEBE;" text="Menu Principal" textAlignment="CENTER" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="243.0" />
+      <JFXButton fx:id="btnBuscarCliente" buttonType="RAISED" contentDisplay="CENTER" layoutX="243.0" layoutY="185.0" onAction="#buscarCliente" style="-fx-background-color: #C4BEBE;" text="Buscar Cliente" textAlignment="CENTER" AnchorPane.bottomAnchor="184.0" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="185.0" />
+      <JFXButton fx:id="btnCrearCliente" alignment="CENTER" buttonType="RAISED" layoutX="243.0" layoutY="70.0" onAction="#crearCliente" style="-fx-background-color: #C4BEBE;" text="Crear Cliente" textAlignment="CENTER" AnchorPane.leftAnchor="243.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="70.0" />
+   </children>
+</AnchorPane>
