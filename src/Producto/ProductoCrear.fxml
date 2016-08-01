@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Producto.ProductoCrearController">
+    <children>
+      <Pane layoutX="-3.0" prefHeight="400.0" prefWidth="606.0">
+         <children>
+            <Label layoutX="251.0" layoutY="34.0" prefHeight="21.0" prefWidth="68.0" text="Ingreso">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="43.0" layoutY="101.0" text="Nombre:" />
+            <Label layoutX="46.0" layoutY="154.0" text="Código:" />
+            <JFXTextField fx:id="tfNombreProducto" layoutX="137.0" layoutY="93.0" maxWidth="267.0" minWidth="267.0" onAction="#IngresarNombreProducto" prefHeight="37.0" prefWidth="267.0" promptText="nombre del producto a ingresar" />
+            <JFXTextField fx:id="tfCodigoProducto" layoutX="137.0" layoutY="146.0" maxWidth="267.0" minWidth="267.0" onAction="#IngresarCodigoProducto" prefHeight="37.0" prefWidth="267.0" promptText="codigo del producto" />
+            <ImageView fx:id="ivImagenProdcuto" fitHeight="163.0" fitWidth="185.0" layoutX="407.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="50.0" layoutY="212.0" text="Precio:" />
+            <Label layoutX="50.0" layoutY="258.0" text="Precio Venta:" />
+            <Label layoutX="52.0" layoutY="309.0" text="Stock:" />
+            <JFXTextField fx:id="tfPrecioProducto" layoutX="137.0" layoutY="204.0" maxWidth="267.0" minWidth="267.0" onAction="#IngresarPrecioProducto" prefHeight="37.0" prefWidth="267.0" promptText="Precio del producto" />
+            <JFXTextField fx:id="tfPrecioVentaProducto" layoutX="142.0" layoutY="250.0" maxWidth="277.0" minWidth="258.0" onAction="#IngresarPrecioVentaProducto" prefHeight="37.0" prefWidth="261.0" promptText="Precio de venta del producto" />
+            <JFXTextField fx:id="tfStockProducto" layoutX="142.0" layoutY="301.0" maxWidth="267.0" minWidth="251.0" onAction="#IngresarStockProducto" prefHeight="37.0" prefWidth="261.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

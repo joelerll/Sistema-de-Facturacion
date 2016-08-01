@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Producto.ProductoBuscarController">
+    <children>
+      <Pane layoutX="1.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="246.0" layoutY="75.0" text="Buscar Prodcuto" />
+            <Label layoutX="69.0" layoutY="162.0" text="Nombre:" />
+            <Label layoutX="69.0" layoutY="261.0" text="Código:" />
+            <JFXTextField fx:id="tfNombreProductoBuscar" layoutX="137.0" layoutY="154.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="nombre del procucto a buscar" />
+            <JFXTextField fx:id="tfCodigoProductoBuscar" layoutX="137.0" layoutY="253.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="código del procucto a buscar" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="380.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
