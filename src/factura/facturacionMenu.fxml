@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.FacturacionMenuController">
+   <children>
+      <JFXButton fx:id="facturacion" layoutX="240.0" layoutY="107.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Ingresar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="253.0" layoutY="38.0" text="Facturas">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="facturacion1" layoutX="240.0" layoutY="200.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Eliminar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="facturacion2" layoutX="239.0" layoutY="288.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Modificar">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnAtras" layoutX="22.0" layoutY="348.0" onAction="#menu" styleClass="custom-button-regreso" stylesheets="@borders.css" text="Atras">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

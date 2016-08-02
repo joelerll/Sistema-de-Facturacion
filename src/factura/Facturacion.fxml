@@ -12,45 +12,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="facturacion.FacturacionController">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.FacturacionController">
     <children>
       <FlowPane prefHeight="33.0" prefWidth="456.0" />
-      <MenuBar id="menuBar" layoutX="-1.0" layoutY="2.0" prefHeight="33.0" prefWidth="1366.0">
-        <menus>
-            <Menu mnemonicParsing="false" text="Archivo">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Open" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Factura">
-            <items>
-                  <MenuItem mnemonicParsing="false" text="Nuevo" />
-              <MenuItem mnemonicParsing="false" text="Buscar" />
-                  <MenuItem mnemonicParsing="false" text="Eliminar" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Cliente">
-              <items>
-                <MenuItem fx:id="mnuClienteBuscar" mnemonicParsing="false" onAction="#buscarCliente" text="Editar" />
-                  <MenuItem fx:id="mnuClienteIngresar" mnemonicParsing="false" onAction="#crearCliente" text="Ingresar" />
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Proveedores">
-              <items>
-                  <MenuItem mnemonicParsing="false" text="Editar" />
-                <MenuItem mnemonicParsing="false" text="Ingresar" />
-              </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Ayuda">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Creadores" />
-            </items>
-          </Menu>
-        </menus>
-         <effect>
-            <InnerShadow color="#433d3b" />
-         </effect>
-      </MenuBar>
       <Text layoutX="1255.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
       <Pane layoutX="33.0" layoutY="183.0" prefHeight="470.0" prefWidth="1299.0" styleClass="panel-material">
          <children>
@@ -97,7 +61,7 @@
             <Font size="48.0" />
          </font>
       </Text>
-      <JFXButton fx:id="button" layoutX="45.0" layoutY="679.0" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Facturar" />
+      <JFXButton fx:id="button" layoutX="73.0" layoutY="678.0" onAction="#handleButtonAction" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Facturar" />
       <Text layoutX="1157.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="IVA" />
       <Text layoutX="866.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal con Descuento" />
       <Text layoutX="738.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descuento" />
@@ -148,5 +112,6 @@
             </Pane>
          </children>
       </Pane>
+      <JFXButton fx:id="btnRegresar" layoutX="17.0" layoutY="678.0" onAction="#regresarMenuFacturacion" prefHeight="18.0" prefWidth="29.0" styleClass="custom-button" text="A" />
     </children>
 </AnchorPane>

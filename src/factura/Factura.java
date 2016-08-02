@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Factura;
+package factura;
 
 import Producto.Producto;
 import database.DBconnection;
@@ -111,7 +111,7 @@ public class Factura {
         return null;
     }
     
-    public Factura Last()
+ /*   public Factura Last()
     {
         Factura f=new Factura();
         try {
@@ -132,7 +132,7 @@ public class Factura {
             System.out.println("----No cargo Last-----------");
         }
         return f;
-    }
+    }*/
      
      
 

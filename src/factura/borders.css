@@ -43,3 +43,10 @@
     -fx-background-color: #0288D1;
     -fx-text-fill: white;
 }
+
+.custom-button-regreso {
+    -fx-font: 16px "Serif";
+    -fx-padding: 10;
+    -fx-background-color: red;
+    -fx-text-fill: white;
+}

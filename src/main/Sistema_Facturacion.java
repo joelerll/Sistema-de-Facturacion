@@ -24,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -36,6 +37,7 @@ public class Sistema_Facturacion extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("Sistema de Facturacion");
+        //stage.initStyle(StageStyle.TRANSPARENT);
         try{
             Parent root = FXMLLoader.load(getClass().getResource("VentanaLogin.fxml"));
             Scene scene = new Scene(root,600,400);
