@@ -1,123 +1,125 @@
-CREATE DATABASE IF NOT EXISTS Facturacion;
-USE Facturacion;
+CREATE DATABASE facturacion;
+USE facturacion;
 
-CREATE TABLE Proveedor(
-  Id_Proveedor CHAR(30) NOT NULL UNIQUE,
-  Nombre CHAR(30) NOT NULL,
-  Direccion CHAR(50) NOT NULL,
-  PRIMARY KEY (Id_Proveedor)
+CREATE TABLE proveedor(
+  id CHAR(30) NOT NULL UNIQUE,
+  nombre CHAR(30) NOT NULL,
+  direccion CHAR(50) NOT NULL,
+  PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Producto(
-  Id_Producto CHAR(30) NOT NULL UNIQUE,
-  Nombre_Producto CHAR(30) NOT NULL,
-  Imagen LONGBLOB,
-  Stock INTEGER NOT NULL,
-  Precio_Venta FLOAT UNSIGNED NOT NULL,
-  Precio_Inicial FLOAT UNSIGNED NOT NULL,
-  PRIMARY KEY (Id_Producto)
+CREATE TABLE producto(
+  id CHAR(30) NOT NULL UNIQUE,
+  nombre CHAR(30) NOT NULL,
+  marca CHAR(30),
+  imagen LONGBLOB,
+  stock INTEGER NOT NULL,
+  precio_venta FLOAT UNSIGNED NOT NULL,
+  precio_inicial FLOAT UNSIGNED NOT NULL,
+  PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Grupos(
-  Id_Grupo CHAR (30) NOT NULL UNIQUE,
-  Nombre_G CHAR (30) NOT NULL,
-  Descripcion CHAR (200) NOT NULL,
-  PRIMARY KEY (Id_Grupo)
+CREATE TABLE grupos(
+  id CHAR (30) NOT NULL UNIQUE,
+  nombre CHAR (30) NOT NULL,
+  descripcion CHAR (200) NOT NULL,
+  PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Cliente(
-  Cedula_C CHAR(30) NOT NULL UNIQUE,
-  Nombre_C CHAR(30) NOT NULL,
-  Direccion_C CHAR(30) NOT NULL,
-  PRIMARY KEY (Cedula_C)
+CREATE TABLE cliente(
+  cedula CHAR(30) NOT NULL UNIQUE,
+  nombre CHAR(30) NOT NULL,
+  direccion CHAR(30) NOT NULL,
+  PRIMARY KEY (cedula)
 )ENGINE = InnoDB;
 
-CREATE TABLE Empleado(
-  Cedula_Empl CHAR(30) NOT NULL UNIQUE,
-  Nombre_E CHAR(30) NOT NULL,
-  Horario_Ent CHAR(30) NOT NULL,
-  Horario_Sal CHAR(30) NOT NULL,
-  Es_Admin INTEGER NOT NULL,
-  Sueldo  FLOAT UNSIGNED NOT NULL DEFAULT '320',
-  PRIMARY KEY (Cedula_Empl)
+CREATE TABLE empleado(
+  cedula CHAR(30) NOT NULL UNIQUE,
+  nombre CHAR(30) NOT NULL,
+  horario_ent CHAR(30) NOT NULL,
+  horario_sal CHAR(30) NOT NULL,
+  es_admin INTEGER NOT NULL,
+  sueldo  FLOAT UNSIGNED NOT NULL DEFAULT '320',
+  PRIMARY KEY (cedula)
 )ENGINE = InnoDB;
 
-CREATE TABLE Item(
-  Id_Item Char(30) NOT NULL UNIQUE,
-  Precio  FLOAT UNSIGNED NOT NULL,
-  Nombre CHAR(30) NOT NULL,
-  Descripcion Char(200),
-  PRIMARY KEY (Id_Item)
+CREATE TABLE item(
+  id CHAR(30) NOT NULL UNIQUE,
+  precio  FLOAT UNSIGNED NOT NULL,
+  nombre CHAR(30) NOT NULL,
+  descripcion CHAR(200),
+  PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Gastos(
-  Id_Gasto CHAR(30) NOT NULL UNIQUE,
-  Fecha DATE NOT NULL,
-  Total  FLOAT UNSIGNED NOT NULL,
-  Cedula_Empl CHAR(30) NOT NULL,
-  PRIMARY KEY (Id_Gasto),
-  CONSTRAINT FOREIGN KEY (Cedula_Empl) REFERENCES Empleado(Cedula_Empl)
+CREATE TABLE gastos(
+  id CHAR(30) NOT NULL UNIQUE,
+  fecha DATE NOT NULL,
+  total  FLOAT UNSIGNED NOT NULL,
+  cedula_empl CHAR(30) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
 )ENGINE = InnoDB;
 
-CREATE TABLE Factura(
-  Id_Orden CHAR (30) NOT NULL UNIQUE,
-  Tipo CHAR (30) NOT NULL,
-  Valor  FLOAt UNSIGNED NOT NULL,
-  Fecha DATE NOT NULL,
-  Cedula_C CHAR(30) NOT NULL,
-  Cedula_Empl CHAR(30) NOT NULL,
-  PRIMARY KEY (Id_Orden),
-  CONSTRAINT FOREIGN KEY (Cedula_C) REFERENCES Cliente(Cedula_C),
-  CONSTRAINT FOREIGN KEY (Cedula_Empl) REFERENCES Empleado(Cedula_Empl)
+CREATE TABLE factura(
+  id CHAR (30) NOT NULL UNIQUE,
+  tipo CHAR (30) NOT NULL,
+  valor  FLOAt UNSIGNED NOT NULL,
+  fecha DATE NOT NULL,
+  cedula_c CHAR(30) NOT NULL,
+  cedula_empl CHAR(30) NOT NULL,
+  anulada INTEGER NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES cliente(cedula),
+  CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
 )ENGINE = InnoDB;
 
-CREATE TABLE Proveedor_Producto(
-  Id_PP CHAR(30) NOT NULL,
-  Id_Proveedor CHAR(30) NOT NULL,
-  Id_Producto CHAR(30) NOT NULL,
-  Cantidad INTEGER NOT NULL,
-  Precio FLOAT UNSIGNED NOT NULL,
-  PRIMARY KEY (Id_PP),
-  FOREIGN KEY (Id_Proveedor) REFERENCES Proveedor(Id_Proveedor),
-  FOREIGN KEY (Id_Producto) REFERENCES Producto(Id_Producto)
+CREATE TABLE proveedor_producto(
+  id CHAR(30) NOT NULL,
+  id_proveedor CHAR(30) NOT NULL,
+  id_producto CHAR(30) NOT NULL,
+  cantidad INTEGER NOT NULL,
+  precio FLOAT UNSIGNED NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (id_proveedor) REFERENCES proveedor(id),
+  FOREIGN KEY (id_producto) REFERENCES producto(id)
 )ENGINE = InnoDB;
 
 
-CREATE TABLE Producto_Grupos(
-  Id_PerteneceA CHAR(30) NOT NULL,
-  Id_Producto CHAR(30) NOT NULL,
-  Id_Grupo CHAR(30) NOT NULL,
-  PRIMARY KEY (Id_PerteneceA),
-  CONSTRAINT FOREIGN KEY (Id_Producto) REFERENCES Producto(Id_Producto),
-  CONSTRAINT FOREIGN KEY (Id_Grupo) REFERENCES Grupos(Id_Grupo)
+CREATE TABLE producto_grupos(
+  id_perteneceA CHAR(30) NOT NULL,
+  id_producto CHAR(30) NOT NULL,
+  id_grupo CHAR(30) NOT NULL,
+  PRIMARY KEY (id_perteneceA),
+  CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
+  CONSTRAINT FOREIGN KEY (id_grupo) REFERENCES grupos(id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Producto_Factura(
-  Id_PF CHAR (30) NOT NULL,
-  Id_Producto CHAR(30) NOT NULL,
-  Id_Orden CHAR(30) NOT NULL,
-  PRIMARY KEY (Id_PF),
-  CONSTRAINT FOREIGN KEY (Id_Producto) REFERENCES Producto(Id_Producto),
-  CONSTRAINT FOREIGN KEY (Id_Orden) REFERENCES Factura(Id_Orden)
+CREATE TABLE producto_factura(
+  id CHAR (30) NOT NULL,
+  id_producto CHAR(30) NOT NULL,
+  id_orden CHAR(30) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
+  CONSTRAINT FOREIGN KEY (id_orden) REFERENCES factura(id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Telefonos_Cliente(
-  Cedula_C CHAR(30) NOT NULL,
-  Telefono CHAR(30) NOT NULL,
-  CONSTRAINT FOREIGN KEY (Cedula_C) REFERENCES Cliente(Cedula_C)
+CREATE TABLE telefonos_cliente(
+  cedula_c CHAR(30) NOT NULL,
+  telefono CHAR(30) NOT NULL,
+  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES cliente(cedula)
 )ENGINE = InnoDB;
 
-CREATE TABLE Item_Gastos(
-  Id_ITG CHAR(30) NOT NULL,
-  Id_Item CHAR(30) NOT NULL,
-  Id_Gasto CHAR(30) NOT NULL,
-  PRIMARY KEY (Id_ITG),
-  CONSTRAINT FOREIGN KEY (Id_Item) REFERENCES Item (Id_Item),
-  CONSTRAINT FOREIGN KEY (Id_Gasto) REFERENCES Gastos (Id_Gasto)
+CREATE TABLE item_gastos(
+  id CHAR(30) NOT NULL,
+  id_item CHAR(30) NOT NULL,
+  id_gasto CHAR(30) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT FOREIGN KEY (id_item) REFERENCES item (id),
+  CONSTRAINT FOREIGN KEY (id_gasto) REFERENCES gastos (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Telefono_Proveedor(
-  Id_Proveedor CHAR(30) NOT NULL,
-  Telefono CHAR(30) NOT NULL,
-  CONSTRAINT FOREIGN KEY (Id_Proveedor) REFERENCES Proveedor (Id_Proveedor)
+CREATE TABLE telefono_proveedor(
+  id_proveedor CHAR(30) NOT NULL,
+  telefono CHAR(30) NOT NULL,
+  CONSTRAINT FOREIGN KEY (id_proveedor) REFERENCES proveedor (id)
 )ENGINE = InnoDB;
