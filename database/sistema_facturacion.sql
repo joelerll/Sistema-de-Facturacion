@@ -2,20 +2,20 @@ CREATE DATABASE facturacion;
 USE facturacion;
 
 CREATE TABLE proveedor(
-  id CHAR(30) NOT NULL UNIQUE,
+  id CHAR(30) NOT NULL ,
   nombre CHAR(30) NOT NULL,
   direccion CHAR(50) NOT NULL,
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
 CREATE TABLE producto(
-  id CHAR(30) NOT NULL UNIQUE,
-  nombre CHAR(30) NOT NULL,
+  id CHAR(40) NOT NULL UNIQUE,
+  nombre CHAR(60) NOT NULL,
   marca CHAR(30),
   imagen LONGBLOB,
-  stock INTEGER NOT NULL,
-  precio_venta FLOAT UNSIGNED NOT NULL,
-  precio_inicial FLOAT UNSIGNED NOT NULL,
+  stock INTEGER UNSIGNED NOT NULL,
+  precio_venta DECIMAL(5,2) NOT NULL,
+  precio_inicial DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
@@ -39,13 +39,13 @@ CREATE TABLE empleado(
   horario_ent CHAR(30) NOT NULL,
   horario_sal CHAR(30) NOT NULL,
   es_admin INTEGER NOT NULL,
-  sueldo  FLOAT UNSIGNED NOT NULL DEFAULT '320',
+  sueldo  DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (cedula)
 )ENGINE = InnoDB;
 
 CREATE TABLE item(
   id CHAR(30) NOT NULL UNIQUE,
-  precio  FLOAT UNSIGNED NOT NULL,
+  precio  DECIMAL(5,2)  NOT NULL,
   nombre CHAR(30) NOT NULL,
   descripcion CHAR(200),
   PRIMARY KEY (id)
@@ -54,7 +54,7 @@ CREATE TABLE item(
 CREATE TABLE gastos(
   id CHAR(30) NOT NULL UNIQUE,
   fecha DATE NOT NULL,
-  total  FLOAT UNSIGNED NOT NULL,
+  total DECIMAL(5,2) NOT NULL,
   cedula_empl CHAR(30) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
@@ -63,7 +63,7 @@ CREATE TABLE gastos(
 CREATE TABLE factura(
   id CHAR (30) NOT NULL UNIQUE,
   tipo CHAR (30) NOT NULL,
-  valor  FLOAt UNSIGNED NOT NULL,
+  valor  DECIMAL(5,2) NOT NULL,
   fecha DATE NOT NULL,
   cedula_c CHAR(30) NOT NULL,
   cedula_empl CHAR(30) NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE factura(
 CREATE TABLE proveedor_producto(
   id CHAR(30) NOT NULL,
   id_proveedor CHAR(30) NOT NULL,
-  id_producto CHAR(30) NOT NULL,
+  id_producto CHAR(40) NOT NULL,
   cantidad INTEGER NOT NULL,
   precio FLOAT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
@@ -87,7 +87,7 @@ CREATE TABLE proveedor_producto(
 
 CREATE TABLE producto_grupos(
   id_perteneceA CHAR(30) NOT NULL,
-  id_producto CHAR(30) NOT NULL,
+  id_producto CHAR(40) NOT NULL,
   id_grupo CHAR(30) NOT NULL,
   PRIMARY KEY (id_perteneceA),
   CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
@@ -96,7 +96,7 @@ CREATE TABLE producto_grupos(
 
 CREATE TABLE producto_factura(
   id CHAR (30) NOT NULL,
-  id_producto CHAR(30) NOT NULL,
+  id_producto CHAR(40) NOT NULL,
   id_orden CHAR(30) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
