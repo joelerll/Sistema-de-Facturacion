@@ -26,11 +26,16 @@ CREATE TABLE grupos(
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE cliente(
-  cedula CHAR(30) NOT NULL UNIQUE,
-  nombre CHAR(30) NOT NULL,
-  direccion CHAR(30) NOT NULL,
-  PRIMARY KEY (cedula)
+CREATE TABLE Cliente(
+  Cedula_C VARCHAR(15) NOT NULL UNIQUE,
+  Fecha_C DATE,
+  Nombre_C VARCHAR(30) NOT NULL,
+  Apellido_C VARCHAR(30) NOT NULL,
+  Direccion_C VARCHAR(30) NOT NULL,
+  Celular_C VARCHAR(30),
+  Convencional_C VARCHAR(30),
+  Email_C VARCHAR(30),
+  PRIMARY KEY (Cedula_C)
 )ENGINE = InnoDB;
 
 CREATE TABLE empleado(

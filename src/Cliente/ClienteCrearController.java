@@ -53,13 +53,17 @@ public class ClienteCrearController implements Initializable {
         
         if(cedula.equals("")||nombre.equals("")||apellido.equals("")){
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
+            alert.setTitle("Alert Dialog");
             alert.setHeaderText(null);
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
-        }
-        else{
+        }else{
             Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Confirmation Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Cliente ingresado!");
+            alert.showAndWait();
         }
     }
 
