@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Cliente;
 
 import database.DBconnection;
@@ -12,12 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author joelerll
  */
 public class Cliente {
+    //ATRIBUTOS
     private static final DBconnection database=new DBconnection();
     private static Connection con;
     private static PreparedStatement ps;
@@ -25,16 +24,15 @@ public class Cliente {
     
     private String Cedula_C;
     private String Nombre_C;
+    private String Apellido_C;
     private String Direccion_C;
+    private String Celular_C;
+    private String Convencional_C;
+    private String Email_C;
 
-    public Cliente(String Cedula_C, String Nombre_C, String Direccion_C) {
-        this.Cedula_C = Cedula_C;
-        this.Nombre_C = Nombre_C;
-        this.Direccion_C = Direccion_C;
-    }
+    //METODOS
     
-    public static List <Cliente> searchClientesByName(String name)
-    {
+    public static List <Cliente> searchClientesByName(String name){
         List <Cliente>  clientes=new ArrayList<> ();
         
         String patron=String.format("");
@@ -60,8 +58,7 @@ public class Cliente {
         return clientes;
     }
     
-    public static List<String> nombresClientes(List <Cliente> clientes)
-    {
+    public static List<String> nombresClientes(List <Cliente> clientes){
         List<String> nombres= new ArrayList<String>();
         String nombre;
         for(Cliente cliente: clientes)
@@ -71,8 +68,6 @@ public class Cliente {
         return nombres;
     }
 
-    public Cliente() {
-    }
 
     public String getCedula_C() {
         return Cedula_C;
@@ -96,6 +91,119 @@ public class Cliente {
 
     public void setDireccion_C(String Direccion_C) {
         this.Direccion_C = Direccion_C;
+    }
+
+    public String getApellido_C() {
+        return Apellido_C;
+    }
+
+    public void setApellido_C(String Apellido_C) {
+        this.Apellido_C = Apellido_C;
+    }
+
+    public String getCelular_C() {
+        return Celular_C;
+    }
+
+    public void setCelular_C(String Celular_C) {
+        this.Celular_C = Celular_C;
+    }
+
+    public String getConvencional_C() {
+        return Convencional_C;
+    }
+
+    public void setConvencional_C(String Convencional_C) {
+        this.Convencional_C = Convencional_C;
+    }
+
+    public String getEmail_C() {
+        return Email_C;
+    }
+
+    public void setEmail_C(String Email_C) {
+        this.Email_C = Email_C;
+    }
+    
+    public static void ingresarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+        try{
+            con=database.conectar();
+            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1,cedula);
+            preparedStatement.setString(2,nombre);
+            preparedStatement.setString(3, apellido);
+            preparedStatement.setString(4, dir);
+            preparedStatement.setString(5, cel);
+            preparedStatement.setString(6, telf);
+            preparedStatement.setString(7, email);
+            preparedStatement.executeUpdate();
+        }catch (SQLException ex)
+        {
+            System.out.println("No se ingreso el cliente");
+        }finally{
+            System.out.println("Se ingreso el cliente");
+        }
+        
+    }
+    
+    public static void buscarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+        String query = "SELECT * FROM cliente WHERE ";
+        String query2 = "";
+        List <Cliente>  listaClientes=new ArrayList<> ();
+        
+        if(!cedula.equals("")){
+            query+="Cedula_C = '"+cedula+"' AND ";
+        }
+        if(!nombre.equals("")){
+            query+="Nombre_C = '"+nombre+"' AND ";
+        }
+        if(!apellido.equals("")){
+            query+="Apellido_C = '"+apellido+"' AND ";
+        }
+        if(!dir.equals("")){
+            query+="Direccion_C = '"+dir+"' AND ";
+        }
+        if(!cel.equals("")){
+            query+="Celular_C = '"+cel+"' AND ";
+        }
+        if(!telf.equals("")){
+            query+="Convencional_C = '"+telf+"' AND ";
+        }
+        if(!email.equals("")){
+            query+="Email_C = '"+email+"' AND ";
+        }
+        query2 = query.substring(0, query.length()-4);
+        try {
+            con=database.conectar();
+            ps = con.prepareCall(query2);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente cliente=new Cliente();
+                cliente.setCedula_C(rs.getString(1));
+                cliente.setNombre_C(rs.getString(2));
+                cliente.setApellido_C(rs.getString(3));
+                cliente.setDireccion_C (rs.getString(4));
+                cliente.setCelular_C(rs.getString(5));
+                cliente.setConvencional_C(rs.getString(6));
+                cliente.setEmail_C(rs.getString(7));
+                listaClientes.add(cliente);
+            }ps.close();
+            con.close();
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        int i=1;
+        for(Cliente c : listaClientes){
+            System.out.println("Cliente #"+i);
+            System.out.println("Cedula: " + c.getCedula_C());
+            System.out.println("Nombre: " + c.getNombre_C());
+            System.out.println("Apellido: " + c.getApellido_C());
+            System.out.println("Direccion: " + c.getDireccion_C());
+            System.out.println("Celular: " + c.getCelular_C());
+            i++;
+        }
     }
     
     

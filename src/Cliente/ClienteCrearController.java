@@ -2,9 +2,13 @@
 package Cliente;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.validation.RequiredFieldValidator;
+import database.DBconnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,44 +16,51 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 
 public class ClienteCrearController implements Initializable {
-
+    private static final DBconnection database=new DBconnection();
+    private static Connection con;
+    
     @FXML
     private JFXTextField tfNombres;
-
     @FXML
     private JFXTextField tfDireccion;
-
     @FXML
     private JFXButton btnMenuPrincipal;
-
     @FXML
     private JFXTextField tfApellidos;
-
     @FXML
     private JFXTextField tfConvencional;
-
     @FXML
     private JFXTextField tfEmail;
-
     @FXML
     private JFXButton btnIngresar;
-
     @FXML
     private JFXTextField tfCedula;
-
     @FXML
     private JFXTextField tfCelular;
-
     @FXML
     private JFXTextField tfFechaRegistro;
-
     @FXML
     void ingresarCliente(ActionEvent event) {
-
+        String cedula = tfCedula.getText();
+        String nombre = tfNombres.getText();
+        String apellido = tfApellidos.getText();
+        
+        if(cedula.equals("")||nombre.equals("")||apellido.equals("")){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information Dialog");
+            alert.setHeaderText(null);
+            alert.setContentText("Debes completar los campos obligatorios");
+            alert.showAndWait();
+        }
+        else{
+            Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+        }
     }
 
     @FXML
@@ -64,7 +75,33 @@ public class ClienteCrearController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        RequiredFieldValidator validatorCedula = new RequiredFieldValidator();
+        RequiredFieldValidator validatorNombre = new RequiredFieldValidator();
+        RequiredFieldValidator validatorApellido = new RequiredFieldValidator();
         
+        tfCedula.getValidators().add(validatorCedula);
+        validatorCedula.setMessage("Campo Obligatorio");
+        tfCedula.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(!newValue){
+                tfCedula.validate();
+            }
+        });
+        
+        tfNombres.getValidators().add(validatorNombre);
+        validatorNombre.setMessage("Campo Obligatorio");
+        tfNombres.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(!newValue){
+                tfNombres.validate();
+            }
+        });
+        
+        tfApellidos.getValidators().add(validatorApellido);
+        validatorApellido.setMessage("Campo Obligatorio");
+        tfApellidos.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(!newValue){
+                tfApellidos.validate();
+            }
+        });
     }    
     
 }

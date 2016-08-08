@@ -37,7 +37,13 @@ public class ClienteMWController implements Initializable {
     }
 
     @FXML
-    void buscarCliente(ActionEvent event) {
+    void buscarCliente(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/Cliente/clienteBuscar.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show();
 
     }
 
