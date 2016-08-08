@@ -15,6 +15,6 @@
       <JFXButton fx:id="btnFacturacion" buttonType="RAISED" layoutX="249.0" layoutY="200.0" onAction="#accederFacturacion" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #C4BEBE;" text="Facturacion" textAlignment="CENTER" AnchorPane.bottomAnchor="169.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="200.0" />
       <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="41.0" layoutY="328.0" onAction="#regresarMenuLogin" prefHeight="31.0" prefWidth="119.0" style="-fx-background-color: #C4BEBE;" text="Regresar Login" textAlignment="CENTER" AnchorPane.bottomAnchor="41.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="440.0" AnchorPane.topAnchor="328.0" />
       <JFXButton fx:id="btnProductos1" buttonType="RAISED" layoutX="249.0" layoutY="328.0" onAction="#accederProductos" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #C4BEBE;" text="Estadisticas" textAlignment="CENTER" />
-      <JFXButton fx:id="btnFacturacion1" buttonType="RAISED" layoutX="249.0" layoutY="265.0" onAction="#accederFacturacion" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #C4BEBE;" text="Gastos" textAlignment="CENTER" />
+      <JFXButton fx:id="btnFacturacion1" buttonType="RAISED" layoutX="249.0" layoutY="265.0" onAction="#accederItem" prefHeight="31.0" prefWidth="103.0" style="-fx-background-color: #C4BEBE;" text="Item" textAlignment="CENTER" />
    </children>
 </AnchorPane>

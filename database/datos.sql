@@ -64,15 +64,27 @@ INSERT INTO grupos (id,nombre,descripcion) VALUES
 ('PIZAR-BOR','PIZARRA BORRADOR','BORRADOR DE PIZARRA DE DIFERENTE MARCA'),
 ('SELLO','SELLOS','SELLO DE TAM Y MARCA DIFERENTE');
 
-# INSERT INTO CLIENTE VALUES (cedula,nombre,direccion) VALUES ('','','')
+# INSERT INTO cliente VALUES (cedula,nombre,direccion) VALUES ('','','')
 
-# INSERT INTO empleado VALUES (cedula, nombre, horario_ent,horario_sal,es_admin,sueldo) VALUES ('','','','', ,'')
+# 
+INSERT INTO empleado (cedula, nombre, horario_ent,horario_sal,es_admin,sueldo) VALUES 
+('0931823448','JOEL EDUARDO RODRIGUEZ LLAMUCA','15:30','18:00',0 ,'250');
 
 # INSERT INTO item (id,precio,nombre,descripcion) VALUES ('','','','')
 
-#INSERT INTO gastos (id,fecha,total,cedula) VALUES ('','','','')
+
 
 # INSERT INTO factura (id,tipo,valor,fecha,cedula_c,cedula_emp,anulada) VALUES ('','','','','','', )
+
+INSERT INTO item (id,precio,nombre,descripcion,fecha) VALUES
+('1','5.00','AGUA','PAGO DEL AGUA','2016-5-20');
+
+INSERT INTO gastos (id,fecha,total,cedula_empl) VALUES
+('1','2016-7-20 01:02:03','250','0931823448');
+
+INSERT INTO item_gastos (id,id_item,id_gastos) VALUES
+('1','1','1');
+
 
 
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="item.EditarItemController">
+    <stylesheets>
+        <URL value="@editaritem.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="219.0" layoutY="43.0" text="Editar Item">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnAtras" layoutX="24.0" layoutY="351.0" onAction="#atras" text="Atras" />
+   </children>
+</AnchorPane>

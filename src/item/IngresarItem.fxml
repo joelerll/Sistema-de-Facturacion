@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="item.IngresarItemController">
+    <stylesheets>
+        <URL value="@ingresaritem.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="219.0" layoutY="37.0" text="Ingresar Item">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnAtras" layoutX="31.0" layoutY="342.0" onAction="#atras" text="Atras" />
+      <JFXTextField fx:id="textFieldDescripcion" layoutX="40.0" layoutY="181.0" maxWidth="526.0" minWidth="490.0" prefHeight="38.0" prefWidth="526.0" promptText="Descripcion">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="textFieldNombre" layoutX="40.0" layoutY="111.0" maxWidth="372.0" minWidth="372.0" prefHeight="31.0" prefWidth="372.0" promptText="Nombre">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="textFieldPrecio" layoutX="320.0" layoutY="264.0" maxWidth="229.0" minWidth="229.0" prefHeight="38.0" prefWidth="229.0" promptText="Precio">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnGuardar" layoutX="458.0" layoutY="330.0" text="Guardar" />
+      <DatePicker fx:id="datePickerFecha" layoutX="51.0" layoutY="271.0" promptText="Fecha" />
+   </children>
+</AnchorPane>

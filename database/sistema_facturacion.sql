@@ -48,6 +48,7 @@ CREATE TABLE item(
   precio  DECIMAL(5,2)  NOT NULL,
   nombre CHAR(30) NOT NULL,
   descripcion CHAR(200),
+  fecha DATE NOT NULL,
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
@@ -112,10 +113,10 @@ CREATE TABLE telefonos_cliente(
 CREATE TABLE item_gastos(
   id CHAR(30) NOT NULL,
   id_item CHAR(30) NOT NULL,
-  id_gasto CHAR(30) NOT NULL,
+  id_gastos CHAR(30) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_item) REFERENCES item (id),
-  CONSTRAINT FOREIGN KEY (id_gasto) REFERENCES gastos (id)
+  CONSTRAINT FOREIGN KEY (id_gastos) REFERENCES gastos (id)
 )ENGINE = InnoDB;
 
 CREATE TABLE telefono_proveedor(
