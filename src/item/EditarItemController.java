@@ -5,8 +5,11 @@
  */
 package item;
 
+import database.DBconnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +30,8 @@ public class EditarItemController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    public DBconnection database=new DBconnection();
+    public Connection conexion;
     @FXML
     void atras(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/item/itemOpciones.fxml"));
@@ -36,6 +41,9 @@ public class EditarItemController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
     }
+    
+   
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

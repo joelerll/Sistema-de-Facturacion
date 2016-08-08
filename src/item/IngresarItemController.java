@@ -7,7 +7,6 @@ package item;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.prism.impl.Disposer.Record;
 import database.DBconnection;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -15,10 +14,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -61,6 +57,10 @@ public class IngresarItemController implements Initializable {
     
     @FXML
     private Label labelError;
+    
+    public DBconnection database=new DBconnection();
+    public Connection conexion;
+    
     @FXML
     void atras(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/item/itemOpciones.fxml"));
@@ -70,9 +70,7 @@ public class IngresarItemController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
     }
-    
-    public DBconnection database=new DBconnection();
-    public Connection conexion;
+
     public void setEmpleado(String Cedula_Empl, String Nombre_E, String Horario_Ent,String Horario_Sal,int Es_Admin, float Sueldo){
         try{
             conexion=database.conectar();
@@ -92,8 +90,7 @@ public class IngresarItemController implements Initializable {
     }
     
     @FXML
-    private void guardar(ActionEvent event) {
-        
+    private void guardar(ActionEvent event) {      
         String nombre = textFieldNombre.getCharacters().toString();
         String descripcion = textFieldDescripcion.getCharacters().toString();
         LocalDate date = datePickerFecha.getValue();

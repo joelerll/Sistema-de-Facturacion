@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -9,16 +11,63 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="item.EliminarItemController">
+<AnchorPane id="AnchorPane" prefHeight="537.0" prefWidth="664.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="item.EliminarItemController">
     <stylesheets>
         <URL value="@eliminaritem.css" />
     </stylesheets>
    <children>
-      <Label layoutX="203.0" layoutY="41.0" text="Eliminar Item">
+      <Label layoutX="235.0" layoutY="14.0" text="Eliminar Item">
          <font>
             <Font size="29.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btnAtras" layoutX="36.0" layoutY="347.0" onAction="#atras" text="Atras" />
+      <JFXButton fx:id="btnAtras" layoutX="28.0" layoutY="492.0" onAction="#atras" text="Atras" />
+      <Pane layoutX="24.0" layoutY="80.0" prefHeight="113.0" prefWidth="609.0">
+         <children>
+            <JFXTextField fx:id="textFieldBuscarNombre" layoutX="171.0" layoutY="47.0" maxWidth="401.0" minWidth="257.0" prefHeight="38.0" prefWidth="342.0" promptText="NOMBRE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton fx:id="btnBuscar" layoutX="533.0" layoutY="53.0" onAction="#buscarItemNombre" text="BUSCAR" />
+            <JFXComboBox layoutX="20.0" layoutY="53.0" prefHeight="25.0" prefWidth="146.0" />
+         </children>
+      </Pane>
+      <JFXTextField fx:id="TexfFielNombre" layoutX="37.0" layoutY="257.0" promptText="NOMBRE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="textFieldDescripcion" layoutX="37.0" layoutY="311.0" maxWidth="576.0" minWidth="510.0" prefHeight="39.0" prefWidth="576.0" promptText="DESCRIPCION">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="textFieldPrecio" layoutX="46.0" layoutY="389.0" promptText="PRECIO">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Text layoutX="272.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENCONTRADO">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Label layoutX="289.0" layoutY="68.0" text="BUSCAR">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btnEliminar" layoutX="457.0" layoutY="409.0" text="Eliminar" />
+      <JFXTextField fx:id="textFieldFecha" layoutX="355.0" layoutY="258.0" promptText="FECHA">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </JFXTextField>
+      <Label fx:id="labelMensaje" layoutX="178.0" layoutY="471.0" textFill="#e40c0c">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
