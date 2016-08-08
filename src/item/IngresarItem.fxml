@@ -35,7 +35,12 @@
             <Font size="17.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="btnGuardar" layoutX="458.0" layoutY="330.0" text="Guardar" />
+      <JFXButton fx:id="btnGuardar" layoutX="458.0" layoutY="330.0" onAction="#guardar" text="Guardar" />
       <DatePicker fx:id="datePickerFecha" layoutX="51.0" layoutY="271.0" promptText="Fecha" />
+      <Label fx:id="labelError" layoutX="114.0" layoutY="347.0" textFill="#dd0808">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

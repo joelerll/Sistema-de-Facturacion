@@ -44,7 +44,7 @@ CREATE TABLE empleado(
 )ENGINE = InnoDB;
 
 CREATE TABLE item(
-  id CHAR(30) NOT NULL UNIQUE,
+  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   precio  DECIMAL(5,2)  NOT NULL,
   nombre CHAR(30) NOT NULL,
   descripcion CHAR(200),
@@ -53,7 +53,7 @@ CREATE TABLE item(
 )ENGINE = InnoDB;
 
 CREATE TABLE gastos(
-  id CHAR(30) NOT NULL UNIQUE,
+  id INTEGER  AUTO_INCREMENT NOT NULL UNIQUE,
   fecha DATE NOT NULL,
   total DECIMAL(5,2) NOT NULL,
   cedula_empl CHAR(30) NOT NULL,
@@ -112,8 +112,8 @@ CREATE TABLE telefonos_cliente(
 
 CREATE TABLE item_gastos(
   id CHAR(30) NOT NULL,
-  id_item CHAR(30) NOT NULL,
-  id_gastos CHAR(30) NOT NULL,
+  id_item INTEGER NOT NULL,
+  id_gastos INTEGER NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_item) REFERENCES item (id),
   CONSTRAINT FOREIGN KEY (id_gastos) REFERENCES gastos (id)

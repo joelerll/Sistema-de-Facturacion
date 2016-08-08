@@ -77,13 +77,13 @@ INSERT INTO empleado (cedula, nombre, horario_ent,horario_sal,es_admin,sueldo) V
 # INSERT INTO factura (id,tipo,valor,fecha,cedula_c,cedula_emp,anulada) VALUES ('','','','','','', )
 
 INSERT INTO item (id,precio,nombre,descripcion,fecha) VALUES
-('1','5.00','AGUA','PAGO DEL AGUA','2016-5-20');
+(1,'5.00','AGUA','PAGO DEL AGUA','2016-5-20');
 
 INSERT INTO gastos (id,fecha,total,cedula_empl) VALUES
-('1','2016-7-20 01:02:03','250','0931823448');
+(1,'2016-7-20 01:02:03','250','0931823448');
 
 INSERT INTO item_gastos (id,id_item,id_gastos) VALUES
-('1','1','1');
+('1',1,1);
 
 
 
