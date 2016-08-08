@@ -5,9 +5,16 @@
  */
 package item;
 
+import database.DBconnection;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -19,12 +26,9 @@ public class Item {
     private String nombre;
     private String descripcion;
     private Date fecha;
-
     public Item() {
     }
-    
-    
-    
+
     public Item(BigDecimal precio, String nombre, String descripcion, Date date) {
         this.precio = precio;
         this.nombre = nombre;
@@ -39,6 +43,78 @@ public class Item {
         this.descripcion = descripcion;
         this.fecha = date;
     }
+    
+    public static List <Item> searchItem(String campo,String nombreBuscar){
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        ResultSet rs = null;
+        List <Item>  items=new ArrayList<> ();
+        try{
+            conexion = database.conectar();
+            String q ="SELECT * FROM item WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')";
+            System.out.println(q);
+            ps = conexion.prepareCall(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt(1));
+                item.setPrecio(rs.getBigDecimal(2));
+                item.setNombre(rs.getString(3));
+                item.setDescripcion(rs.getString(4));
+                item.setFecha(rs.getDate(5));
+                items.add(item);
+            }ps.close();
+            conexion.close();
+            rs.close();
+        }catch(SQLException sql){
+            System.out.println("Error en buscar item para eliminar");
+        }
+        return items;
+    }
+    
+    public static void eliminarItemSQL(Item item){
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        try{
+            conexion = database.conectar();
+            String q ="DELETE FROM item WHERE id = " +item.getId(); 
+            System.out.println(q);
+            ps = conexion.prepareStatement(q);
+            ps.execute();
+            conexion.close();
+            System.out.println("Borrado el item seleccionado");
+        }catch(SQLException sql){
+            System.out.println("Error al tratar de eliminar item");
+        }
+    }
+     /* public static List <Cliente> searchClientesByName(String name)
+    {
+        List <Cliente>  clientes=new ArrayList<> ();
+        
+        String patron=String.format("");
+        String query=String.format("\"SELECT Nombre_C FROM Cliente WHERE Nombre_C REGEXP "+"'"+"(?i)"+name+"'"+"\"");
+        String query2=String.format("\"SELECT * FROM Cliente\"");
+        try {
+            con=database.conectar();
+            ps = con.prepareCall(" SELECT * FROM Cliente WHERE Nombre_C REGEXP'"+name+"'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cliente cliente=new Cliente();
+                cliente.setCedula_C(rs.getString(1));
+                cliente.setNombre_C(rs.getString(2));
+                cliente.setDireccion_C (rs.getString(3));
+                clientes.add(cliente);
+            }ps.close();
+            con.close();
+            rs.close();
+            return clientes;
+        } catch (SQLException ex) {
+            System.out.println("----No cargo Cliente-----------");
+        }
+        return clientes;
+    }*/
     
     public int getId() {
         return id;
@@ -80,9 +156,9 @@ public class Item {
         this.fecha = fecha;
     }
 
+    //Modificado para el list box
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", precio=" + precio + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha + '}';
+        return " NOMBRE "+ nombre + " ID " +  id;
     }
-    
 }
