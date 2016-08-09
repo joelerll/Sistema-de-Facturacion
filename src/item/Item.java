@@ -89,6 +89,26 @@ public class Item {
             System.out.println("Error al tratar de eliminar item");
         }
     }
+    
+    public static void editarItemSQL(Item item){
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        String q = "UPDATE item SET precio = '"+ item.getPrecio() + "', nombre = '" + item.getNombre()
+                + "', descripcion = '" + item.getDescripcion() + "', fecha = '" + item.getFecha() +
+                "' WHERE id = "+item.getId();
+        PreparedStatement ps;
+        try{
+            conexion = database.conectar();
+            //String q ="DELETE FROM item WHERE id = " +item.getId(); 
+            System.out.println(q);
+            ps = conexion.prepareStatement(q);
+            ps.execute();
+            conexion.close();
+            System.out.println("Editado el item seleccionado");
+        }catch(SQLException sql){
+            System.out.println("Error al tratar de editar item");
+        }
+    }
      /* public static List <Cliente> searchClientesByName(String name)
     {
         List <Cliente>  clientes=new ArrayList<> ();

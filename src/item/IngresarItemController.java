@@ -120,9 +120,11 @@ public class IngresarItemController implements Initializable {
                 preparedStatement.setDate(4,java.sql.Date.valueOf(date));
                 preparedStatement.executeUpdate();
                 System.out.println("Item exitosamente ingresado");
+                labelError.setText("Se guardo su item exitosamente");
             }catch (SQLException ex)
             {
                 System.out.println("-------No se ha ingresado el Item--------");
+                System.out.println("Error database:" + ex.getErrorCode());
             }
         }
         
