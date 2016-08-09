@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendedor;
+package empleado;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,12 +14,11 @@ import javafx.fxml.Initializable;
  *
  * @author fernando
  */
-public class VendedorController implements Initializable {
+public class EmpleadoController implements Initializable {
 
     /**
      * Initializes the controller class.
      */
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
