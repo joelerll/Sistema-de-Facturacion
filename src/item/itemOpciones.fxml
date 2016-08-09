@@ -14,22 +14,27 @@
         <URL value="@itemopciones.css" />
     </stylesheets>
    <children>
-      <JFXButton fx:id="btnIngresar" layoutX="237.0" layoutY="71.0" onAction="#IngresarItem" text="Ingresar">
+      <JFXButton fx:id="btnIngresar" layoutX="211.0" layoutY="39.0" onAction="#IngresarItem" text="Ingresar Item">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnEditar" layoutX="252.0" layoutY="166.0" onAction="#editarItem" text="Editar">
+      <JFXButton fx:id="btnEliminar" layoutX="166.0" layoutY="119.0" onAction="#eliminarItem" text="Eliminar y Editar Item">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnEliminar" layoutX="240.0" layoutY="292.0" onAction="#eliminarItem" text="Eliminar">
+      <JFXButton fx:id="btnAtras" layoutX="20.0" layoutY="344.0" onAction="#atras" text="Atras">
          <font>
             <Font size="22.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="btnAtras" layoutX="34.0" layoutY="324.0" onAction="#atras" text="Atras">
+      <JFXButton layoutX="146.0" layoutY="208.0" text="Ingresar Gasto Empleado">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="101.0" layoutY="290.0" text="Eliminar y Editar Gasto Empleado">
          <font>
             <Font size="22.0" />
          </font>

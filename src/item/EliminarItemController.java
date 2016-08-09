@@ -9,14 +9,18 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import database.DBconnection;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,10 +76,18 @@ public class EliminarItemController implements Initializable {
     @FXML
     private ComboBox comboBoxNombre;
     
+    @FXML
+    private Label labelError;
+    
+    private static final Integer STARTTIME = 0;
+    private Integer timeSeconds = STARTTIME;
+    
     public DBconnection database=new DBconnection();
     public Connection conexion;
     PreparedStatement ps;
     ResultSet rs;
+    
+    
     
     @FXML
     //atras de menu
@@ -112,10 +124,11 @@ public class EliminarItemController implements Initializable {
             if (comboBoxNombre != null){
                 comboBoxNombre.getSelectionModel().clearSelection();
                 comboBoxNombre.getItems().clear();
-                System.out.println("dssa-----------------");
             }
         }catch(SQLException sql){
-            System.out.println("Error en buscar item para eliminar");
+            System.out.println("Error en buscar item");
+            labelError.setText("Ninguna coincidencia encontrada");
+            return null;
         }
         return this.item;
     }
@@ -127,10 +140,14 @@ public class EliminarItemController implements Initializable {
             labelMensaje.setText("No ingreso nombre");
         }else{
             Item item= buscarItem(campo,nombreBuscar);
+            if (item == null){
+                System.out.println("No encontro ninguna coincidencia");
+            }else{
             setCamposEnTextField(item);
-            this.items=Item.searchItem("nombre", nombreBuscar);
-            comboBoxNombre.setValue(this.items.get(0));
-            comboBoxNombre.getItems().addAll(this.items);
+                this.items=Item.searchItem("nombre", nombreBuscar);
+                comboBoxNombre.setValue(this.items.get(0));
+                comboBoxNombre.getItems().addAll(this.items);
+            }
         }
     }
 
@@ -145,9 +162,48 @@ public class EliminarItemController implements Initializable {
     
     @FXML
     public void eliminarItem(ActionEvent event){
+        List <String>  vacio = new ArrayList <>(); 
         Item.eliminarItemSQL(this.item);
+        TexfFielNombre.setText("");
+        textFieldPrecio.setText("");
+        textFieldDescripcion.setText("");
+        textFieldFecha.setText("");
+        comboBoxNombre.setValue("");
+        comboBoxNombre.getItems().addAll(vacio);
+        
+    }
+    
+    @FXML
+    public void editarItem(ActionEvent event){
+        Item item = new Item();
+        item.setId(this.item.getId());
+        try{
+            item.setPrecio(new BigDecimal(textFieldPrecio.getText())); 
+            item.setNombre(TexfFielNombre.getText());
+            item.setDescripcion(textFieldDescripcion.getText());
+            item.setFecha(java.sql.Date.valueOf(textFieldFecha.getText()));    
+            Item.editarItemSQL(item);
+            labelError.setText("Se edito exitosamente el item");
+        }catch(Exception e){
+            System.out.println("Ingrese correctamente la fecha");
+            labelError.setText("Ingrese bien los datos");
+        }
     }
 
+    
+   /* private boolean time()
+    {
+        
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            int count = 1;
+        @Override
+        public void run() {
+            System.out.print("I would be called every 3 seconds");
+            return t;
+        }
+        }, 0, 3000);
+    }*/
     ////Private 
     private void setCamposEnTextField(Item item)
     {
