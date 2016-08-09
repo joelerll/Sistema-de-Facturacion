@@ -58,12 +58,21 @@ public class ClienteCrearController implements Initializable {
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Confirmation Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Cliente ingresado!");
-            alert.showAndWait();
+            if(Cliente.buscarCliente(cedula, "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
+                Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Confirmation Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Cliente ingresado!");
+                alert.showAndWait();
+            }
+            else{
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText(null);
+                alert.setContentText("Ya existe un cliente con esa cedula!");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -79,6 +88,7 @@ public class ClienteCrearController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        btnIngresar.setDefaultButton(true);
         RequiredFieldValidator validatorCedula = new RequiredFieldValidator();
         RequiredFieldValidator validatorNombre = new RequiredFieldValidator();
         RequiredFieldValidator validatorApellido = new RequiredFieldValidator();

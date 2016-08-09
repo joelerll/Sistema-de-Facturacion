@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
 
 /**
  *
@@ -147,7 +148,7 @@ public class Cliente {
         
     }
     
-    public static void buscarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+    public static List <Cliente> buscarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
         String query = "SELECT * FROM cliente WHERE ";
         String query2 = "";
         List <Cliente>  listaClientes=new ArrayList<> ();
@@ -178,7 +179,7 @@ public class Cliente {
             con=database.conectar();
             ps = con.prepareCall(query2);
             rs = ps.executeQuery();
-            while (rs.next()) {
+            while (rs.next()){
                 Cliente cliente=new Cliente();
                 cliente.setCedula_C(rs.getString(1));
                 cliente.setNombre_C(rs.getString(2));
@@ -188,21 +189,29 @@ public class Cliente {
                 cliente.setConvencional_C(rs.getString(6));
                 cliente.setEmail_C(rs.getString(7));
                 listaClientes.add(cliente);
-            }ps.close();
+            }
+            ps.close();
             con.close();
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
         }
-        int i=1;
-        for(Cliente c : listaClientes){
-            System.out.println("Cliente #"+i);
-            System.out.println("Cedula: " + c.getCedula_C());
-            System.out.println("Nombre: " + c.getNombre_C());
-            System.out.println("Apellido: " + c.getApellido_C());
-            System.out.println("Direccion: " + c.getDireccion_C());
-            System.out.println("Celular: " + c.getCelular_C());
-            i++;
+        return listaClientes;
+    }
+    
+    public static boolean eliminarCliente(String cedula){
+        String query = "DELETE FROM cliente WHERE Cedula_C = '" + cedula + "'";
+        try {
+            con = database.conectar();
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.executeUpdate();
+            System.out.println("Se elimino el cliente!");
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("No se elimino el cliente!");
+            return false;
+        }finally{
+            return true;
         }
     }
     
