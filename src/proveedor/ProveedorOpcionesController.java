@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vendedor;
+package proveedor;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
@@ -21,9 +21,9 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author joelerll
+ * @author fernando
  */
-public class VendedorOpcionesController implements Initializable {
+public class ProveedorOpcionesController implements Initializable {
 
     @FXML
     private JFXButton actualizarButton;
@@ -39,7 +39,7 @@ public class VendedorOpcionesController implements Initializable {
     
     @FXML
         private void handleButtonActionIngresar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Vendedor.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Proveedor.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -49,7 +49,7 @@ public class VendedorOpcionesController implements Initializable {
         
     @FXML
     private void handleButtonActionEliminar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("VendedorEliminar.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ProveedorEliminar.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -59,18 +59,27 @@ public class VendedorOpcionesController implements Initializable {
         
     @FXML
     private void handleButtonActionActualizar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("VendedorActualizar.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ProveedorActualizar.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
-    } 
-
+    }
+    
+    @FXML
+    void atras(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show(); 
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+    }    
     
-    }
 }

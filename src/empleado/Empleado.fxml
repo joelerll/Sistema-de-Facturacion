@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="380.0" prefWidth="570.0" styleClass="vendedor-main-pane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vendedor.VendedorController">
+<AnchorPane id="AnchorPane" prefHeight="380.0" prefWidth="570.0" styleClass="vendedor-main-pane" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleado.EmpleadoController">
    <children>
       <Pane layoutX="35.0" layoutY="17.0" prefHeight="34.0" prefWidth="335.0" style="-fx-background-color: #ffffff;" styleClass="vendedor-botones-pane">
          <children>

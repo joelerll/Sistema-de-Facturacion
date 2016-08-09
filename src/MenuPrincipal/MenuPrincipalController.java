@@ -56,7 +56,7 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     void accederProveedores(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/vendedor/VendedorOpciones.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/proveedor/ProveedorOpciones.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -64,6 +64,16 @@ public class MenuPrincipalController implements Initializable {
         app_stage.show(); 
     }
 
+    @FXML
+    void accederEmpleados(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/empleado/EmpleadoOpciones.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show(); 
+    }
+    
     @FXML
     void accederFacturacion(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/factura/facturacionMenu.fxml"));
