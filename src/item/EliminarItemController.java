@@ -15,12 +15,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,10 +26,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -79,15 +81,10 @@ public class EliminarItemController implements Initializable {
     @FXML
     private Label labelError;
     
-    private static final Integer STARTTIME = 0;
-    private Integer timeSeconds = STARTTIME;
-    
     public DBconnection database=new DBconnection();
     public Connection conexion;
     PreparedStatement ps;
     ResultSet rs;
-    
-    
     
     @FXML
     //atras de menu
@@ -137,7 +134,7 @@ public class EliminarItemController implements Initializable {
         String campo = "nombre";
         String nombreBuscar= textFieldBuscarNombre.getCharacters().toString().toUpperCase();
         if ("".equals(nombreBuscar)){
-            labelMensaje.setText("No ingreso nombre");
+            errorWindow("Error","No ingreso nombre");
         }else{
             Item item= buscarItem(campo,nombreBuscar);
             if (item == null){
@@ -151,7 +148,6 @@ public class EliminarItemController implements Initializable {
         }
     }
 
-    //FXMLsss
     @FXML
     public void getComboBoxOpcion(ActionEvent event){
         this.item = null;
@@ -162,49 +158,47 @@ public class EliminarItemController implements Initializable {
     
     @FXML
     public void eliminarItem(ActionEvent event){
-        List <String>  vacio = new ArrayList <>(); 
-        Item.eliminarItemSQL(this.item);
-        TexfFielNombre.setText("");
-        textFieldPrecio.setText("");
-        textFieldDescripcion.setText("");
-        textFieldFecha.setText("");
-        comboBoxNombre.setValue("");
-        comboBoxNombre.getItems().addAll(vacio);
-        
+        if(this.item.getId() == 0)
+        {
+            alertWindow("Ingrese campos","No ha ingresado ningun campo");
+        }else
+        {
+             Alert alert = confirmationWindow("Eliminar","Esta de Acuerdo con eliminar item");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                List <String>  vacio = new ArrayList <>(); 
+                Item.eliminarItemSQL(this.item);
+                TexfFielNombre.setText("");
+                textFieldPrecio.setText("");
+                textFieldDescripcion.setText("");
+                textFieldFecha.setText("");
+                comboBoxNombre.setValue("");
+                comboBoxNombre.getItems().addAll(vacio);
+            }
+        }
     }
     
     @FXML
     public void editarItem(ActionEvent event){
         Item item = new Item();
         item.setId(this.item.getId());
-        try{
+        Alert alert = confirmationWindow("Editar","Esta de Acuerdo con editar item");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try{
             item.setPrecio(new BigDecimal(textFieldPrecio.getText())); 
             item.setNombre(TexfFielNombre.getText());
             item.setDescripcion(textFieldDescripcion.getText());
             item.setFecha(java.sql.Date.valueOf(textFieldFecha.getText()));    
             Item.editarItemSQL(item);
-            labelError.setText("Se edito exitosamente el item");
-        }catch(Exception e){
-            System.out.println("Ingrese correctamente la fecha");
-            labelError.setText("Ingrese bien los datos");
+            alertWindow("Editado","Se ha editado el item correctamente");
+            }catch(Exception e){
+                System.out.println("Ingrese correctamente la fecha");
+                errorWindow("Error","Ingrese correctamente los campos");
+            }
         }
     }
 
-    
-   /* private boolean time()
-    {
-        
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            int count = 1;
-        @Override
-        public void run() {
-            System.out.print("I would be called every 3 seconds");
-            return t;
-        }
-        }, 0, 3000);
-    }*/
-    ////Private 
     private void setCamposEnTextField(Item item)
     {
         TexfFielNombre.setText(item.getNombre());
@@ -216,6 +210,36 @@ public class EliminarItemController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+    
+    private Alert confirmationWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        return alert;
+    }
+    
+    public void alertWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.showAndWait();
+    }
+    
+    public void errorWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.showAndWait();
     }
     
 }

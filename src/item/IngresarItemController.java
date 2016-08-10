@@ -23,9 +23,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -104,10 +106,10 @@ public class IngresarItemController implements Initializable {
                 + "Fecha: " + date );
         }catch (Exception excepcion){
             System.out.println("No ingreso todos los datos");
-            labelError.setText("No ingreso precio");
+            alertWindow("Item","No ingreso precio");
         }
         if ("".equals(nombre) || "".equals(descripcion) || date == null){
-            labelError.setText("Ingrese todos los datos");
+            errorWindow("Item","Ingrese todos los datos");
         }else
         {
             try{
@@ -120,7 +122,7 @@ public class IngresarItemController implements Initializable {
                 preparedStatement.setDate(4,java.sql.Date.valueOf(date));
                 preparedStatement.executeUpdate();
                 System.out.println("Item exitosamente ingresado");
-                labelError.setText("Se guardo su item exitosamente");
+                alertWindow("Item","Item exitosamente ingresado");           
             }catch (SQLException ex)
             {
                 System.out.println("-------No se ha ingresado el Item--------");
@@ -128,9 +130,38 @@ public class IngresarItemController implements Initializable {
             }
         }
         
-                
-        
+     
     }
+    private Alert confirmationWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        return alert;
+    }
+    
+    public void alertWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.showAndWait();
+    }
+    
+    public void errorWindow(String title, String mensaje)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.initStyle(StageStyle.UTILITY);
+        alert.showAndWait();
+    }            
+       
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
