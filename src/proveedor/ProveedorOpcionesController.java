@@ -26,20 +26,17 @@ import javafx.stage.Stage;
 public class ProveedorOpcionesController implements Initializable {
 
     @FXML
-    private JFXButton actualizarButton;
-
-    @FXML
     private JFXButton eliminarButton;
 
     @FXML
     private JFXButton ingresarButton;
 
     @FXML
-    private JFXButton atrasButton;
+    private JFXButton menuButton;
     
     @FXML
         private void handleButtonActionIngresar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Proveedor.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("IngresarProveedor.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -48,27 +45,17 @@ public class ProveedorOpcionesController implements Initializable {
     }
         
     @FXML
-    private void handleButtonActionEliminar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ProveedorEliminar.fxml"));
+    private void handleButtonActionEditar(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("BuscarProveedor.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
     } 
-        
-    @FXML
-    private void handleButtonActionActualizar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ProveedorActualizar.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.hide(); //optional
-        app_stage.setScene(home_page_scene);
-        app_stage.show(); 
-    }
     
     @FXML
-    void atras(ActionEvent event) throws IOException {
+    void menuPrincipal(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -35,11 +35,11 @@ public class EmpleadoOpcionesController implements Initializable {
     private JFXButton ingresarButton;
 
     @FXML
-    private JFXButton atrasButton;
+    private JFXButton menuButton;
     
     @FXML
         private void handleButtonActionIngresar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Empleado.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("IngresarEmpleado.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -68,7 +68,7 @@ public class EmpleadoOpcionesController implements Initializable {
     }
     
     @FXML
-    void atras(ActionEvent event) throws IOException {
+    void menuPrincipal(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

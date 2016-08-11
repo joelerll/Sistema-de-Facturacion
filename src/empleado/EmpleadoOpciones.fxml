@@ -7,9 +7,6 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="328.0" prefWidth="456.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="empleado.EmpleadoOpcionesController">
-   <stylesheets>
-      <URL value="@../vendedor/vendedoropciones.css" />
-   </stylesheets>
    <children>
       <JFXButton fx:id="ingresarButton" layoutX="138.0" layoutY="60.0" onAction="#handleButtonActionIngresar" prefHeight="50.0" prefWidth="181.0" text="Ingresar">
          <font>
@@ -26,7 +23,7 @@
             <Font size="26.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="atrasButton" layoutX="14.0" layoutY="286.0" onAction="#atras" text="Atras" />
+      <JFXButton fx:id="menuButton" layoutX="14.0" layoutY="286.0" onAction="#menuPrincipal" text="Atras" />
       <Label layoutX="170.0" layoutY="15.0" text="Empleado">
          <font>
             <Font size="23.0" />
