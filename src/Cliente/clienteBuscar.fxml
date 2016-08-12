@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.ClienteBuscarController">
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.ClienteBuscarController">
    <items>
       <GridPane>
         <columnConstraints>
@@ -42,7 +42,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <GridPane>
+      <GridPane fx:id="GridVistaPrevia">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -52,55 +52,61 @@
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label text="VISTA PREVIA" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
-            <JFXTextField fx:id="tfVPNombre" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="tfVPCedula" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
-            <JFXTextField fx:id="tfVPDireccion" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-            <DatePicker fx:id="tfVPFechaRegistro" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+            <JFXTextField fx:id="tfVPNombre" disable="true" labelFloat="true" promptText="Nombre" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="tfVPCedula" disable="true" labelFloat="true" promptText="Cedula" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+            <JFXTextField fx:id="tfVPDireccion" disable="true" labelFloat="true" promptText="Direccion" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <DatePicker fx:id="tfVPFechaRegistro" disable="true" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets />
                </GridPane.margin>
             </DatePicker>
-            <JFXButton fx:id="btnEditar" buttonType="RAISED" onAction="#editar" style="-fx-background-color: C4BEBE;" text="Editar" textAlignment="CENTER" GridPane.rowIndex="3">
+            <JFXButton fx:id="btnEditar" buttonType="RAISED" onAction="#editar" style="-fx-background-color: C4BEBE;" text="Editar" textAlignment="CENTER" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="30.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton fx:id="btnEliminar" buttonType="RAISED" onAction="#eliminar" style="-fx-background-color: C4BEBE;" text="Eliminar" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="3">
+            <JFXButton fx:id="btnEliminar" buttonType="RAISED" onAction="#eliminar" style="-fx-background-color: C4BEBE;" text="Eliminar" textAlignment="CENTER" GridPane.columnIndex="4" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="20.0" />
                </GridPane.margin>
             </JFXButton>
-            <Label fx:id="lblCActual" prefWidth="35.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="lblCActual" prefWidth="35.0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </Label>
-            <Label disable="true" text="de" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="lblDe" disable="true" text="de" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin>
             </Label>
-            <Label fx:id="lblCTotal" disable="true" prefWidth="35.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+            <Label fx:id="lblCTotal" disable="true" prefWidth="35.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="80.0" />
                </GridPane.margin>
             </Label>
-            <JFXButton fx:id="btnPrev" buttonType="RAISED" onAction="#previous" style="-fx-background-color: C4BEBE;" text="Prev" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <JFXButton fx:id="btnPrev" buttonType="RAISED" onAction="#previous" style="-fx-background-color: C4BEBE;" text="Prev" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="60.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton fx:id="btnNext" buttonType="RAISED" onAction="#next" style="-fx-background-color: C4BEBE;" text="Next" GridPane.columnIndex="3" GridPane.rowIndex="3">
+            <JFXButton fx:id="btnNext" buttonType="RAISED" onAction="#next" style="-fx-background-color: C4BEBE;" text="Next" GridPane.columnIndex="3" GridPane.rowIndex="5">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
             </JFXButton>
+            <JFXTextField fx:id="tfVPApellido" disable="true" labelFloat="true" promptText="Apellido" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="tfVPEmail" disable="true" labelFloat="true" promptText="Email" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="3" />
+            <JFXTextField fx:id="tfVPCelular" disable="true" labelFloat="true" promptText="Celular" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+            <JFXTextField fx:id="tfVPConvencional" disable="true" labelFloat="true" promptText="Convencional" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </items>

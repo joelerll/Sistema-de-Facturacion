@@ -18,10 +18,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 
 public class ClienteBuscarController implements Initializable {
+    //ATRIBUTOS BUSCAR
     @FXML
     private JFXTextField tfNombres;
     @FXML
@@ -40,7 +42,7 @@ public class ClienteBuscarController implements Initializable {
     private JFXButton BtnRegresar;
     @FXML
     private JFXButton btnBuscar;
-    
+    //ATRIBUTOS VISTA PREVIA
     @FXML
     private JFXTextField tfVPNombre;
     @FXML
@@ -49,12 +51,21 @@ public class ClienteBuscarController implements Initializable {
     private JFXTextField tfVPDireccion;
     @FXML
     private DatePicker tfVPFechaRegistro;
-    
+    @FXML
+    private JFXTextField tfVPEmail;
+    @FXML
+    private JFXTextField tfVPCelular;
+    @FXML
+    private JFXTextField tfVPApellido;
+    @FXML
+    private JFXTextField tfVPConvencional;
     
     @FXML
     private Label lblCTotal;    //muestra el total de Clientes encontrados.
     @FXML
     private Label lblCActual;   //muestra el Cliente actual que se muestra en la Vista Previa
+    @FXML
+    private Label lblDe;
     
      @FXML
     private JFXButton btnPrev;
@@ -68,7 +79,14 @@ public class ClienteBuscarController implements Initializable {
     private int index;
     private List <Cliente> listaClientes;
     
-
+    String cedulaOriginal;
+    
+    @FXML
+    private JFXButton btnConfirmar;
+    
+    @FXML
+    private GridPane GridVistaPrevia;
+    //METODOS
     @FXML
     void regresarMenuPrincipal(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
@@ -85,67 +103,98 @@ public class ClienteBuscarController implements Initializable {
         index = 0;
         if(!listaClientes.isEmpty()){
             Cliente c = listaClientes.get(0);
-            tfVPNombre.setText(c.getNombre_C() + " " + c.getApellido_C());
+            tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
             tfVPDireccion.setText(c.getDireccion_C());
-            
+            tfVPApellido.setText(c.getApellido_C());
+            tfVPCelular.setText(c.getCelular_C());
+            tfVPConvencional.setText(c.getConvencional_C());
+            tfVPEmail.setText(c.getEmail_C());
             int i = index + 1;
             lblCActual.setText(""+i);
             lblCTotal.setText(""+listaClientes.size()); 
+            enableTextFields();
         }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Alert Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("No se encontraron coincidencias");
-            alert.showAndWait();
+            AlertBox.alertBox.crearAlertBox("Information Dialog", null, "No se encontraron coincidencias");
         }
-        
-        
-        
-        /*
-        int i=1;
-        for(Cliente c : listaClientes){
-            System.out.println("Cliente #"+i);
-            System.out.println("Cedula: " + c.getCedula_C());
-            System.out.println("Nombre: " + c.getNombre_C());
-            System.out.println("Apellido: " + c.getApellido_C());
-            System.out.println("Direccion: " + c.getDireccion_C());
-            System.out.println("Celular: " + c.getCelular_C());
-            System.out.println("Email: " + c.getEmail_C());
-            i++;
-        }*/
-        
+        //FALTA REVISAR ESTA SIGUIENTE LINEA!!!!!!!!!!!!!!!!!
+        cedulaOriginal = tfVPCedula.getText();
     }
     
     @FXML
     void editar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/Cliente/clienteEditar.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.hide(); //optional
-        app_stage.setScene(home_page_scene);
-        app_stage.show(); 
+        if(revisarEdicion()&&Cliente.editarCliente(cedulaOriginal, tfVPCedula.getText(), tfVPNombre.getText(), tfVPApellido.getText(), tfVPDireccion.getText(), tfVPCelular.getText(), tfVPConvencional.getText(), tfVPEmail.getText())){
+            
+            AlertBox.alertBox.crearAlertBox("Confirmation Dialog", null, "Cliente actualizado");
+        }
+        
+        
+    }
+    
+    public void enableTextFields(){
+        tfVPCedula.setDisable(false);
+        tfVPNombre.setDisable(false);
+        tfVPApellido.setDisable(false);
+        tfVPDireccion.setDisable(false);
+        tfVPEmail.setDisable(false);
+        tfVPCelular.setDisable(false);
+        tfVPConvencional.setDisable(false);
+        tfVPFechaRegistro.setDisable(false);
+    }
+    
+    public boolean revisarEdicion(){
+        System.out.println(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "").size());
+         if(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "").size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
+               //Tiene que ser >1 porque al buscar en la BD, si va a encontrar una coincidencia.
+             AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Ya existe otro cliente con esa cedula!");
+             return false;
+         }
+         if(tfVPCedula.getText().length()!=10){ //La cedula debe tener 10 digitos
+             AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Cedula incorrecta. Debe tener 10 digitos");
+             return false;
+         }
+        return true;
     }
 
     @FXML
     void eliminar(ActionEvent event) {
         if(Cliente.eliminarCliente(tfVPCedula.getText())){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Information Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Cliente eliminado");
-            alert.showAndWait();
+            AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente eliminado");
+        }else{
+            AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "No se pudo eliminar");
         }
-        //Encero todos los valores
-        tfVPCedula.setText(null);
-        tfVPNombre.setText(null);
-        tfVPDireccion.setText(null);
-        lblCActual.setText(null);
-        lblCTotal.setText(null);
+        
+        if(listaClientes.size()==1){        //SI SOLO HABIA UN CLIENTE ENCONTRADO, AL ELIMINARLO YA NO SE DEBE MOSTRAR NADA EN LA VISTA PREVIA
+            //Encero todos los valores
+            tfVPCedula.setText(null);
+            tfVPNombre.setText(null);
+            tfVPDireccion.setText(null);
+            lblCActual.setText(null);
+            lblCTotal.setText(null);
+        }else{                              //SI HABIAN MAS CLIENTES QUE COINCIDIAN CON EL CRITERIO DE BUSQUEDA, AL ELIMINAR EL CLIENTE SELECCIONADO SE DEBEN MOSTRAR LOS QUE QUEDAN
+            listaClientes.remove(index);        //SE ELIMINA EL CLIENTE ELIMINADO DE LA LISTA
+            //SE VUELVE A PRESENTAR TODO COMO ANTES SIN EL CLIENTE ELIMINADO
+            index = 0;
+            Cliente c = listaClientes.get(0);
+            tfVPNombre.setText(c.getNombre_C());
+            tfVPCedula.setText(c.getCedula_C());
+            tfVPDireccion.setText(c.getDireccion_C());
+            tfVPApellido.setText(c.getApellido_C());
+            tfVPCelular.setText(c.getCelular_C());
+            tfVPConvencional.setText(c.getConvencional_C());
+            tfVPEmail.setText(c.getEmail_C());
+            int i = index + 1;
+            lblCActual.setText(""+i);
+            lblCTotal.setText(""+listaClientes.size()); 
+            
+            cedulaOriginal = c.getCedula_C();
+        }
+        
     }
     
      @FXML
     void previous(ActionEvent event) {
+        //Para hacer prvious debe haber un cliente anterior, por lo que el label lblCActual debe indicar un valor >1
         if(Integer.parseInt(lblCActual.getText())>1){
             index--;
             Cliente c = listaClientes.get(index);
@@ -154,7 +203,7 @@ public class ClienteBuscarController implements Initializable {
             tfVPDireccion.setText(c.getDireccion_C());
             int i = index+1;
             lblCActual.setText(""+i);  
-            
+            cedulaOriginal = c.getCedula_C();
         }
     }
 
@@ -163,12 +212,17 @@ public class ClienteBuscarController implements Initializable {
         if(!lblCActual.getText().equals(lblCTotal.getText())){
             index++;
             Cliente c = listaClientes.get(index);
-            tfVPNombre.setText(c.getNombre_C() + " " + c.getApellido_C());
+            tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
             tfVPDireccion.setText(c.getDireccion_C());
+            tfVPApellido.setText(c.getApellido_C());
+            tfVPCelular.setText(c.getCelular_C());
+            tfVPConvencional.setText(c.getConvencional_C());
+            tfVPEmail.setText(c.getEmail_C());
             
             int i = index+1;
             lblCActual.setText(""+i);
+            cedulaOriginal = c.getCedula_C();
         }
     }
 
@@ -176,6 +230,6 @@ public class ClienteBuscarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-            }    
+    }    
     
 }
