@@ -5,6 +5,7 @@
  */
 package factura;
 
+import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,17 +24,21 @@ import javafx.stage.Stage;
  * @author joelerll
  */
 public class FacturacionMenuController implements Initializable {
+    
+    @FXML
+    private JFXButton btnAtras;
 
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    private JFXButton facturacion;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
+    
     @FXML
     void facturacion(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("Facturacion.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ingresar.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional

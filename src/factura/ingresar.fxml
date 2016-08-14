@@ -12,7 +12,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.FacturacionController">
+<AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.IngresarController">
     <children>
       <FlowPane prefHeight="33.0" prefWidth="456.0" />
       <Text layoutX="1255.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
@@ -79,36 +79,33 @@
                         <Font size="14.0" />
                      </font>
                   </JFXCheckBox>
-                  <JFXTextField fx:id="clienteNombre" layoutX="197.0" layoutY="5.0" maxWidth="511.0" minWidth="274.0" prefHeight="38.0" prefWidth="274.0" promptText="CLIENTE NOMBRE" styleClass="texto-informacion-factura" />
-                  <JFXTextField fx:id="clienteCedula" layoutX="747.0" layoutY="5.0" maxWidth="355.0" minWidth="316.0" prefHeight="38.0" prefWidth="355.0" promptText="CEDULA O RUC" styleClass="texto-informacion-factura" />
-                  <JFXButton fx:id="bntBuscarCliente" layoutX="1119.0" layoutY="-1.0" onAction="#handleButtonBuscarCliente" prefHeight="40.0" prefWidth="168.0" styleClass="custom-button" text="Buscar Cliente" />
-                  <JFXTextField fx:id="clienteApellido" layoutX="471.0" layoutY="5.0" maxWidth="511.0" minWidth="274.0" prefHeight="38.0" prefWidth="274.0" promptText="CLIENTE APELLIDO" styleClass="texto-informacion-factura" />
+                  <JFXTextField fx:id="clienteApellido" layoutX="521.0" layoutY="4.0" maxWidth="511.0" minWidth="274.0" prefHeight="38.0" prefWidth="310.0" promptText="CLIENTE APELLIDO" styleClass="texto-informacion-factura" />
+                  <JFXButton fx:id="bntBuscarCliente" layoutX="1117.0" layoutY="-2.0" onAction="#handleButtonBuscarCliente" prefHeight="40.0" prefWidth="168.0" styleClass="custom-button" text="Buscar Cliente" />
+                  <JFXTextField fx:id="clienteCedula" layoutX="843.0" layoutY="4.0" maxWidth="355.0" minWidth="257.0" prefHeight="38.0" prefWidth="257.0" promptText="CEDULA O RUC" styleClass="texto-informacion-factura" />
+                  <JFXTextField fx:id="clienteNombre" layoutX="195.0" layoutY="4.0" maxWidth="511.0" minWidth="274.0" prefHeight="38.0" prefWidth="320.0" promptText="CLIENTE NOMBRE" styleClass="texto-informacion-factura" />
                </children>
             </Pane>
             <Pane layoutY="66.0" prefHeight="40.0" prefWidth="1299.0">
                <children>
-                  <Text layoutX="144.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Factura:" />
-                  <Text fill="#282525" layoutX="479.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="69.0" />
-                  <Text layoutX="378.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Hora:" />
-                  <Text layoutX="503.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Fecha:" />
-                  <Text layoutX="739.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Cliente:" />
-                  <Text layoutX="872.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" wrappingWidth="132.3275146484375" />
-                  <Text layoutX="1028.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Vendedor:" />
-                  <JFXCheckBox layoutX="22.0" layoutY="11.0" text="Proforma">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </JFXCheckBox>
-                  <JFXComboBox layoutX="1135.0" layoutY="8.0" prefHeight="25.0" prefWidth="151.0" />
-                  <Label fx:id="codigoFactura" layoutX="293.0" layoutY="12.0" prefHeight="20.0" prefWidth="73.0">
-                     <font>
-                        <Font size="16.0" />
-                     </font></Label>
-                  <Label fx:id="fecha" layoutX="568.0" layoutY="12.0" prefHeight="19.0" prefWidth="139.0">
+                  <Text layoutX="26.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Codigo Factura:" />
+                  <Text layoutX="330.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Hora:" />
+                  <Text layoutX="630.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Fecha:" />
+                  <Text layoutX="872.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Vendedor:" />
+                  <JFXComboBox fx:id="comboBoxEmpleados" layoutX="971.0" layoutY="10.0" prefHeight="25.0" prefWidth="320.0" />
+                  <Label fx:id="codigoFactura" layoutX="170.0" layoutY="10.0" prefHeight="20.0" prefWidth="160.0">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Label>
+                  <Label fx:id="hora" layoutX="384.0" layoutY="10.0" prefHeight="20.0" prefWidth="207.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="fecha" layoutX="688.0" layoutY="7.0" prefHeight="25.0" prefWidth="160.0">
+                     <font>
+                        <Font size="16.0" />
+                     </font></Label>
                </children>
             </Pane>
          </children>

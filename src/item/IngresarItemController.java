@@ -252,6 +252,7 @@ public class IngresarItemController implements Initializable {
         }else{
             textFieldCedula.setDisable(true);
             textFieldNombre.setText("");
+            textFieldNombre.setDisable(false);
         }
         
     }

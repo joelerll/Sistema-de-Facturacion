@@ -53,7 +53,7 @@ CREATE TABLE empleado(
 )ENGINE = InnoDB;
 
 CREATE TABLE item(
-  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
+  id INTEGER NOT NULL AUTO_INCREMENT,
   precio  DECIMAL(5,2)  NOT NULL,
   nombre CHAR(30) NOT NULL,
   descripcion CHAR(200),
@@ -62,13 +62,13 @@ CREATE TABLE item(
 )ENGINE = InnoDB;
 
 CREATE TABLE factura(
-  id CHAR (30) NOT NULL UNIQUE,
-  tipo CHAR (30) NOT NULL,
-  valor  DECIMAL(5,2) NOT NULL,
-  fecha DATE NOT NULL,
+  id  INT(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  valor  DECIMAL(8,2) NOT NULL,
+  fecha TIMESTAMP NOT NULL,
   cedula_c CHAR(30) NOT NULL,
-  cedula_empl CHAR(30) NOT NULL,
-  anulada INTEGER NOT NULL,
+  cedula_empl VARCHAR(30) NOT NULL,
+  anulada BOOL NOT NULL DEFAULT 0,
+  actualizada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES Cliente(Cedula_C),
   CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
@@ -98,7 +98,7 @@ CREATE TABLE producto_grupos(
 CREATE TABLE producto_factura(
   id CHAR (30) NOT NULL,
   id_producto CHAR(40) NOT NULL,
-  id_orden CHAR(30) NOT NULL,
+  id_orden INT(8) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
   CONSTRAINT FOREIGN KEY (id_orden) REFERENCES factura(id)
@@ -113,7 +113,7 @@ CREATE TABLE telefonos_cliente(
 CREATE TABLE item_empleado(
   id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   id_item INTEGER NOT NULL,
-  cedula_empl CHAR(30) NOT NULL,
+  cedula_empl VARCHAR(30) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_item) REFERENCES item (id),
   CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado (cedula)
