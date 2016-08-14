@@ -16,15 +16,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+
 import javafx.stage.Stage;
 
 
 public class ClienteCrearController implements Initializable {
+    //ATRIBUTOS PARA LA BASE DE DATOS
     private static final DBconnection database=new DBconnection();
     private static Connection con;
-    
+    //ATRIBUTOS DE LA VENTANA
     @FXML
     private JFXTextField tfNombres;
     @FXML
@@ -45,33 +45,31 @@ public class ClienteCrearController implements Initializable {
     private JFXTextField tfCelular;
     @FXML
     private JFXTextField tfFechaRegistro;
+    //METODOS
     @FXML
     void ingresarCliente(ActionEvent event) {
         String cedula = tfCedula.getText();
         String nombre = tfNombres.getText();
         String apellido = tfApellidos.getText();
         
-        if(cedula.equals("")||nombre.equals("")||apellido.equals("")){
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Alert Dialog");
-            alert.setHeaderText(null);
-            alert.setContentText("Debes completar los campos obligatorios");
-            alert.showAndWait();
-        }else{
-            if(Cliente.buscarCliente(cedula, "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
-                Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Confirmation Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Cliente ingresado!");
-                alert.showAndWait();
+        if(cedula.equals("")||nombre.equals("")||apellido.equals("")||cedula.equals(null)||nombre.equals(null)||apellido.equals(null)){              //VALIDA QUE LOS CAMPOS OBLIGATORIOS ESTEN LLENOS
+            AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Debes ingresar los campos obligatorios");
+        }
+        else{
+            System.out.println("Su email es: " + tfEmail.getText());
+            if(!Cliente.revisarEmail(tfEmail.getText())){                           //VALIDA QUE EL EMAIL SEA VALIDO
+                
+                AlertBox.alertBox.crearAlertBox("Warning Dialog", null,"No es un email valido");
             }
             else{
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText(null);
-                alert.setContentText("Ya existe un cliente con esa cedula!");
-                alert.showAndWait();
+                if(Cliente.buscarCliente(cedula, "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
+                    Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+                    AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente creado");
+                    encerarTF();
+                }
+                else{
+                    AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Ya existe un cliente con esa cedula");
+                }
             }
         }
     }
@@ -84,6 +82,18 @@ public class ClienteCrearController implements Initializable {
         app_stage.hide(); //optional
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
+    }
+    
+    
+    public void encerarTF(){
+        tfCedula.setText("");
+        tfNombres.setText("");
+        tfApellidos.setText("");
+        tfDireccion.setText("");
+        tfCelular.setText("");
+        tfConvencional.setText("");
+        tfEmail.setText("");
+        tfFechaRegistro.setText("");
     }
     
     @Override

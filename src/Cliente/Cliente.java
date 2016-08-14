@@ -126,6 +126,28 @@ public class Cliente {
         this.Email_C = Email_C;
     }
     
+    public static boolean revisarEmail(String email){
+        if(email.equals("")||email.equals(null)){
+            System.out.println("Email vacio");
+            return true;
+        }
+        ArrayList<String> listaEmail = new ArrayList<String>();
+        listaEmail.add("hotmail.com");
+        listaEmail.add("gmail.com");
+        listaEmail.add("espol.edu.ec");
+        listaEmail.add("live.com");
+        if(email.contains("@")){
+           String [] parts = email.split("@");
+            for(String s:listaEmail){
+                if(s.equals(parts[1])){
+                    return true;
+                }
+            } 
+        }
+        return false;
+    }
+    
+    
     public static void ingresarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
         try{
             con=database.conectar();
@@ -139,13 +161,11 @@ public class Cliente {
             preparedStatement.setString(6, telf);
             preparedStatement.setString(7, email);
             preparedStatement.executeUpdate();
+            System.out.println("Se ingreso el cliente");
         }catch (SQLException ex)
         {
             System.out.println("No se ingreso el cliente");
-        }finally{
-            System.out.println("Se ingreso el cliente");
         }
-        
     }
     
     public static List <Cliente> buscarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
@@ -209,6 +229,28 @@ public class Cliente {
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No se elimino el cliente!");
+            return false;
+        }finally{
+            return true;
+        }
+    }
+    public static boolean editarCliente(String cedulaOriginal, String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+        String query = "UPDATE cliente SET ";
+        query+="Cedula_C = '"+cedula+"', ";
+        query+="Nombre_C = '"+nombre+"', ";
+        query+="Apellido_C = '"+apellido+"', ";
+        query+="Direccion_C = '"+dir+"', ";
+        query+="Celular_C = '"+cel+"', ";
+        query+="Convencional_C = '"+telf+"', ";
+        query+="Email_C = '"+email+"' ";
+        query+= "WHERE Cedula_C = '"+cedulaOriginal+"'";
+        
+        try {
+            con = database.conectar();
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }finally{
             return true;

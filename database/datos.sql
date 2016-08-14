@@ -1,7 +1,7 @@
 
-INSERT INTO proveedor  (id,nombre,direccion) VALUES ("1","EL GORDO","Sucre 921, Guayaquil, Guayas") , ("2","OFIMARKET","Esmeraldas 505 Y Luis Urdaneta ") ,
- ("3","PACINGRAF CIA. LTDA.","Garcia Moreno 2313 Y Capitan Najera"),  ("4","SUPLIES DUPOT","Boyaca 309 ") ,  
-("5","UTYCSA","Sucre 511 ") ,  ("6","COMSUCRE","P.Montufar 109 Y Ballen") ,  ("7","IMPORSUCRE","P Montufar 109 ") ;
+INSERT INTO proveedor  (id,nombre,direccion) VALUES (1,"EL GORDO","SUCRE 921, GUAYAQUIL, GUAYAS") , (2,"OFIMARKET","ESMERALDAS 505 Y LUIS URDANETA ") ,
+ (3,"PACINGRAF CIA. LTDA.","GARCIA MORENO 2313 Y CAPITAN NAJERA"),  (4,"SUPLIES DUPOT","BOYACA 309 ") ,  
+(5,"UTYCSA","SUCRE 511 ") ,  (6,"COMSUCRE","P.MONTUFAR 109 Y BALLEN") ,  (7,"IMPORSUCRE","P.MONTUFAR 109 ") ;
 
 
 INSERT INTO producto (id,nombre,marca,imagen,stock,precio_venta,precio_inicial) VALUES
@@ -66,19 +66,16 @@ INSERT INTO grupos (id,nombre,descripcion) VALUES
 
 # INSERT INTO cliente VALUES (cedula,nombre,direccion) VALUES ('','','')
 
-# 
-INSERT INTO empleado (cedula, nombre, horario_ent,horario_sal,es_admin,sueldo) VALUES 
-('0931823448','JOEL EDUARDO RODRIGUEZ LLAMUCA','15:30','18:00',0 ,'250');
 
-# INSERT INTO item (id,precio,nombre,descripcion) VALUES ('','','','')
-
-
+INSERT INTO empleado (cedula, nombre, apellido, direccion, fecha_ing, horario_ent, horario_sal, sueldo, es_admin, telefono) VALUES 
+('0931823448','JOEL EDUARDO', 'RODRIGUEZ LLAMUCA', 'PUERTO AZUL', '2015-06-23', '06:00:00', '12:30:00', 340.00, 1, '0929746352');
 
 # INSERT INTO factura (id,tipo,valor,fecha,cedula_c,cedula_emp,anulada) VALUES ('','','','','','', )
 
 INSERT INTO item (id,precio,nombre,descripcion,fecha) VALUES
 (1,'5.00','AGUA','PAGO DEL AGUA','2016-5-20'),
 (2,'250.00','SUELDO','PAGO DEL SUELDO','2016-5-10');
+
 
 #INSERT INTO gastos (id,fecha,total,cedula_empl) VALUES
 #(1,'2016-7-20 01:02:03','250','0931823448');

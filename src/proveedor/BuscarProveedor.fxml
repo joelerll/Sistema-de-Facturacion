@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="537.0" prefWidth="664.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedor.BuscarProveedorController">
+   <stylesheets>
+      <URL value="@../item/eliminaritem.css" />
+   </stylesheets>
+   <children>
+      <Label layoutX="140.0" layoutY="16.0" text="Eliminar y Editar Proveedor">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="XBatras" layoutX="14.0" layoutY="19.0" onAction="#atras" text="Atras" />
+      <Pane layoutX="24.0" layoutY="80.0" prefHeight="113.0" prefWidth="609.0">
+         <children>
+            <JFXTextField fx:id="TFbuscar_nombre" layoutX="37.0" layoutY="48.0" maxWidth="401.0" minWidth="257.0" prefHeight="38.0" prefWidth="366.0" promptText="NOMBRE">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXTextField>
+            <JFXButton fx:id="XBbuscar" layoutX="471.0" layoutY="51.0" onAction="#buscarProveedorNombre" text="BUSCAR">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
+      <JFXTextField fx:id="TFnombre" layoutX="42.0" layoutY="365.0" maxWidth="297.0" minWidth="297.0" prefHeight="39.0" prefWidth="297.0" promptText="NOMBRE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="TFdir" layoutX="41.0" layoutY="420.0" maxWidth="576.0" minWidth="510.0" prefHeight="39.0" prefWidth="576.0" promptText="DIRECCION">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <Text layoutX="303.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VISTA PREVIA">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
+      <Label layoutX="289.0" layoutY="68.0" text="BUSCAR">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="XBeliminar" layoutX="575.0" layoutY="495.0" onAction="#eliminarProveedor" text="Eliminar" />
+      <Label fx:id="Lmsg" layoutX="178.0" layoutY="471.0" textFill="#e40c0c">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="XBvista" layoutX="517.0" layoutY="269.0" onAction="#getComboBoxOpcion" text="VISTA PREVIA">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXComboBox fx:id="CBnombre" layoutX="55.0" layoutY="228.0" prefHeight="25.0" prefWidth="590.0" promptText="Muesta todas las coincidencias" visibleRowCount="13" />
+      <Label layoutX="286.0" layoutY="193.0" text="Encontrados">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="XBeditar" layoutX="31.0" layoutY="495.0" onAction="#editarProveedor" text="Editar" />
+      <Label fx:id="Lerror" layoutX="133.0" layoutY="488.0" textFill="#dd0c0c">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

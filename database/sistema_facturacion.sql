@@ -2,7 +2,7 @@ CREATE DATABASE facturacion;
 USE facturacion;
 
 CREATE TABLE proveedor(
-  id CHAR(30) NOT NULL ,
+  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   nombre CHAR(30) NOT NULL,
   direccion CHAR(50) NOT NULL,
   PRIMARY KEY (id)
@@ -39,12 +39,16 @@ CREATE TABLE Cliente(
 )ENGINE = InnoDB;
 
 CREATE TABLE empleado(
-  cedula CHAR(30) NOT NULL UNIQUE,
-  nombre CHAR(30) NOT NULL,
-  horario_ent CHAR(30) NOT NULL,
-  horario_sal CHAR(30) NOT NULL,
-  es_admin INTEGER NOT NULL,
+  cedula VARCHAR(30) NOT NULL UNIQUE,
+  nombre VARCHAR(30) NOT NULL,
+  apellido VARCHAR(30) NOT NULL,
+  direccion VARCHAR(30) NOT NULL,
+  fecha_ing DATE NOT NULL,
+  horario_ent VARCHAR(30) NOT NULL,
+  horario_sal VARCHAR(30) NOT NULL,
   sueldo  DECIMAL(5,2) NOT NULL,
+  es_admin INTEGER NOT NULL,
+  telefono VARCHAR(30),
   PRIMARY KEY (cedula)
 )ENGINE = InnoDB;
 
@@ -72,7 +76,7 @@ CREATE TABLE factura(
 
 CREATE TABLE proveedor_producto(
   id CHAR(30) NOT NULL,
-  id_proveedor CHAR(30) NOT NULL,
+  id_proveedor INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   id_producto CHAR(40) NOT NULL,
   cantidad INTEGER NOT NULL,
   precio FLOAT UNSIGNED NOT NULL,
@@ -116,7 +120,7 @@ CREATE TABLE item_empleado(
 )ENGINE = InnoDB;
 
 CREATE TABLE telefono_proveedor(
-  id_proveedor CHAR(30) NOT NULL,
+  id_proveedor INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   telefono CHAR(30) NOT NULL,
   CONSTRAINT FOREIGN KEY (id_proveedor) REFERENCES proveedor (id)
 )ENGINE = InnoDB;
