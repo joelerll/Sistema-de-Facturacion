@@ -22,36 +22,36 @@
          </font>
       </Label>
       <JFXButton fx:id="btnAtras" layoutX="14.0" layoutY="19.0" onAction="#atras" text="Atras" />
-      <Pane layoutX="24.0" layoutY="80.0" prefHeight="113.0" prefWidth="609.0">
+      <Pane layoutX="24.0" layoutY="80.0" prefHeight="63.0" prefWidth="609.0">
          <children>
-            <JFXTextField fx:id="textFieldBuscarNombre" layoutX="37.0" layoutY="48.0" maxWidth="401.0" minWidth="257.0" prefHeight="38.0" prefWidth="366.0" promptText="NOMBRE">
+            <JFXTextField fx:id="textFieldBuscarNombre" layoutX="29.0" layoutY="19.0" maxWidth="401.0" minWidth="257.0" prefHeight="38.0" prefWidth="366.0" promptText="NOMBRE">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXTextField>
-            <JFXButton fx:id="btnBuscar" layoutX="471.0" layoutY="51.0" onAction="#buscarItemNombre" text="BUSCAR">
+            <JFXButton fx:id="btnBuscar" layoutX="463.0" layoutY="22.0" onAction="#buscarItemNombre" text="BUSCAR">
                <font>
                   <Font size="17.0" />
                </font>
             </JFXButton>
          </children>
       </Pane>
-      <JFXTextField fx:id="TexfFielNombre" layoutX="24.0" layoutY="359.0" promptText="NOMBRE">
+      <JFXTextField fx:id="TexfFielNombre" layoutX="19.0" layoutY="306.0" promptText="NOMBRE">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="textFieldDescripcion" layoutX="41.0" layoutY="420.0" maxWidth="576.0" minWidth="510.0" prefHeight="39.0" prefWidth="576.0" promptText="DESCRIPCION">
+      <JFXTextField fx:id="textFieldDescripcion" layoutX="24.0" layoutY="375.0" maxWidth="576.0" minWidth="510.0" prefHeight="39.0" prefWidth="576.0" promptText="DESCRIPCION">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="textFieldPrecio" layoutX="462.0" layoutY="360.0" maxWidth="183.0" minWidth="183.0" prefHeight="39.0" prefWidth="183.0" promptText="PRECIO">
+      <JFXTextField fx:id="textFieldPrecio" layoutX="457.0" layoutY="307.0" maxWidth="183.0" minWidth="183.0" prefHeight="39.0" prefWidth="183.0" promptText="PRECIO">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <Text layoutX="303.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VISTA PREVIA">
+      <Text layoutX="298.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VISTA PREVIA">
          <font>
             <Font size="17.0" />
          </font>
@@ -62,7 +62,7 @@
          </font>
       </Label>
       <JFXButton fx:id="btnEliminar" layoutX="575.0" layoutY="495.0" onAction="#eliminarItem" text="Eliminar" />
-      <JFXTextField fx:id="textFieldFecha" layoutX="267.0" layoutY="360.0" maxWidth="183.0" minWidth="183.0" prefHeight="38.0" prefWidth="183.0" promptText="FECHA">
+      <JFXTextField fx:id="textFieldFecha" layoutX="262.0" layoutY="307.0" maxWidth="183.0" minWidth="183.0" prefHeight="38.0" prefWidth="183.0" promptText="FECHA">
          <font>
             <Font size="17.0" />
          </font>
@@ -72,13 +72,13 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <JFXButton layoutX="517.0" layoutY="269.0" onAction="#getComboBoxOpcion" text="VISTA PREVIA">
+      <JFXButton layoutX="496.0" layoutY="230.0" onAction="#getComboBoxOpcion" text="VISTA PREVIA">
          <font>
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXComboBox fx:id="comboBoxNombre" layoutX="55.0" layoutY="228.0" prefHeight="25.0" prefWidth="590.0" promptText="Muesta todas las coincidencias" visibleRowCount="13" />
-      <Label layoutX="286.0" layoutY="193.0" text="Encontrados">
+      <JFXComboBox fx:id="comboBoxNombre" layoutX="34.0" layoutY="189.0" prefHeight="25.0" prefWidth="590.0" promptText="Muesta todas las coincidencias" visibleRowCount="13" />
+      <Label layoutX="265.0" layoutY="154.0" text="Encontrados">
          <font>
             <Font size="18.0" />
          </font>
@@ -89,5 +89,24 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Label layoutX="41.0" layoutY="427.0" text="CEDULA">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelCedula_empl" layoutX="180.0" layoutY="427.0" prefHeight="25.0" prefWidth="268.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label fx:id="labelNombre_empl" layoutX="180.0" layoutY="471.0" prefHeight="25.0" prefWidth="392.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="471.0" text="NOMBRE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="414.0" text="vista previa boton para ver datos empleado" />
    </children>
 </AnchorPane>

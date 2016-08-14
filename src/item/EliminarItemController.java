@@ -81,6 +81,14 @@ public class EliminarItemController implements Initializable {
     @FXML
     private Label labelError;
     
+    @FXML
+    private Label labelNombre_empl;
+    
+    @FXML
+    private Label labelCedula_empl;
+     
+     
+   
     public DBconnection database=new DBconnection();
     public Connection conexion;
     PreparedStatement ps;
@@ -102,6 +110,7 @@ public class EliminarItemController implements Initializable {
     //busca item por nombre y campo
     public Item buscarItem(String campo,String nombreBuscar){
         try{
+            comboBoxNombre.setVisible(true);
             conexion = database.conectar();
             String q ="SELECT * FROM item WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')"+"LIMIT 1";
             System.out.println(q);
@@ -124,12 +133,85 @@ public class EliminarItemController implements Initializable {
             }
         }catch(SQLException sql){
             System.out.println("Error en buscar item");
-            labelError.setText("Ninguna coincidencia encontrada");
+            errorWindow("No encontrado","Ninguna coincidencia encontrada");
             return null;
         }
         return this.item;
     }
-  
+    
+    private String buscarNombreEmpleado(String cedula){
+        String c= null;
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        ResultSet rs = null;
+        try{
+            conexion = database.conectar();
+            String q ="SELECT nombre FROM empleado WHERE "+ "cedula" +" LIKE ('%"+cedula+"%') limit 1";
+            System.out.println(q);
+            ps = conexion.prepareCall(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                c = rs.getString(1);
+                System.out.println(c);
+            }
+            ps.close();
+            conexion.close();
+            rs.close();
+        }catch(SQLException sql){
+            System.out.println("Error en buscar nombre empleado");
+            return null;
+        }
+        return c;
+    }
+    
+    private void eliminarItem_emplado(int id_item,String cedula_empl)
+    {
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        try{
+            conexion = database.conectar();
+            String q ="DELETE FROM item_empleado WHERE id_item = " + id_item + " AND cedula_empl = " +cedula_empl; 
+            System.out.println(q);
+            ps = conexion.prepareStatement(q);
+            ps.execute();
+            conexion.close();
+            System.out.println("Borrado el item empleado seleccionado");
+        }catch(SQLException sql){
+            System.out.println("Error al tratar de eliminar item_emplado");
+        }
+    }
+    
+    private Item_empleado buscarItem_Empleado(int id_item)
+    {
+        Item_empleado item_empleado = new Item_empleado();
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        ResultSet rs = null;
+        try{
+            conexion = database.conectar();
+            String q ="SELECT * FROM item_empleado WHERE "+ "id_item" +" LIKE ('%"+id_item+"%') limit 1";
+            System.out.println(q);
+            ps = conexion.prepareCall(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                item_empleado.setId(rs.getInt(1));
+                item_empleado.setId_item(rs.getInt(2));
+                item_empleado.setCedula_empl(rs.getString(3));
+            }
+            ps.close();
+            conexion.close();
+            rs.close();
+        }catch(SQLException sql){
+            System.out.println("Error en buscar item empleado, cedula");
+            return null;
+        }
+        return item_empleado;
+    }
+    
+    @FXML
     public void buscarItemNombre(ActionEvent event){
         String campo = "nombre";
         String nombreBuscar= textFieldBuscarNombre.getCharacters().toString().toUpperCase();
@@ -150,14 +232,18 @@ public class EliminarItemController implements Initializable {
 
     @FXML
     public void getComboBoxOpcion(ActionEvent event){
+        Item_empleado item_empleado = new Item_empleado();
         this.item = null;
         this.item =(Item) comboBoxNombre.getValue();
         System.out.println(this.item);
+        labelNombre_empl.setText(buscarNombreEmpleado(buscarItem_Empleado(this.item.getId()).getCedula_empl()));
+        labelCedula_empl.setText(buscarItem_Empleado(this.item.getId()).getCedula_empl());
         setCamposEnTextField(this.item);     
     }
     
     @FXML
     public void eliminarItem(ActionEvent event){
+        int error;
         if(this.item.getId() == 0)
         {
             alertWindow("Ingrese campos","No ha ingresado ningun campo");
@@ -166,14 +252,26 @@ public class EliminarItemController implements Initializable {
              Alert alert = confirmationWindow("Eliminar","Esta de Acuerdo con eliminar item");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                List <String>  vacio = new ArrayList <>(); 
-                Item.eliminarItemSQL(this.item);
-                TexfFielNombre.setText("");
-                textFieldPrecio.setText("");
-                textFieldDescripcion.setText("");
-                textFieldFecha.setText("");
-                comboBoxNombre.setValue("");
-                comboBoxNombre.getItems().addAll(vacio);
+                List <String>  vacio = new ArrayList <>();
+                eliminarItem_emplado(this.item.getId(),buscarItem_Empleado(this.item.getId()).getCedula_empl());
+                error = Item.eliminarItemSQL(this.item);
+                if (error != 1451){
+                    
+                    System.out.println(error);
+                    TexfFielNombre.setText("");
+                    textFieldPrecio.setText("");
+                    textFieldDescripcion.setText("");
+                    textFieldFecha.setText("");
+                    labelCedula_empl.setText("");
+                    labelNombre_empl.setText("");
+                    comboBoxNombre.getSelectionModel().clearSelection();
+                    comboBoxNombre.setVisible(false);
+                    //comboBoxNombre.getItems().addAll(vacio);
+                }else{
+                    System.out.println("Item no eliminado sueldo");
+                    errorWindow("Sueldo no eliminado","No eliminado sueldo");
+                }
+                
             }
         }
     }

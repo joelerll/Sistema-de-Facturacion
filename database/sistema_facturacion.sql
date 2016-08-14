@@ -57,15 +57,6 @@ CREATE TABLE item(
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE gastos(
-  id INTEGER  AUTO_INCREMENT NOT NULL UNIQUE,
-  fecha DATE NOT NULL,
-  total DECIMAL(5,2) NOT NULL,
-  cedula_empl CHAR(30) NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
-)ENGINE = InnoDB;
-
 CREATE TABLE factura(
   id CHAR (30) NOT NULL UNIQUE,
   tipo CHAR (30) NOT NULL,
@@ -75,7 +66,7 @@ CREATE TABLE factura(
   cedula_empl CHAR(30) NOT NULL,
   anulada INTEGER NOT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES cliente(cedula),
+  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES Cliente(Cedula_C),
   CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado(cedula)
 )ENGINE = InnoDB;
 
@@ -112,16 +103,16 @@ CREATE TABLE producto_factura(
 CREATE TABLE telefonos_cliente(
   cedula_c CHAR(30) NOT NULL,
   telefono CHAR(30) NOT NULL,
-  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES cliente(cedula)
+  CONSTRAINT FOREIGN KEY (cedula_c) REFERENCES Cliente(Cedula_C)
 )ENGINE = InnoDB;
 
-CREATE TABLE item_gastos(
-  id CHAR(30) NOT NULL,
+CREATE TABLE item_empleado(
+  id INTEGER AUTO_INCREMENT NOT NULL UNIQUE,
   id_item INTEGER NOT NULL,
-  id_gastos INTEGER NOT NULL,
+  cedula_empl CHAR(30) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_item) REFERENCES item (id),
-  CONSTRAINT FOREIGN KEY (id_gastos) REFERENCES gastos (id)
+  CONSTRAINT FOREIGN KEY (cedula_empl) REFERENCES empleado (cedula)
 )ENGINE = InnoDB;
 
 CREATE TABLE telefono_proveedor(

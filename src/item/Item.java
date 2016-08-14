@@ -73,7 +73,7 @@ public class Item {
         return items;
     }
     
-    public static void eliminarItemSQL(Item item){
+    public static int eliminarItemSQL(Item item){
         DBconnection database=new DBconnection();
         Connection conexion;
         PreparedStatement ps;
@@ -87,7 +87,9 @@ public class Item {
             System.out.println("Borrado el item seleccionado");
         }catch(SQLException sql){
             System.out.println("Error al tratar de eliminar item");
+            return sql.getErrorCode();
         }
+        return 0;
     }
     
     public static void editarItemSQL(Item item){
@@ -179,6 +181,6 @@ public class Item {
     //Modificado para el list box
     @Override
     public String toString() {
-        return " NOMBRE "+ nombre + " ID " +  id;
+        return " NOMBRE "+ nombre + " ID " +  id + "  FECHA " + fecha;
     }
 }
