@@ -106,7 +106,7 @@ public class MenuPrincipalController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        System.out.println(main.VentanaLoginController.usuario);
     }    
     
 }

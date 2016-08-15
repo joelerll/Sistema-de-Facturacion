@@ -17,6 +17,9 @@ import javafx.stage.Stage;
 
 public class VentanaLoginController implements Initializable {
 
+    public static String usuario;
+    String pass;
+    
     @FXML
     private JFXPasswordField tfPassword;
 
@@ -31,6 +34,13 @@ public class VentanaLoginController implements Initializable {
 
     @FXML
     void ingresarMenuPrincipal(ActionEvent event) throws IOException {
+        usuario = tfUsuario.getText();
+        pass = tfPassword.getText();
+        
+        
+        
+        
+        
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -47,6 +57,7 @@ public class VentanaLoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
     
 }

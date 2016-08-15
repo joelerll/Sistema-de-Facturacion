@@ -24,6 +24,7 @@ public class Cliente {
     private static ResultSet rs;
     
     private String Cedula_C;
+    private String Fecha_C;
     private String Nombre_C;
     private String Apellido_C;
     private String Direccion_C;
@@ -68,8 +69,7 @@ public class Cliente {
         }
         return nombres;
     }
-
-
+    //GETTERS AND SETTERS
     public String getCedula_C() {
         return Cedula_C;
     }
@@ -125,7 +125,15 @@ public class Cliente {
     public void setEmail_C(String Email_C) {
         this.Email_C = Email_C;
     }
-    
+
+    public String getFecha_C() {
+        return Fecha_C;
+    }
+
+    public void setFecha_C(String Fecha_C) {
+        this.Fecha_C = Fecha_C;
+    }
+    //METODOS DE LA BASE DE DATOS
     public static boolean revisarEmail(String email){
         if(email.equals("")||email.equals(null)){
             System.out.println("Email vacio");
@@ -148,18 +156,20 @@ public class Cliente {
     }
     
     
-    public static void ingresarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+    public static void ingresarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
         try{
             con=database.conectar();
-            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?)";
+            //INSERT INTO cliente VALUES(cedula, fecha, nombre, apellido, direccion, celular, convencional, email)
+            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,cedula);
-            preparedStatement.setString(2,nombre);
-            preparedStatement.setString(3, apellido);
-            preparedStatement.setString(4, dir);
-            preparedStatement.setString(5, cel);
-            preparedStatement.setString(6, telf);
-            preparedStatement.setString(7, email);
+            preparedStatement.setString(2,fecha);
+            preparedStatement.setString(3,nombre);
+            preparedStatement.setString(4, apellido);
+            preparedStatement.setString(5, dir);
+            preparedStatement.setString(6, cel);
+            preparedStatement.setString(7, telf);
+            preparedStatement.setString(8, email);
             preparedStatement.executeUpdate();
             System.out.println("Se ingreso el cliente");
         }catch (SQLException ex)
@@ -168,13 +178,16 @@ public class Cliente {
         }
     }
     
-    public static List <Cliente> buscarCliente(String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+    public static List <Cliente> buscarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
         String query = "SELECT * FROM cliente WHERE ";
         String query2 = "";
         List <Cliente>  listaClientes=new ArrayList<> ();
         
         if(!cedula.equals("")){
             query+="Cedula_C = '"+cedula+"' AND ";
+        }
+        if(!fecha.equals("")){
+            query+="Fecha_C = '"+fecha+"' AND ";
         }
         if(!nombre.equals("")){
             query+="Nombre_C = '"+nombre+"' AND ";
@@ -202,12 +215,13 @@ public class Cliente {
             while (rs.next()){
                 Cliente cliente=new Cliente();
                 cliente.setCedula_C(rs.getString(1));
-                cliente.setNombre_C(rs.getString(2));
-                cliente.setApellido_C(rs.getString(3));
-                cliente.setDireccion_C (rs.getString(4));
-                cliente.setCelular_C(rs.getString(5));
-                cliente.setConvencional_C(rs.getString(6));
-                cliente.setEmail_C(rs.getString(7));
+                cliente.setFecha_C(rs.getString(2));
+                cliente.setNombre_C(rs.getString(3));
+                cliente.setApellido_C(rs.getString(4));
+                cliente.setDireccion_C (rs.getString(5));
+                cliente.setCelular_C(rs.getString(6));
+                cliente.setConvencional_C(rs.getString(7));
+                cliente.setEmail_C(rs.getString(8));
                 listaClientes.add(cliente);
             }
             ps.close();
@@ -234,9 +248,10 @@ public class Cliente {
             return true;
         }
     }
-    public static boolean editarCliente(String cedulaOriginal, String cedula, String nombre, String apellido, String dir, String cel, String telf, String email){
+    public static boolean editarCliente(String cedulaOriginal, String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
         String query = "UPDATE cliente SET ";
         query+="Cedula_C = '"+cedula+"', ";
+        query+="Fecha_C = '"+fecha+"', ";
         query+="Nombre_C = '"+nombre+"', ";
         query+="Apellido_C = '"+apellido+"', ";
         query+="Direccion_C = '"+dir+"', ";

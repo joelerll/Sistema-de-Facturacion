@@ -7,6 +7,8 @@ import database.DBconnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 
 import javafx.stage.Stage;
 
@@ -25,6 +28,10 @@ public class ClienteCrearController implements Initializable {
     private static final DBconnection database=new DBconnection();
     private static Connection con;
     //ATRIBUTOS DE LA VENTANA
+    
+    
+    @FXML
+    private DatePicker date;
     @FXML
     private JFXTextField tfNombres;
     @FXML
@@ -43,11 +50,12 @@ public class ClienteCrearController implements Initializable {
     private JFXTextField tfCedula;
     @FXML
     private JFXTextField tfCelular;
-    @FXML
-    private JFXTextField tfFechaRegistro;
     //METODOS
     @FXML
     void ingresarCliente(ActionEvent event) {
+        LocalDate localDate = date.getValue();
+        String fecha = localDate.format(DateTimeFormatter.ISO_DATE);
+        
         String cedula = tfCedula.getText();
         String nombre = tfNombres.getText();
         String apellido = tfApellidos.getText();
@@ -56,14 +64,13 @@ public class ClienteCrearController implements Initializable {
             AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Debes ingresar los campos obligatorios");
         }
         else{
-            System.out.println("Su email es: " + tfEmail.getText());
             if(!Cliente.revisarEmail(tfEmail.getText())){                           //VALIDA QUE EL EMAIL SEA VALIDO
                 
                 AlertBox.alertBox.crearAlertBox("Warning Dialog", null,"No es un email valido");
             }
             else{
-                if(Cliente.buscarCliente(cedula, "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
-                    Cliente.ingresarCliente(tfCedula.getText(), tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+                if(Cliente.buscarCliente(cedula, "", "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
+                    Cliente.ingresarCliente(tfCedula.getText(),fecha , tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
                     AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente creado");
                     encerarTF();
                 }
@@ -93,7 +100,7 @@ public class ClienteCrearController implements Initializable {
         tfCelular.setText("");
         tfConvencional.setText("");
         tfEmail.setText("");
-        tfFechaRegistro.setText("");
+        date.setValue(LocalDate.now());
     }
     
     @Override
@@ -126,6 +133,8 @@ public class ClienteCrearController implements Initializable {
                 tfApellidos.validate();
             }
         });
+        
+        date.setValue(LocalDate.now());
     }    
     
 }
