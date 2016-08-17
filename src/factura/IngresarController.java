@@ -15,6 +15,7 @@ import Clases.FacturaDAO;
 import Clases.ProductoDAO;
 import Clases.ProductoVO;
 import ProductoOpciones.ListaProductosController;
+import Utils.Colores;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -36,6 +37,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -123,7 +125,9 @@ public class IngresarController implements Initializable {
         
         productos = ProductoDAO.buscarProductoFacturaFormato(producto.getId(),producto.getNombre(),producto.getMarca());
         if (productos == null){
-            alertBox.crearErrorBox("","", "No ingreso ningun dato para buscar");
+            alertBox.crearErrorBox(" ","", "No ingreso ningun dato para buscar");
+        }else if(productos.isEmpty()){
+            alertBox.crearAlertBox(" ", "" , "Ningun Producto Encontrado" );
         }else{
             // Para la lista de concidencias a ListaProductosController
             ListaProductosController.productosOB = productos;
@@ -147,12 +151,12 @@ public class IngresarController implements Initializable {
             imprimirCarrito();
             
         }catch(Exception e){
-            System.out.println("factura.IngresarController.cargarFxmlProductos ERROR");
+            System.out.println(Colores.ANSI_RED + "factura.IngresarController.cargarFxmlProductos ERROR");
         }  
     }
     
     private void imprimirCarrito(){
-        System.out.println("Productos agregados a carrito");
+        System.out.println("\n"+ Colores.ANSI_BLUE + "Productos agregados a carrito");
         for (ProductoVO p : productosCanasta){
             System.out.println(p.getId());
         }

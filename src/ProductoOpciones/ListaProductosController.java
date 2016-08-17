@@ -5,7 +5,9 @@
  */
 package ProductoOpciones;
 
+import AlertBox.alertBox;
 import Clases.ProductoVO;
+import Utils.Colores;
 import com.jfoenix.controls.JFXButton;
 import factura.IngresarController;
 import java.math.BigDecimal;
@@ -25,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 /**
@@ -160,7 +163,9 @@ public class ListaProductosController implements Initializable {
         public void handle(MouseEvent t){
             TableCell c = (TableCell) t.getSource();
             int index = c.getIndex();
-            System.out.println("Producto escogido \n" + productosOB.get(index).toString());
+            
+            System.out.println("\n" + Colores.ANSI_GREEN + "Producto escogido");
+            System.out.println("productosOB.get(index).toString()");
 
             // Agregar un producto a carrito
             btnAgregar.setOnAction(new EventHandlerImpl(index));
@@ -172,7 +177,7 @@ public class ListaProductosController implements Initializable {
                 imagen.setImage(im);
             }catch(Exception e){
                 imagen.setVisible(false);
-                System.out.println("No se encontro imagen");
+                System.out.println(Colores.ANSI_RED + "No se encontro imagen");
             }    
         }
 
@@ -189,6 +194,7 @@ public class ListaProductosController implements Initializable {
                 ProductoVO p = new ProductoVO();
                 p.setId(productosOB.get(index).getId());
                 IngresarController.productosCanasta.add(p);
+                alertBox.crearAlertBox(" ", "", "Producto Agregado a Carrito");
             }
         }
     }
