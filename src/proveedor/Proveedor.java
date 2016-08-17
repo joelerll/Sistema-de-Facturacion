@@ -67,14 +67,13 @@ public class Proveedor {
         this.PDireccion = PDireccion;
     }
     
-    public static void ingresarProveedor(int id, String nombre, String dir){
+    public static void ingresarProveedor(String nombre, String dir){
         try{
             con=database.conectar();
-            String query = "INSERT INTO proveedor VALUES(?,?,?)";
+            String query = "INSERT INTO proveedor (nombre,direccion) VALUES(?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1,id);
-            preparedStatement.setString(2,nombre);
-            preparedStatement.setString(3,dir);
+            preparedStatement.setString(1,nombre);
+            preparedStatement.setString(2,dir);
             preparedStatement.executeUpdate();
         }catch (SQLException ex)
         {

@@ -37,8 +37,6 @@ public class IngresarProveedorController implements Initializable {
     
     //JFXTextField
     @FXML
-    private JFXTextField FXPid;
-    @FXML
     private JFXTextField FXPnombre;
     @FXML
     private JFXTextField FXPdir;
@@ -49,21 +47,21 @@ public class IngresarProveedorController implements Initializable {
     private JFXButton ingresarButton;
     @FXML
     private JFXButton atrasButton;
+    
     //METODOS
     @FXML
     void ingresarProveedor(ActionEvent event) {
-        String id = FXPid.getText();
         String nombre = FXPnombre.getText();
         String dir = FXPdir.getText();
         
-        if(id.equals("")||nombre.equals("")||dir.equals("")){
+        if(nombre.equals("")||dir.equals("")){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Alert Dialog");
             alert.setHeaderText(null);
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            Proveedor.ingresarProveedor(Integer.parseInt(FXPid.getText()), FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
+            Proveedor.ingresarProveedor(FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);
@@ -90,20 +88,12 @@ public class IngresarProveedorController implements Initializable {
         app_stage.hide(); //optional
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
+    
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        RequiredFieldValidator validatorId = new RequiredFieldValidator();
         RequiredFieldValidator validatorNombre = new RequiredFieldValidator();
         RequiredFieldValidator validatorDir = new RequiredFieldValidator();
-        
-        FXPid.getValidators().add(validatorId);
-        validatorId.setMessage("Campo Obligatorio");
-        FXPid.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(!newValue){
-                FXPid.validate();
-            }
-        });
         
         FXPnombre.getValidators().add(validatorNombre);
         validatorNombre.setMessage("Campo Obligatorio");
