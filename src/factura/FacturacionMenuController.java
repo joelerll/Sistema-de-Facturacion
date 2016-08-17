@@ -33,7 +33,8 @@ public class FacturacionMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Limpia Productos Canasta si salgo de facturacion <---------------------------------------
+        IngresarController.productosCanasta.clear();
     }  
     
     @FXML

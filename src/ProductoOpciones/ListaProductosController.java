@@ -6,22 +6,25 @@
 package ProductoOpciones;
 
 import Clases.ProductoVO;
+import com.jfoenix.controls.JFXButton;
+import factura.IngresarController;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 
 /**
@@ -32,49 +35,29 @@ import javafx.util.Callback;
 public class ListaProductosController implements Initializable {
     @FXML
     private TableView<ProductoVO> productos;
+ 
+    @FXML
+    private ImageView imagen;
     
-   /* @FXML
-    private TableColumn <ProductoVO, String>marca;*/
-    
-    /*@FXML
-    private TableColumn   <ProductoVO, String> codigo;*/
-    
-    /*@FXML
-    private TableColumn<ProductoVO, BigDecimal> precio;
-
-   /* @FXML
-    private TableColumn<ProductoVO, Integer> stock;*/
-
-    /*@FXML
-    private TableColumn<ProductoVO, String> nombre;*/
+    @FXML
+    private JFXButton btnAgregar;
+  
+    private ProductoVO productoEscogido;
     
     public static List<ProductoVO> productosOB;
-    
-    @FXML
-    private Label label;
-    
-    @FXML
-    private AnchorPane anchorPane;
 
-    public ListaProductosController() {
-        
-    }
-  
-    public List<ProductoVO> getProductosOB() {
-        return productosOB;
-    }
-    ObservableList<ProductoVO> productosOBB = FXCollections.observableArrayList();
+    private ObservableList<ProductoVO> productosOBB = FXCollections.observableArrayList();
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
        // Setear todos los productos en la tablewiew
-       
        for (ProductoVO p : productosOB){   
             productosOBB.add(p);
        }
        
-       Callback<TableColumn, TableCell> integerCellFactory =
-               new Callback<TableColumn, TableCell>(){
+       // Verifica que celda esta escogiendo
+       Callback<TableColumn, TableCell> integerCellFactory = new Callback<TableColumn, TableCell>(){
            @Override
            public TableCell call(TableColumn p){
                MyIntegerTableCell cell = new MyIntegerTableCell();
@@ -83,9 +66,7 @@ public class ListaProductosController implements Initializable {
                
            }
         };
-       
-       Callback<TableColumn, TableCell> stringCellFactory =
-               new Callback<TableColumn, TableCell>(){
+       Callback<TableColumn, TableCell> stringCellFactory = new Callback<TableColumn, TableCell>(){
            @Override
            public TableCell call(TableColumn p){
                MyStringTableCell cell = new MyStringTableCell();
@@ -94,9 +75,7 @@ public class ListaProductosController implements Initializable {
                
            }
         };
-       
-       Callback<TableColumn, TableCell> bigDecimalCellFactory =
-               new Callback<TableColumn, TableCell>(){
+       Callback<TableColumn, TableCell> bigDecimalCellFactory = new Callback<TableColumn, TableCell>(){
            @Override
            public TableCell call(TableColumn p){
                MyBigDecimalTableCell cell = new MyBigDecimalTableCell();
@@ -106,8 +85,9 @@ public class ListaProductosController implements Initializable {
            }
         };
        
+       // Anade celdad al tableview, no se hace directamente del fxml por error de parser del mismo
        TableColumn codigo = new TableColumn("Codigo"); 
-       codigo.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("id"));
+       codigo.setCellValueFactory(new PropertyValueFactory<>("id"));
        codigo.setCellFactory(stringCellFactory);
        
        TableColumn nombre = new TableColumn("Nombre");
@@ -115,7 +95,7 @@ public class ListaProductosController implements Initializable {
        nombre.setCellFactory(stringCellFactory);
        
        TableColumn marca = new TableColumn("Marca");
-       marca.setCellValueFactory(new PropertyValueFactory<ProductoVO, String>("marca"));
+       marca.setCellValueFactory(new PropertyValueFactory<>("marca"));
        marca.setCellFactory(stringCellFactory);
        
        TableColumn precio = new TableColumn("Precio");
@@ -125,8 +105,14 @@ public class ListaProductosController implements Initializable {
        TableColumn stock = new TableColumn("Stock");
        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
        stock.setCellFactory(integerCellFactory);
+       
+       // elimina la ultima celda por defecto
        productos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+       
+       // Ingresa los datos en cada celda determinada
        productos.setItems(productosOBB);
+       
+        // Anade todas las columnas en orden
        productos.getColumns().addAll(codigo,nombre,marca,stock,precio);
     }
     
@@ -174,31 +160,37 @@ public class ListaProductosController implements Initializable {
         public void handle(MouseEvent t){
             TableCell c = (TableCell) t.getSource();
             int index = c.getIndex();
-            System.out.println(productosOB.get(index).getId());
-            System.out.println(productosOB.get(index).getNombre());
-            System.out.println(productosOB.get(index).getMarca());
-            System.out.println(productosOB.get(index).getStock());
-            System.out.println(productosOB.get(index).getPrecio_venta());
+            System.out.println("Producto escogido \n" + productosOB.get(index).toString());
+
+            // Agregar un producto a carrito
+            btnAgregar.setOnAction(new EventHandlerImpl(index));
+            
+            // Ingresar imagen y ver
+            try{
+                imagen.setVisible(true);
+                Image im = new Image(productosOB.get(index).getImagen());
+                imagen.setImage(im);
+            }catch(Exception e){
+                imagen.setVisible(false);
+                System.out.println("No se encontro imagen");
+            }    
         }
 
-      
-    }
-
-    
- /*   public void cargarFxmlProductos()
-    {
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/ProductoOpciones/ListaProductos.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setTitle("Coincidencia Productos");
-            stage.setScene(new Scene(root1));  
-            stage.show();
-            }catch(Exception e){
-                System.out.println("factura.IngresarController.cargarFxmlProductos ERROR");
+        private class EventHandlerImpl implements EventHandler<ActionEvent> {
+            
+            private final int index;
+            
+            public EventHandlerImpl(int index) {
+                this.index = index;
             }
-        
-    }*/
+
+            @Override
+            public void handle(ActionEvent e) {
+                ProductoVO p = new ProductoVO();
+                p.setId(productosOB.get(index).getId());
+                IngresarController.productosCanasta.add(p);
+            }
+        }
+    }
+    
 }

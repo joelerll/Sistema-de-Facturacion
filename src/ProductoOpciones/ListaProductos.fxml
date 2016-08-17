@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
@@ -9,21 +10,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="657.0" prefWidth="1030.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProductoOpciones.ListaProductosController">
+<AnchorPane id="AnchorPane" fx:id="anchorPane" prefHeight="657.0" prefWidth="1201.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ProductoOpciones.ListaProductosController">
     <stylesheets>
         <URL value="@listaproductos.css" />
     </stylesheets>
    <children>
-      <JFXButton layoutX="887.0" layoutY="603.0" text="AGREGAR">
+      <JFXButton fx:id="btnAgregar" layoutX="1026.0" layoutY="591.0" text="AGREGAR">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <Label fx:id="label" layoutX="41.0" layoutY="619.0" prefHeight="28.0" prefWidth="475.0">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <TableView fx:id="productos" layoutX="4.0" prefHeight="594.0" prefWidth="1030.0" />
+      <TableView fx:id="productos" layoutX="4.0" prefHeight="657.0" prefWidth="896.0" />
+      <ImageView fx:id="imagen" fitHeight="483.0" fitWidth="268.0" layoutX="913.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

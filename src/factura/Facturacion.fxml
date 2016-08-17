@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import com.jfoenix.validation.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
@@ -49,6 +50,11 @@
             <Pane layoutX="14.0" layoutY="70.0" prefHeight="392.0" prefWidth="234.0" styleClass="border-panel-internonn">
                <children>
                   <ImageView fitHeight="392.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true" />
+                  <SubScene fx:id="subScene" height="183.0" layoutX="14.0" layoutY="195.0" width="200.0">
+                    <root>
+                      <Region />
+                    </root>
+                  </SubScene>
                </children>
             </Pane>
          </children>

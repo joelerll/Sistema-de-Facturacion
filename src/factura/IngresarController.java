@@ -14,29 +14,18 @@ import Clases.EmpleadoDAO;
 import Clases.FacturaDAO;
 import Clases.ProductoDAO;
 import Clases.ProductoVO;
-import Cliente.Cliente;
-import ProductoOpciones.ListProductos;
 import ProductoOpciones.ListaProductosController;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,6 +64,11 @@ public class IngresarController implements Initializable {
     private Date date = new Date();
     private ClienteVO cliente;
     private int siguienteIdFactura;
+    private List <ProductoVO> productos;
+        
+    public static ProductoVO productoEscogido;
+    public static List<ProductoVO> productosCanasta = new ArrayList<>();
+    
     
     @FXML
     void regresarMenuFacturacion(ActionEvent event) throws IOException {
@@ -85,10 +79,8 @@ public class IngresarController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
     }
-    
-    /*
-    Check Box a consumidor final, 
-    */
+
+    // CheckBox para setear si es cosumidor final
     @FXML
     private void consumidorFinalCheck(ActionEvent event) {
         boolean selected = consumidorFinal.isSelected();
@@ -106,11 +98,7 @@ public class IngresarController implements Initializable {
             clienteCedula.setDisable(false);
         }        
     }
-    
-    /*
-    Buscar cliente
-    Verificar que los datos ingresados de cliente existan
-    */
+
     @FXML
     private void handleButtonBuscarCliente(ActionEvent event){
        ClienteVO cliente;
@@ -124,28 +112,7 @@ public class IngresarController implements Initializable {
            alertBox.crearErrorBox("","","No fue encontrado el cliente");
        }
     }
-    
-    
-    /*
-    Buscar cliente, si no llevarlo a ingresar cliente
-    */
-    
-    /*
-    Buscar vendedor
-    */
-    
-    /*
-    Setear los datos de la factura
-    */
-    
-    /*
-    Imprimir factura
-    */
-    
-    /*
-    Crear una nueva ventana al darle el boton buscar y seleccinar el producto que se desea
-    */
-    List <ProductoVO> productos;
+
     @FXML
     public void handleButtonBuscarProducto(ActionEvent event)
     {
@@ -158,23 +125,12 @@ public class IngresarController implements Initializable {
         if (productos == null){
             alertBox.crearErrorBox("","", "No ingreso ningun dato para buscar");
         }else{
-            
-            //ListaProductosController productospass = new ListaProductosController(productos);
-            //productospass.setProductos(productos);
-            //ListaProductosController productospass = new ListaProductosController(productos);
+            // Para la lista de concidencias a ListaProductosController
             ListaProductosController.productosOB = productos;
             cargarFxmlProductos();
-            
-            //productospass.setProductos();
-            //ListProductos.Productos(productos);
         }
     }
-    
-    public static List<ProductoVO> Productos(List <ProductoVO> productos)
-    {
-        return productos;
-    }
-    
+  
     public void cargarFxmlProductos()
     {
         try{
@@ -185,15 +141,23 @@ public class IngresarController implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Coincidencia Productos");
             stage.setScene(new Scene(root1));  
-            stage.show();    
-            }catch(Exception e){
-                System.out.println("factura.IngresarController.cargarFxmlProductos ERROR");
-            }  
+            stage.showAndWait(); //Para que espere y podramos coger los datos que escoge el empleado
+            
+            // Imprime los productos escogidos
+            imprimirCarrito();
+            
+        }catch(Exception e){
+            System.out.println("factura.IngresarController.cargarFxmlProductos ERROR");
+        }  
     }
     
-    /*
-    Eliminar producto de la tabla
-    */
+    private void imprimirCarrito(){
+        System.out.println("Productos agregados a carrito");
+        for (ProductoVO p : productosCanasta){
+            System.out.println(p.getId());
+        }
+        System.out.println("\n");
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -221,8 +185,5 @@ public class IngresarController implements Initializable {
         
         imagen.setImage(im);
         */
-        
-        
-    }    
- 
+    }  
 }

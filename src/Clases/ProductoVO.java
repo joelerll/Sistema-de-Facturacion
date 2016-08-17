@@ -24,6 +24,10 @@ public class ProductoVO {
     public ProductoVO() {
     }
 
+    public ProductoVO(String id) {
+        this.id = id;
+    }
+    
     public ProductoVO(String id, String nombre, String marca, int stock) {
         this.id = id;
         this.nombre = nombre;
@@ -31,8 +35,15 @@ public class ProductoVO {
         this.stock = stock;
     }
 
-    
-    
+    public ProductoVO(String id, String nombre, String marca, String imagen, int stock, BigDecimal precio_venta) {
+        this.id = id;
+        this.nombre = nombre;
+        this.marca = marca;
+        this.imagen = imagen;
+        this.stock = stock;
+        this.precio_venta = precio_venta;
+    }
+ 
     public String getId() {
         return id;
     }
