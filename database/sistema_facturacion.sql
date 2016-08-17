@@ -12,7 +12,7 @@ CREATE TABLE producto(
   id CHAR(40) NOT NULL UNIQUE,
   nombre CHAR(60) NOT NULL,
   marca CHAR(30),
-  imagen LONGBLOB,
+  imagen VARCHAR(40),
   stock INTEGER UNSIGNED NOT NULL,
   precio_venta DECIMAL(5,2) NOT NULL,
   precio_inicial DECIMAL(5,2) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE item(
 )ENGINE = InnoDB;
 
 CREATE TABLE factura(
-  id  INT(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  id  INT UNSIGNED  NOT NULL AUTO_INCREMENT,
   valor  DECIMAL(8,2) NOT NULL,
   fecha TIMESTAMP NOT NULL,
   cedula_c CHAR(30) NOT NULL,
@@ -98,7 +98,7 @@ CREATE TABLE producto_grupos(
 CREATE TABLE producto_factura(
   id CHAR (30) NOT NULL,
   id_producto CHAR(40) NOT NULL,
-  id_orden INT(8) UNSIGNED ZEROFILL NOT NULL,
+  id_orden INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
   CONSTRAINT FOREIGN KEY (id_orden) REFERENCES factura(id)

@@ -9,6 +9,7 @@ import database.DBconexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -16,9 +17,14 @@ import java.sql.SQLException;
  */
 public class ClienteDAO {
     
-    public static ClienteVO buscarCliente(ClienteVO clienteVO){
+    /**
+     *
+     * @param clienteVO
+     * @param arg
+     */
+    public static ClienteVO buscarCliente(ClienteVO clienteVO,String... arg){
         ClienteVO cliente = new ClienteVO();
-        String q = "SELECT * from Cliente WHERE Cedula_C like ('"+clienteVO.getCedula_C()+"')";
+        String q = "SELECT * from "+ "Cliente" + " WHERE "+ arg[0] +  " = '"+clienteVO.getCedula_C()+"'";
         try{
             DBconexion con= new DBconexion();
             System.out.println(q);

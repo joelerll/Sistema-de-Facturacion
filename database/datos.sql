@@ -5,8 +5,8 @@ INSERT INTO proveedor  (id,nombre,direccion) VALUES (1,"EL GORDO","SUCRE 921, GU
 
 
 INSERT INTO producto (id,nombre,marca,imagen,stock,precio_venta,precio_inicial) VALUES
-('CARP-AR','CARPETA ARCHIVADORA','IDEAL',NULL,3,'2.80','1.75'),
-('PAPEL-ALU','PAPEL ALUMINIO','WRAPIT',NULL,'4','2.80','1.80'),
+('CARP-AR','CARPETA ARCHIVADORA','IDEAL','images/CARP-AR.jpg',3,'2.80','1.75'),
+('PAPEL-ALU','PAPEL ALUMINIO','WRAPIT','images/PAPEL-ALU.jpg','4','2.80','1.80'),
 ('CALC-CASIO-FX750MS','CALCULADORA CIENTIFICA CASIO FX-570MS','CASIO',NULL,2,'15','13'),
 ('CALC-KENKO-350MS','CALCULADORA CIENTIFICA KENKO KK350MS-1','KENKO',NULL,3,'4.50','3.58'),
 ('CALC-KENKO-88MS','CALCULADORA CIENTIFICA KENKO KK-88MS-1','KENKO',NULL,3 ,'4.50','3.50'),
@@ -72,7 +72,10 @@ INSERT INTO Cliente (Cedula_C,Nombre_C,Apellido_C,Direccion_C) VALUES
 INSERT INTO empleado (cedula, nombre, apellido, direccion, fecha_ing, horario_ent, horario_sal, sueldo, es_admin, telefono) VALUES 
 ('0931823448','JOEL EDUARDO', 'RODRIGUEZ LLAMUCA', 'PUERTO AZUL', '2015-06-23', '06:00:00', '12:30:00', 340.00, 1, '0929746352');
 
-INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES 
+INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES
+(10335.6,'2014-01-06 17:03:10','092','0931823448'),
+(103.6,'2013-01-06 17:03:10','092','0931823448'),
+(235.36,'2012-01-06 17:03:10','092','0931823448'), 
 (10335.36,'2016-01-06 17:03:10','092','0931823448');
 
 INSERT INTO item (id,precio,nombre,descripcion,fecha) VALUES
