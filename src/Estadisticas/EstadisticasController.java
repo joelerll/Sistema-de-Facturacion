@@ -49,14 +49,14 @@ public class EstadisticasController implements Initializable {
     @FXML
     private BorderPane borderPane;
     @FXML
-    private JFXListView<?> lvYearList;
-    @FXML
-    private JFXListView<?> lvItemList;
+    private JFXListView<Label> lvYearList;
+    
     @FXML
     private JFXListView<Label> lvMonthList;
     @FXML
     private JFXButton btnRegresar;
     
+    public static String year;
     public static String mes;
     public static BigDecimal valor;
     /*
@@ -74,6 +74,16 @@ public class EstadisticasController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        for(int i =2010; i<2019; i++){
+            lvYearList.getItems().add(new Label (""+ i));
+        }
+        
+        ObservableList<Label> yList = lvYearList.getItems();
+        for(Label lbl : yList){
+            lbl.setOnMouseClicked(yearHandler);
+        }
+        
         lvMonthList.getItems().add(enero);
         lvMonthList.getItems().add(febrero);
         lvMonthList.getItems().add(marzo);
@@ -102,9 +112,9 @@ public class EstadisticasController implements Initializable {
         
     } 
     
-    public void crearPieChart(String mesPC){
+    public void crearPieChart(String yearPC, String mesPC){
         double x;
-        List<Item> resultado = item.Item.buscarPorFecha("2016", mesPC, "01");
+        List<Item> resultado = item.Item.buscarPorFecha(yearPC, mesPC, "01");
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         for(Item i:resultado){
             valor = i.getPrecio();
@@ -119,41 +129,52 @@ public class EstadisticasController implements Initializable {
         public void handle(MouseEvent event) {
             Label lbl = (Label) event.getSource();
             if(event.getSource()== enero){
-                crearPieChart("01");
+                crearPieChart(year, "01");
             }
             if(event.getSource()== febrero){
-                crearPieChart("02");
+                crearPieChart(year, "02");
             }
             if(event.getSource()== marzo){
-                crearPieChart("03");
+                crearPieChart(year, "03");
             }
             if(event.getSource()== abril){
-                crearPieChart("04");
+                crearPieChart(year, "04");
             }
             if(event.getSource()== mayo){
-                crearPieChart("05");
+                crearPieChart(year, "05");
             }
             if(event.getSource()== junio){
-                crearPieChart("06");
+                crearPieChart(year, "06");
             }
             if(event.getSource()== julio){
-                crearPieChart("07");
+                crearPieChart(year, "07");
             }
             if(event.getSource()== agosto){
-                crearPieChart("08");
+                crearPieChart(year, "08");
             }
             if(event.getSource()== septiembre){
-                crearPieChart("09");
+                crearPieChart(year, "09");
             }
             if(event.getSource()== octubre){
-                crearPieChart("10");
+                crearPieChart(year, "10");
             }
             if(event.getSource()== noviembre){
-                crearPieChart("11");
+                crearPieChart(year, "11");
             }
             if(event.getSource()== diciembre){
-                crearPieChart("12");
+                crearPieChart(year, "12");
             }
         }
     };
+    
+    final EventHandler<MouseEvent> yearHandler = new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event) {
+                Label lbl = (Label) event.getSource();
+                year=lbl.getText();
+                System.out.println(year);
+            }
+        
+    };
+    
 }
