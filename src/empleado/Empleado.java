@@ -33,7 +33,7 @@ public class Empleado {
     private String Ehorario_ent;
     private String Ehorario_sal;
     private BigDecimal Esueldo;
-    private Integer Ees_admin;
+    private Integer Ees_admin;      //1 si lo es, 0 si no lo es
     private String Etelefono;
     private String Euser;
     
@@ -200,6 +200,37 @@ public class Empleado {
             rs.close();
         }catch(SQLException sql){
             System.out.println("Error en buscar empleado para eliminar");
+        }
+        return empleados;
+    }
+    
+    public static List<Empleado> buscarPorUsuario(String usuario){
+        List <Empleado>  empleados = new ArrayList<> ();
+        try{
+            con = database.conectar();
+            String q ="SELECT * FROM empleado WHERE usuario = '"+usuario+"'";
+            ps = con.prepareCall(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Empleado empleado = new Empleado();
+                empleado.setEcedula(rs.getString(1));
+                empleado.setEnombre(rs.getString(2));
+                empleado.setEapellido(rs.getString(3));
+                empleado.setEdireccion(rs.getString(4));
+                empleado.setEfecha_ing(rs.getString(5));
+                empleado.setEhorario_ent(rs.getString(6));
+                empleado.setEhorario_sal(rs.getString(7));
+                empleado.setEsueldo(new BigDecimal(rs.getString(8)));
+                empleado.setEes_admin(rs.getInt(9));
+                empleado.setEtelefono(rs.getString(10));
+                empleado.setEuser(rs.getString(11));
+                empleados.add(empleado);
+            }
+            ps.close();
+            con.close();
+            rs.close();
+        }catch(SQLException sql){
+            System.out.println("Error de busqueda");
         }
         return empleados;
     }

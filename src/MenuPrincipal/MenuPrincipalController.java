@@ -19,18 +19,16 @@ public class MenuPrincipalController implements Initializable {
 
      @FXML
     private JFXButton btnProveedores;
-
     @FXML
     private JFXButton btnLogin;
-
     @FXML
     private JFXButton btnProductos;
-
     @FXML
     private JFXButton btnClientes;
-
     @FXML
     private JFXButton btnFacturacion;
+    @FXML
+    private JFXButton btnEstadisticas;
     
 
 
@@ -66,12 +64,16 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     void accederEmpleados(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/empleado/EmpleadoOpciones.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.hide(); //optional
-        app_stage.setScene(home_page_scene);
-        app_stage.show(); 
+        if(main.VentanaLoginController.es_Admin){
+           Parent home_page_parent = FXMLLoader.load(getClass().getResource("/empleado/EmpleadoOpciones.fxml"));
+            Scene home_page_scene = new Scene(home_page_parent);
+            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            app_stage.hide(); //optional
+            app_stage.setScene(home_page_scene);
+            app_stage.show();  
+        }else{
+            AlertBox.alertBox.crearErrorBox("Error", null, "No es administrador. No tiene permisos para acceder a esta informacion!");
+        }
     }
     
     @FXML
@@ -103,6 +105,21 @@ public class MenuPrincipalController implements Initializable {
         app_stage.setScene(home_page_scene);
         app_stage.show(); 
     }
+    
+    @FXML
+    void accederEstadisticas(ActionEvent event) throws IOException {
+        if(main.VentanaLoginController.es_Admin){
+            Parent home_page_parent = FXMLLoader.load(getClass().getResource("/Estadisticas/estadisticas.fxml"));
+            Scene home_page_scene = new Scene(home_page_parent);
+            Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            app_stage.hide(); //optional
+            app_stage.setScene(home_page_scene);
+            app_stage.show();  
+        }else{
+            AlertBox.alertBox.crearErrorBox("Error", null, "No es administrador. No tiene permisos para acceder a esta informacion!");
+        }
+    }
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {

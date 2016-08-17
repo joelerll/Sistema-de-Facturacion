@@ -85,9 +85,6 @@ public class ClienteBuscarController implements Initializable {
     String cedulaOriginal;
     
     @FXML
-    private JFXButton btnConfirmar;
-    
-    @FXML
     private GridPane GridVistaPrevia;
     //METODOS
     @FXML
