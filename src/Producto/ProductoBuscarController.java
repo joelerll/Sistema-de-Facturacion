@@ -77,7 +77,7 @@ public class ProductoBuscarController implements Initializable {
     void BuscarProducto(ActionEvent event) {
         listaProductos = Producto.buscarProducto(tfNombreProductoBuscar.getText(), tfCodigoProductoBuscar.getText());
         index = 0;
-        if(!listaProductos.isEmpty()){
+        if(!listaProductos.isEmpty()){      //si devolvio una coincidencia en la BD
             Producto p = listaProductos.get(0);
             tfNombreProductoEncontrar.setText(p.getNombre_Producto());
             tfCodigoProductoEncontrar.setText(p.getId_Producto());
@@ -99,7 +99,6 @@ public class ProductoBuscarController implements Initializable {
                 AlertBox.alertBox.crearAlertBox("Confirmation Dialog", null, "Producto actualizado");
             }
         }
-
     }
     
     @FXML
@@ -150,10 +149,10 @@ public class ProductoBuscarController implements Initializable {
     }
     
     private boolean revisarEdicion() {
-        System.out.println(Producto.buscarProducto("",tfCodigoProductoEncontrar.getText()).size());
-        if(Producto.buscarProducto("",tfCodigoProductoEncontrar.getText()).size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
+        //System.out.println(Producto.buscarProducto("",tfCodigoProductoEncontrar.getText()).size());
+        if(Producto.buscarProducto("",tfCodigoProductoEncontrar.getText()).size()>1){      //Busca en la BD si existe otro registro con el mismo codigo ingresada en el TextField
             //Tiene que ser >1 porque al buscar en la BD, si va a encontrar una coincidencia.
-            AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Ya existe otro producto con esecodigo!");
+            AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Ya existe otro producto con ese codigo!");
             return false;
         }
         return true;

@@ -1,7 +1,6 @@
 
 package Estadisticas;
 
-import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -10,6 +9,9 @@ import item.Item;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
@@ -122,6 +125,14 @@ public class EstadisticasController implements Initializable {
         }
         pieChartMes.setData(pieChartData);
         pieChartMes.setTitle("Gastos del mes de " + month + " del " + year);
+        
+        //DoubleBinding total = Bindings.createDoubleBinding(() -> pieChartData.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartData);
+               
+        pieChartData.forEach(data ->
+            data.nameProperty().bind(
+                Bindings.concat(data.getName(), " $", data.pieValueProperty())
+            )
+        );
     }
     
     final EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>(){

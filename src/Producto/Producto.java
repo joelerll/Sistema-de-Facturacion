@@ -217,7 +217,7 @@ public class Producto {
         }
     }
     
-    public static boolean editarProducto(String IdOriginal,String Nombre, String Id){
+    public static boolean editarProducto(String IdOriginal, String Nombre, String Id){
         String query = "UPDATE producto SET ";
         query+="id = '"+Id+"', ";
         query+="nombre = '"+Nombre+"', ";
