@@ -9,6 +9,7 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 src/images/
+/src/database
 
 ### Java ###
 *.class
