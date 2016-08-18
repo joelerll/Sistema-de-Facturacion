@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" prefHeight="333.0" prefWidth="456.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedor.ProveedorTelefonoController">
+   <children>
+      <JFXButton fx:id="atrasButton" layoutX="26.0" layoutY="58.0" onAction="#atras" text="Atras" />
+      <JFXTextField fx:id="FXTtel" layoutX="139.0" layoutY="164.0" promptText="TELEFONO">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <Text layoutX="115.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono Provedor">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Text>
+      <JFXTextField fx:id="FXTid" layoutX="141.0" layoutY="113.0" promptText="ID_PROVEEDOR">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="guardarButton" layoutX="349.0" layoutY="264.0" onAction="#ingresarTelefonoProveedor" text="Guardar" />
+      <JFXButton fx:id="menuButton" layoutX="32.0" layoutY="261.0" onAction="#menuPrincipal" text="Menu Principal" />
+   </children>
+</AnchorPane>
