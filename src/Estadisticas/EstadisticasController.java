@@ -53,11 +53,10 @@ public class EstadisticasController implements Initializable {
     
     @FXML
     private JFXListView<Label> lvMonthList;
-    @FXML
-    private JFXButton btnRegresar;
     
     public static String year;
-    public static String mes;
+    public static String mes;       //en numero
+    public static String month = "";
     public static BigDecimal valor;
     /*
     METODOS
@@ -122,6 +121,7 @@ public class EstadisticasController implements Initializable {
             pieChartData.add(new PieChart.Data(i.getNombre(), x));
         }
         pieChartMes.setData(pieChartData);
+        pieChartMes.setTitle("Gastos del mes de " + month + " del " + year);
     }
     
     final EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>(){
@@ -129,39 +129,51 @@ public class EstadisticasController implements Initializable {
         public void handle(MouseEvent event) {
             Label lbl = (Label) event.getSource();
             if(event.getSource()== enero){
+                month = "enero";
                 crearPieChart(year, "01");
             }
             if(event.getSource()== febrero){
+                month = "febrero";
                 crearPieChart(year, "02");
             }
             if(event.getSource()== marzo){
+                month = "marzo";
                 crearPieChart(year, "03");
             }
             if(event.getSource()== abril){
+                month = "abril";
                 crearPieChart(year, "04");
             }
             if(event.getSource()== mayo){
+                month = "mayo";
                 crearPieChart(year, "05");
             }
             if(event.getSource()== junio){
+                month = "junio";
                 crearPieChart(year, "06");
             }
             if(event.getSource()== julio){
+                month = "julio";
                 crearPieChart(year, "07");
             }
             if(event.getSource()== agosto){
+                month = "agosto";
                 crearPieChart(year, "08");
             }
             if(event.getSource()== septiembre){
+                month = "septiembre";
                 crearPieChart(year, "09");
             }
             if(event.getSource()== octubre){
+                month = "octubre";
                 crearPieChart(year, "10");
             }
             if(event.getSource()== noviembre){
+                month = "noviembre";
                 crearPieChart(year, "11");
             }
             if(event.getSource()== diciembre){
+                month = "diciembre";
                 crearPieChart(year, "12");
             }
         }

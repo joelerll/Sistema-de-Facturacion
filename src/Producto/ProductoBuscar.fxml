@@ -8,16 +8,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Producto.ProductoBuscarController">
+<AnchorPane id="AnchorPane" prefHeight="443.0" prefWidth="608.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Producto.ProductoBuscarController">
     <children>
-      <Pane layoutX="1.0" layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
+      <Pane layoutX="1.0" prefHeight="455.0" prefWidth="607.0">
          <children>
-            <Label layoutX="246.0" layoutY="75.0" text="Buscar Prodcuto" />
-            <Label layoutX="69.0" layoutY="162.0" text="Nombre:" />
-            <Label layoutX="69.0" layoutY="261.0" text="Código:" />
-            <JFXTextField fx:id="tfNombreProductoBuscar" layoutX="137.0" layoutY="154.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="nombre del procucto a buscar" />
-            <JFXTextField fx:id="tfCodigoProductoBuscar" layoutX="137.0" layoutY="253.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="código del procucto a buscar" />
+            <Label layoutX="249.0" layoutY="28.0" text="Buscar Prodcuto" />
+            <Label layoutX="49.0" layoutY="70.0" text="Nombre:" />
+            <Label layoutX="52.0" layoutY="130.0" text="Código:" />
+            <JFXTextField fx:id="tfNombreProductoBuscar" layoutX="143.0" layoutY="62.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="nombre del procucto a buscar" />
+            <JFXTextField fx:id="tfCodigoProductoBuscar" layoutX="143.0" layoutY="122.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoBuscar" prefHeight="37.0" prefWidth="237.0" promptText="código del procucto a buscar" />
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="380.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
+            <Label layoutX="239.0" layoutY="242.0" text="Vista Previa" />
+            <Label layoutX="57.0" layoutY="290.0" text="Nobre" />
+            <JFXTextField fx:id="tfNombreProductoEncontrar" editable="false" layoutX="143.0" layoutY="282.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
+            <Label layoutX="52.0" layoutY="343.0" text="Código:" />
+            <JFXTextField fx:id="tfCodigoProductoEncontrar" editable="false" layoutX="146.0" layoutY="335.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
+            <Button fx:id="btEditarProducto" layoutX="111.0" layoutY="393.0" mnemonicParsing="false" onAction="#EditarProducto" text="Editar" />
+            <Button fx:id="btEliminarProducto" layoutX="348.0" layoutY="393.0" mnemonicParsing="false" onAction="#EliminarProducto" text="Eliminar" />
+            <Button fx:id="btBuscarProducto" layoutX="111.0" layoutY="184.0" mnemonicParsing="false" onAction="#BuscarProducto" text="Buscar" />
+            <Button fx:id="btMenuPrincipal" layoutX="351.0" layoutY="184.0" mnemonicParsing="false" onAction="#MenuPrincipal" text="Menu Principal" />
+            <Label fx:id="lblActual" layoutX="189.0" layoutY="398.0" />
+            <Label layoutX="241.0" layoutY="398.0" text="de" />
+            <Label fx:id="lbltotal" layoutX="285.0" layoutY="398.0" />
          </children>
       </Pane>
    </children>
