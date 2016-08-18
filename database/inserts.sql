@@ -35,9 +35,15 @@ INSERT INTO cliente VALUES ("0957839585", "2016-08-01", "jose Antonio", "Viteri 
 INSERT INTO cliente VALUES ("0924781166", "2016-08-01", "Erasmo Israel", "Zurita Barahona", "Guayaquil", "0953680843", "", ""); 
 
 SELECT * FROM cliente;
+/*INSERTS A EMPLEADO*/
+SELECT * FROM empleado;
 
+INSERT INTO empleado VALUES ("0931823447", "Joel", "Rodriguez", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "joel");
+INSERT INTO empleado VALUES ("0929858736", "Fernando", "Sanchez", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "ferissan");
+INSERT INTO empleado VALUES ("0928412469", "Israel", "Plascencia", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "israel");
 
-
+INSERT INTO empleado VALUES ("1", "nombrePrueba", "apellidoPrueba", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "PRUEBA");
+INSERT INTO empleado VALUES ("0", "nombrePrueba2", "apellidoPrueba2", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 0, "", "prueba2");
 
 
 
