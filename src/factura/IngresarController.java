@@ -194,7 +194,7 @@ public class IngresarController implements Initializable {
             Parent root1 = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setTitle("Coincidencia Productos");
             stage.setScene(new Scene(root1));
             limpiarCarritoObservable(); //<-------------------------------------------------- Limpia el obseblable

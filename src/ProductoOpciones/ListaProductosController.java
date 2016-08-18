@@ -28,6 +28,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -41,6 +42,10 @@ public class ListaProductosController implements Initializable {
  
     @FXML
     private ImageView imagen;
+    
+    @FXML
+    private JFXButton btnSalir;
+
     
     @FXML
     private JFXButton btnAgregar;
@@ -109,6 +114,14 @@ public class ListaProductosController implements Initializable {
        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
        stock.setCellFactory(integerCellFactory);
        
+        productos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //tableColumNombre.prefWidthProperty().bind(tablaProductos.widthProperty().multiply(0.50));
+        codigo.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
+        nombre.setMaxWidth( 1f * Integer.MAX_VALUE * 35 );
+        marca.setMaxWidth( 1f * Integer.MAX_VALUE * 10 );
+        precio.setMaxWidth( 1f * Integer.MAX_VALUE * 8 );
+        stock.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
+       
        // elimina la ultima celda por defecto
        productos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
        
@@ -117,6 +130,14 @@ public class ListaProductosController implements Initializable {
        
         // Anade todas las columnas en orden
        productos.getColumns().addAll(codigo,nombre,marca,stock,precio);
+    }
+    
+    @FXML
+    private void closeButtonAction(){
+    // get a handle to the stage
+    Stage stage = (Stage) btnSalir.getScene().getWindow();
+    // do what you have to do
+    stage.close();
     }
     
     class MyIntegerTableCell extends TableCell<ProductoVO,Integer>{

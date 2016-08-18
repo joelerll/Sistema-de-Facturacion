@@ -15,12 +15,17 @@
         <URL value="@listaproductos.css" />
     </stylesheets>
    <children>
-      <JFXButton fx:id="btnAgregar" layoutX="913.0" layoutY="14.0" text="AGREGAR">
+      <JFXButton fx:id="btnAgregar" layoutX="933.0" layoutY="8.0" text="AGREGAR">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
       <TableView fx:id="productos" layoutX="4.0" prefHeight="351.0" prefWidth="896.0" />
-      <ImageView fx:id="imagen" fitHeight="308.0" fitWidth="268.0" layoutX="913.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imagen" fitHeight="292.0" fitWidth="222.0" layoutX="950.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXButton fx:id="btnSalir" layoutX="1089.0" layoutY="8.0" onAction="#closeButtonAction" text="SALIR">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
