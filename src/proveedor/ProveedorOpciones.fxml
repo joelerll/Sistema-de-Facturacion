@@ -26,5 +26,10 @@
             <Font size="32.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="telefonoButton" layoutX="140.0" layoutY="265.0" onAction="#handleButtonActionTelefono" text="Ingresar telefono Proveedor">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
