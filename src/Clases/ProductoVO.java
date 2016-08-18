@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * @author joelerll
  */
 public class ProductoVO {
-    private String id;
+    public String id;
     private String nombre;
     private String marca;
     private String imagen;

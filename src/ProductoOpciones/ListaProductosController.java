@@ -10,6 +10,7 @@ import Clases.ProductoVO;
 import Utils.Colores;
 import com.jfoenix.controls.JFXButton;
 import factura.IngresarController;
+import factura.ProductosCanasta;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
@@ -27,7 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 /**
@@ -165,7 +165,7 @@ public class ListaProductosController implements Initializable {
             int index = c.getIndex();
             
             System.out.println("\n" + Colores.ANSI_GREEN + "Producto escogido");
-            System.out.println("productosOB.get(index).toString()");
+            System.out.println(productosOB.get(index).getId());
 
             // Agregar un producto a carrito
             btnAgregar.setOnAction(new EventHandlerImpl(index));
@@ -193,7 +193,14 @@ public class ListaProductosController implements Initializable {
             public void handle(ActionEvent e) {
                 ProductoVO p = new ProductoVO();
                 p.setId(productosOB.get(index).getId());
+                p.setNombre(productosOB.get(index).getNombre());
+                p.setMarca(productosOB.get(index).getMarca());
+                p.setStock(productosOB.get(index).getStock());
+                p.setPrecio_inicial(productosOB.get(index).getPrecio_inicial());
+                p.setPrecio_venta(productosOB.get(index).getPrecio_venta());
+                p.setImagen(productosOB.get(index).getImagen());
                 IngresarController.productosCanasta.add(p);
+                IngresarController.productosCanastaFactura.add(new ProductosCanasta(p));
                 alertBox.crearAlertBox(" ", "", "Producto Agregado a Carrito");
             }
         }

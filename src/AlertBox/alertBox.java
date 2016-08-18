@@ -1,7 +1,9 @@
 
 package AlertBox;
 
+import java.util.Optional;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.StageStyle;
 
 public class alertBox {
@@ -40,5 +42,17 @@ public class alertBox {
         alert.showAndWait();
     }
 
-    
+    public static int textInputCantidadBox(String title, String header, String message){
+        int cantidad = -1;
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle(title);
+        dialog.setHeaderText(header);
+        dialog.setContentText(message);
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            cantidad = Integer.parseInt(result.get());
+            return cantidad;
+        }
+        return -1;
+    }
 }

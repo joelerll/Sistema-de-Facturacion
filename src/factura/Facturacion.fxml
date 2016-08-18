@@ -34,7 +34,7 @@
             </Pane>
             <Pane layoutX="258.0" layoutY="70.0" prefHeight="398.0" prefWidth="1027.0" styleClass="border-panel-internonn">
                <children>
-                  <TableView fx:id="tabla" layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
+                  <TableView fx:id="tableColumnDescripcion" layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
                     <columns>
                         <TableColumn fx:id="TableColumnNro" prefWidth="81.0" text="Nro" />
                         <TableColumn fx:id="TableColumnCodigo" prefWidth="98.0" text="CODIGO" />
@@ -50,11 +50,6 @@
             <Pane layoutX="14.0" layoutY="70.0" prefHeight="392.0" prefWidth="234.0" styleClass="border-panel-internonn">
                <children>
                   <ImageView fitHeight="392.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true" />
-                  <SubScene fx:id="subScene" height="183.0" layoutX="14.0" layoutY="195.0" width="200.0">
-                    <root>
-                      <Region />
-                    </root>
-                  </SubScene>
                </children>
             </Pane>
          </children>

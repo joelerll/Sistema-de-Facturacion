@@ -16,7 +16,7 @@
     <children>
       <FlowPane prefHeight="33.0" prefWidth="456.0" />
       <Text layoutX="1255.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
-      <Pane layoutX="33.0" layoutY="183.0" prefHeight="470.0" prefWidth="1299.0" styleClass="panel-material">
+      <Pane layoutX="33.0" layoutY="183.0" prefHeight="470.0" prefWidth="1310.0" styleClass="panel-material">
          <children>
             <Pane layoutX="15.0" layoutY="14.0" prefHeight="56.0" prefWidth="1270.0">
                <children>
@@ -24,39 +24,29 @@
                      <font>
                         <Font size="15.0" />
                      </font></JFXTextField>
-                  <JFXTextField fx:id="nombreProducto" focusColor="#408ea8" layoutX="320.0" layoutY="11.0" maxWidth="621.0" minWidth="386.0" prefHeight="35.0" prefWidth="393.0" promptText="NOMBRE" styleClass="root-borde">
+                  <JFXTextField fx:id="nombreProducto" focusColor="#408ea8" layoutX="277.0" layoutY="12.0" maxWidth="621.0" minWidth="386.0" prefHeight="35.0" prefWidth="393.0" promptText="NOMBRE" styleClass="root-borde">
                      <font>
                         <Font size="15.0" />
                      </font></JFXTextField>
-                  <JFXButton fx:id="btnBorrarProducto" layoutX="1136.0" layoutY="9.0" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BORRAR" />
-                  <JFXTextField fx:id="marcaProducto" focusColor="#408ea8" layoutX="726.0" layoutY="12.0" maxWidth="621.0" minWidth="281.0" prefHeight="35.0" prefWidth="294.0" promptText="MARCA" styleClass="root-borde">
+                  <JFXButton fx:id="btnBorrarProducto" layoutX="985.0" layoutY="8.0" onAction="#handleButtonBorrar" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BORRAR" />
+                  <JFXTextField fx:id="marcaProducto" focusColor="#408ea8" layoutX="680.0" layoutY="12.0" maxWidth="621.0" minWidth="175.0" prefHeight="35.0" prefWidth="175.0" promptText="MARCA" styleClass="root-borde">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXButton fx:id="btnBuscarProducto" layoutX="1007.0" layoutY="9.0" onAction="#handleButtonBuscarProducto" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BUSCAR" />
+                  <JFXButton fx:id="btnBuscarProducto" layoutX="855.0" layoutY="8.0" onAction="#handleButtonBuscarProducto" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BUSCAR" />
+                  <JFXButton fx:id="btnCantidad" layoutX="1133.0" layoutY="8.0" styleClass="custom-button" text="CANTIDAD">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
                </children>
             </Pane>
-            <Pane layoutX="258.0" layoutY="70.0" prefHeight="398.0" prefWidth="1027.0" styleClass="border-panel-internonn">
+            <Pane layoutX="3.0" layoutY="70.0" prefHeight="398.0" prefWidth="1299.0" styleClass="border-panel-internonn">
                <children>
-                  <TableView fx:id="tabla" layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1005.0">
-                    <columns>
-                        <TableColumn fx:id="TableColumnNro" prefWidth="81.0" text="Nro" />
-                        <TableColumn fx:id="TableColumnCodigo" prefWidth="98.0" text="CODIGO" />
-                      <TableColumn fx:id="TableColumnDescripcion" prefWidth="448.0" text="DESCRIPCION" />
-                        <TableColumn fx:id="TableColumnStrok" prefWidth="72.0" text="STOCK" />
-                        <TableColumn fx:id="TableColumnCantidad" prefWidth="90.0" text="CANTIDAD" />
-                      <TableColumn fx:id="TableColumnPUnitario" prefWidth="108.0" text="P. UNITARIO" />
-                        <TableColumn fx:id="TableColumnTotal" prefWidth="98.0" text="TOTAL" />
-                    </columns>
-                  </TableView>
-                  <ScrollBar fx:id="ScrollBar" layoutX="1007.0" layoutY="3.0" orientation="VERTICAL" prefHeight="392.0" prefWidth="17.0" />
+                  <TableView fx:id="tablaProductos" layoutX="2.0" layoutY="3.0" prefHeight="392.0" prefWidth="1292.0" />
                </children></Pane>
-            <Pane layoutX="14.0" layoutY="104.0" prefHeight="358.0" prefWidth="234.0">
-               <children>
-                  <ImageView fx:id="imagen" fitHeight="392.0" fitWidth="234.0" pickOnBounds="true" preserveRatio="true" />
-               </children>
-            </Pane>
+            <Pane layoutX="14.0" layoutY="104.0" prefHeight="358.0" prefWidth="234.0" />
          </children>
          <effect>
             <DropShadow />
@@ -73,7 +63,7 @@
       <Text layoutX="738.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descuento" />
       <Text layoutX="625.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal" />
       <NumberValidator layoutX="608.0" layoutY="173.0" />
-      <Pane layoutX="33.0" layoutY="46.0" prefHeight="120.0" prefWidth="1299.0" styleClass="panel-material">
+      <Pane layoutX="33.0" layoutY="46.0" prefHeight="120.0" prefWidth="1310.0" styleClass="panel-material">
          <effect>
             <DropShadow color="#222121" />
          </effect>
