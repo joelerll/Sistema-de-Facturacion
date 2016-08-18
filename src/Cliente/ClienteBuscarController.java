@@ -2,12 +2,14 @@ package Cliente;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,15 +27,17 @@ import javafx.stage.Stage;
 public class ClienteBuscarController implements Initializable {
     //ATRIBUTOS BUSCAR
     @FXML
+    private JFXTextField tfCedula;
+    @FXML
+    private JFXTextField tfEmail;
+    @FXML
     private JFXTextField tfNombres;
     @FXML
     private JFXTextField tfApellido;
     @FXML
     private JFXTextField tfDireccion;
     @FXML
-    private JFXTextField tfCedula;
-    @FXML
-    private JFXTextField tfEmail;
+    private JFXTextField tfFechaRegistro;
     @FXML
     private JFXTextField tfConvencional;
     @FXML
@@ -50,7 +54,7 @@ public class ClienteBuscarController implements Initializable {
     @FXML
     private JFXTextField tfVPDireccion;
     @FXML
-    private DatePicker tfVPFechaRegistro;
+    private JFXTextField tfVPFechaRegistro;
     @FXML
     private JFXTextField tfVPEmail;
     @FXML
@@ -59,15 +63,15 @@ public class ClienteBuscarController implements Initializable {
     private JFXTextField tfVPApellido;
     @FXML
     private JFXTextField tfVPConvencional;
-    
+    //LABELS
     @FXML
     private Label lblCTotal;    //muestra el total de Clientes encontrados.
     @FXML
     private Label lblCActual;   //muestra el Cliente actual que se muestra en la Vista Previa
     @FXML
     private Label lblDe;
-    
-     @FXML
+    //BOTONES
+    @FXML
     private JFXButton btnPrev;
     @FXML
     private JFXButton btnNext;
@@ -75,14 +79,10 @@ public class ClienteBuscarController implements Initializable {
     private JFXButton btnEditar;
     @FXML
     private JFXButton btnEliminar;
-    
+    //ATRIBUTOS DE LA CLASE
     private int index;
     private List <Cliente> listaClientes;
-    
     String cedulaOriginal;
-    
-    @FXML
-    private JFXButton btnConfirmar;
     
     @FXML
     private GridPane GridVistaPrevia;
@@ -99,12 +99,14 @@ public class ClienteBuscarController implements Initializable {
 
     @FXML
     void buscar(ActionEvent event) {
-        listaClientes = Cliente.buscarCliente(tfCedula.getText(), tfNombres.getText(), tfApellido.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+        listaClientes = Cliente.buscarCliente(tfCedula.getText(), tfFechaRegistro.getText(), tfNombres.getText(), tfApellido.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
         index = 0;
         if(!listaClientes.isEmpty()){
             Cliente c = listaClientes.get(0);
+            LocalDate date = LocalDate.parse(c.getFecha_C(), DateTimeFormatter.ISO_DATE);
             tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
+            tfVPFechaRegistro.setText(c.getFecha_C());
             tfVPDireccion.setText(c.getDireccion_C());
             tfVPApellido.setText(c.getApellido_C());
             tfVPCelular.setText(c.getCelular_C());
@@ -117,18 +119,17 @@ public class ClienteBuscarController implements Initializable {
         }else{
             AlertBox.alertBox.crearAlertBox("Information Dialog", null, "No se encontraron coincidencias");
         }
-        //FALTA REVISAR ESTA SIGUIENTE LINEA!!!!!!!!!!!!!!!!!
         cedulaOriginal = tfVPCedula.getText();
     }
     
     @FXML
     void editar(ActionEvent event) throws IOException {
-        if(revisarEdicion()&&Cliente.editarCliente(cedulaOriginal, tfVPCedula.getText(), tfVPNombre.getText(), tfVPApellido.getText(), tfVPDireccion.getText(), tfVPCelular.getText(), tfVPConvencional.getText(), tfVPEmail.getText())){
-            
-            AlertBox.alertBox.crearAlertBox("Confirmation Dialog", null, "Cliente actualizado");
+        if(revisarEdicion()){
+            if (Cliente.editarCliente(cedulaOriginal, tfVPCedula.getText(), tfVPFechaRegistro.getText(), tfVPNombre.getText(), tfVPApellido.getText(), tfVPDireccion.getText(), tfVPCelular.getText(), tfVPConvencional.getText(), tfVPEmail.getText())) 
+            {
+                AlertBox.alertBox.crearAlertBox("Confirmation Dialog", null, "Cliente actualizado");
+            }
         }
-        
-        
     }
     
     public void enableTextFields(){
@@ -143,8 +144,8 @@ public class ClienteBuscarController implements Initializable {
     }
     
     public boolean revisarEdicion(){
-        System.out.println(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "").size());
-         if(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "").size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
+        System.out.println(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "", "").size());
+         if(Cliente.buscarCliente(tfVPCedula.getText(),"", "", "", "", "", "", "").size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
                //Tiene que ser >1 porque al buscar en la BD, si va a encontrar una coincidencia.
              AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Ya existe otro cliente con esa cedula!");
              return false;
@@ -168,7 +169,12 @@ public class ClienteBuscarController implements Initializable {
             //Encero todos los valores
             tfVPCedula.setText(null);
             tfVPNombre.setText(null);
+            tfVPApellido.setText(null);
             tfVPDireccion.setText(null);
+            tfVPCelular.setText(null);
+            tfVPConvencional.setText(null);
+            tfVPEmail.setText(null);
+            tfVPFechaRegistro.setText(null);
             lblCActual.setText(null);
             lblCTotal.setText(null);
         }else{                              //SI HABIAN MAS CLIENTES QUE COINCIDIAN CON EL CRITERIO DE BUSQUEDA, AL ELIMINAR EL CLIENTE SELECCIONADO SE DEBEN MOSTRAR LOS QUE QUEDAN
@@ -176,6 +182,8 @@ public class ClienteBuscarController implements Initializable {
             //SE VUELVE A PRESENTAR TODO COMO ANTES SIN EL CLIENTE ELIMINADO
             index = 0;
             Cliente c = listaClientes.get(0);
+            LocalDate date = LocalDate.parse(c.getFecha_C(), DateTimeFormatter.ISO_DATE);
+            tfVPFechaRegistro.setText(c.getFecha_C());
             tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
             tfVPDireccion.setText(c.getDireccion_C());
@@ -198,9 +206,15 @@ public class ClienteBuscarController implements Initializable {
         if(Integer.parseInt(lblCActual.getText())>1){
             index--;
             Cliente c = listaClientes.get(index);
-            tfVPNombre.setText(c.getNombre_C() + " " + c.getApellido_C());
+            LocalDate date = LocalDate.parse(c.getFecha_C(), DateTimeFormatter.ISO_DATE);
+            tfVPFechaRegistro.setText(c.getFecha_C());
+            tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
             tfVPDireccion.setText(c.getDireccion_C());
+            tfVPApellido.setText(c.getApellido_C());
+            tfVPCelular.setText(c.getCelular_C());
+            tfVPConvencional.setText(c.getConvencional_C());
+            tfVPEmail.setText(c.getEmail_C());
             int i = index+1;
             lblCActual.setText(""+i);  
             cedulaOriginal = c.getCedula_C();
@@ -212,6 +226,8 @@ public class ClienteBuscarController implements Initializable {
         if(!lblCActual.getText().equals(lblCTotal.getText())){
             index++;
             Cliente c = listaClientes.get(index);
+            LocalDate date = LocalDate.parse(c.getFecha_C(), DateTimeFormatter.ISO_DATE);
+            tfVPFechaRegistro.setText(c.getFecha_C());
             tfVPNombre.setText(c.getNombre_C());
             tfVPCedula.setText(c.getCedula_C());
             tfVPDireccion.setText(c.getDireccion_C());

@@ -40,7 +40,7 @@ public class Sistema_Facturacion extends Application {
         //stage.initStyle(StageStyle.TRANSPARENT);
         try{
             Parent root = FXMLLoader.load(getClass().getResource("VentanaLogin.fxml"));
-            Scene scene = new Scene(root,600,400);
+            Scene scene = new Scene(root,485,345);
             stage.setScene(scene);
         }catch (Exception e){
             System.out.println("No cargo VentanaLogin.xml");

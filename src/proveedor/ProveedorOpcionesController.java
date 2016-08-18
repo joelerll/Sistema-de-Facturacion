@@ -35,6 +35,9 @@ public class ProveedorOpcionesController implements Initializable {
     private JFXButton menuButton;
     
     @FXML
+    private JFXButton telefonoButton;
+    
+    @FXML
         private void handleButtonActionIngresar(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("IngresarProveedor.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
@@ -57,6 +60,16 @@ public class ProveedorOpcionesController implements Initializable {
     @FXML
     void menuPrincipal(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show(); 
+    }
+    
+    @FXML
+        private void handleButtonActionTelefono(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("ProveedorTelefono.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional

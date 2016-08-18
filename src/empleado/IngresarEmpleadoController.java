@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -59,42 +60,49 @@ public class IngresarEmpleadoController implements Initializable {
     private JFXTextField FXEes_admin;
     @FXML
     private JFXTextField FXEtelefono;
+    @FXML
+    private JFXTextField FXEuser;
     
     //JFXButton
     @FXML
     private JFXButton menuButton;
     @FXML
     private JFXButton ingresarButton;
+    @FXML
+    private JFXButton atrasButton;
     
     //METODOS
     @FXML
     void ingresarEmpleado(ActionEvent event) {
-       /* String cedula = FXEcedula.getText();
-        String nombre = FXEnombre.getText();
+        String cedula = FXEcedula.getText(); 
+        String nombre = FXEnombre.getText(); 
         String apellido = FXEapellido.getText();
         String dir = FXEdir.getText();
-        Date fecha_ing = (Date) FXEfecha_ing.getDayCellFactory();
+        LocalDate date = FXEfecha_ing.getValue(); //Verificacion
+        String fecha_ing = date.format(DateTimeFormatter.ISO_DATE); 
         String hora_ent = FXEhora_ent.getText();
         String hora_sal = FXEhora_sal.getText();
-        BigDecimal sueldo = new BigDecimal(FXEsueldo.getText());
-        Integer es_admin = Integer.parseInt(FXEes_admin.getText());
-        String telefono = FXEtelefono.getText();
+        String amount = FXEsueldo.getText(); //Verificacion
+        BigDecimal sueldo = new BigDecimal(FXEsueldo.getCharacters().toString()); 
+        String is_admin = FXEes_admin.getText(); //Verificacion
+        Integer es_admin = Integer.parseInt(FXEes_admin.getText()); 
+        String telefono = FXEtelefono.getText(); 
+        String user = FXEuser.getText();
         
-        
-        if(cedula.equals("")||nombre.equals("")||apellido.equals("")||dir.equals("")||hora_ent.equals("")||hora_sal.equals("")||telefono.equals("")){
+        if(cedula.equals("")||nombre.equals("")||apellido.equals("")||dir.equals("")||date == null||hora_ent.equals("")||hora_sal.equals("")||amount.equals("")||is_admin.equals("")||telefono.equals("")||user.equals("")){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Alert Dialog");
             alert.setHeaderText(null);
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            empleado.Empleado.ingresarEmpleado(cedula, nombre, apellido, dir, fecha_ing, hora_ent, hora_sal, sueldo, es_admin, telefono);
+            empleado.Empleado.ingresarEmpleado(cedula, nombre.toUpperCase(), apellido.toUpperCase(), dir.toUpperCase(), fecha_ing, hora_ent, hora_sal, sueldo, es_admin, telefono,user);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);
             alert.setContentText("Empleado ingresado!");
             alert.showAndWait();
-        }*/
+        }
     }
     
     @FXML
@@ -107,19 +115,28 @@ public class IngresarEmpleadoController implements Initializable {
         app_stage.show(); 
     }
     
+    @FXML
+    void atras(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/empleado/EmpleadoOpciones.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show(); 
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        /*
         RequiredFieldValidator validatorCedula = new RequiredFieldValidator();
         RequiredFieldValidator validatorNombre = new RequiredFieldValidator();
         RequiredFieldValidator validatorApellido = new RequiredFieldValidator();
         RequiredFieldValidator validatorDir = new RequiredFieldValidator();
-      //RequiredFieldValidator validatorFecha_Ing = new RequiredFieldValidator();
         RequiredFieldValidator validatorHora_Ent = new RequiredFieldValidator();
         RequiredFieldValidator validatorHora_Sal = new RequiredFieldValidator();
         RequiredFieldValidator validatorSueldo = new RequiredFieldValidator();
         RequiredFieldValidator validatorEs_Admin = new RequiredFieldValidator();
         RequiredFieldValidator validatorTelefono = new RequiredFieldValidator();
+        RequiredFieldValidator validatorUser = new RequiredFieldValidator();
         
         
         FXEcedula.getValidators().add(validatorCedula);
@@ -192,7 +209,17 @@ public class IngresarEmpleadoController implements Initializable {
             if(!newValue){
                 FXEtelefono.validate();
             }
-        });*/
+        });
+        
+        FXEuser.getValidators().add(validatorTelefono);
+        validatorUser.setMessage("Campo Obligatorio");
+        FXEuser.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if(!newValue){
+                FXEuser.validate();
+            }
+        });
+        
+        FXEfecha_ing.setValue(LocalDate.now());
     }    
     
 }

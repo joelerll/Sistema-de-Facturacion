@@ -49,7 +49,7 @@ public class EmpleadoOpcionesController implements Initializable {
         
     @FXML
     private void handleButtonActionEliminar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("EmpleadoEliminar.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("BuscarEmpleado.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional
@@ -57,16 +57,6 @@ public class EmpleadoOpcionesController implements Initializable {
         app_stage.show(); 
     } 
         
-    @FXML
-    private void handleButtonActionActualizar(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("EmpleadoActualizar.fxml"));
-        Scene home_page_scene = new Scene(home_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.hide(); //optional
-        app_stage.setScene(home_page_scene);
-        app_stage.show(); 
-    }
-    
     @FXML
     void menuPrincipal(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));

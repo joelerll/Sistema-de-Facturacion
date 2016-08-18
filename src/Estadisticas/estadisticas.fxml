@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Estadisticas.EstadisticasController">
+   <children>
+      <BorderPane fx:id="borderPane" prefHeight="400.0" prefWidth="600.0">
+         <center>
+            <AnchorPane fx:id="chartPane" prefHeight="366.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+               <children>
+                  <PieChart fx:id="pieChartMes" layoutX="2.0" layoutY="1.0" prefHeight="323.0" prefWidth="471.0" />
+               </children></AnchorPane>
+         </center>
+         <top>
+            <AnchorPane prefHeight="34.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label layoutX="253.0" layoutY="4.0" text="ESTADISTICAS" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="252.0" />
+               </children>
+            </AnchorPane>
+         </top>
+         <left>
+            <TabPane prefHeight="366.0" prefWidth="124.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab text="Año">
+                     <content>
+                        <JFXListView fx:id="lvYearList" />
+                     </content>
+                </Tab>
+                <Tab text="Mes">
+                     <content>
+                        <JFXListView fx:id="lvMonthList" />
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </left>
+         <bottom>
+            <Pane prefHeight="39.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btnRegresar" buttonType="RAISED" layoutX="241.0" layoutY="4.0" onAction="#regresarMenuPrincipal" text="Menu Principal" />
+               </children>
+            </Pane>
+         </bottom>
+      </BorderPane>
+   </children>
+</AnchorPane>

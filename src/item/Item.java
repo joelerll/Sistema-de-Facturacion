@@ -26,6 +26,9 @@ public class Item {
     private String nombre;
     private String descripcion;
     private Date fecha;
+    
+    
+    
     public Item() {
     }
 
@@ -183,4 +186,45 @@ public class Item {
     public String toString() {
         return " NOMBRE "+ nombre + " ID " +  id + "  FECHA " + fecha;
     }
+    
+    public static List<Item> buscarPorFecha(String year, String month, String day){
+        List<Item> resultados = new ArrayList<Item>();
+        
+        DBconnection database=new DBconnection();
+        Connection conexion;
+        PreparedStatement ps;
+        ResultSet rs = null;
+        String fechaB = year + "-" + month;
+        //System.out.println(fechaB);
+        try{
+            conexion = database.conectar();
+            
+            
+            String q ="SELECT * FROM item WHERE fecha LIKE ('%"+fechaB+"%')";
+            
+            //String q ="SELECT * FROM item WHERE fecha = '"+fechaB+"'";
+            System.out.println(q);
+            ps = conexion.prepareCall(q);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Item item = new Item();
+                item.setId(rs.getInt(1));
+                item.setPrecio(rs.getBigDecimal(2));
+                item.setNombre(rs.getString(3));
+                item.setDescripcion(rs.getString(4));
+                item.setFecha(rs.getDate(5));
+                resultados.add(item);
+            }ps.close();
+            conexion.close();
+            rs.close();
+        }catch(SQLException sql){
+            System.out.println("Error en buscar item para eliminar");
+        }
+        
+        return resultados;
+        
+    }
+    
+    
+    
 }

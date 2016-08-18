@@ -8,8 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Cliente.ClienteCrearController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Cliente.ClienteCrearController">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="376.0" prefWidth="575.0">
         <columnConstraints>
@@ -26,7 +25,6 @@
         </rowConstraints>
          <children>
             <JFXTextField fx:id="tfCedula" alignment="CENTER" promptText="Cedula" />
-            <JFXTextField fx:id="tfFechaRegistro" promptText="Fecha de registro" GridPane.columnIndex="1" />
             <JFXTextField fx:id="tfNombres" promptText="Nombres" GridPane.rowIndex="1" />
             <JFXTextField fx:id="tfApellidos" promptText="Apellidos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXTextField fx:id="tfDireccion" maxWidth="574.0" minWidth="574.0" prefHeight="37.0" prefWidth="574.0" promptText="Direccion" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
@@ -46,6 +44,11 @@
                   <Insets left="82.0" />
                </GridPane.margin>
             </JFXButton>
+            <DatePicker fx:id="date" promptText="Fecha de Registro" GridPane.columnIndex="1">
+               <GridPane.margin>
+                  <Insets left="35.0" />
+               </GridPane.margin>
+            </DatePicker>
          </children>
       </GridPane>
    </children>

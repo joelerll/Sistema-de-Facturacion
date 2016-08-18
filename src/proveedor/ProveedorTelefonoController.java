@@ -7,13 +7,11 @@ package proveedor;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RequiredFieldValidator;
 import database.DBconnection;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,43 +27,43 @@ import javafx.stage.Stage;
  *
  * @author fernando
  */
-public class IngresarProveedorController implements Initializable {
-    
+public class ProveedorTelefonoController implements Initializable {
+
     //ATRIBUTOS
     private static final DBconnection database=new DBconnection();
     private static Connection con;
     
     //JFXTextField
     @FXML
-    private JFXTextField FXPnombre;
+    private JFXTextField FXTid;
     @FXML
-    private JFXTextField FXPdir;
+    private JFXTextField FXTtel;
     //JFXButton
     @FXML
     private JFXButton menuButton;
     @FXML
-    private JFXButton ingresarButton;
+    private JFXButton guardarButton;
     @FXML
     private JFXButton atrasButton;
     
     //METODOS
     @FXML
-    void ingresarProveedor(ActionEvent event) {
-        String nombre = FXPnombre.getText();
-        String dir = FXPdir.getText();
+    void ingresarTelefonoProveedor(ActionEvent event) {
+        String id = FXTid.getText();
+        String tel = FXTtel.getText();
         
-        if(nombre.equals("")||dir.equals("")){
+        if(id.equals("")||tel.equals("")){
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Alert Dialog");
             alert.setHeaderText(null);
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            Proveedor.ingresarProveedor(FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
+            ProveedorTelefono.ingresarTelefonoProveedor(FXTid.getText(), FXTtel.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);
-            alert.setContentText("Proveedor ingresado!");
+            alert.setContentText("Telefono del Proveedor ingresado!");
             alert.showAndWait();
         }
     }
@@ -92,24 +90,8 @@ public class IngresarProveedorController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        RequiredFieldValidator validatorNombre = new RequiredFieldValidator();
-        RequiredFieldValidator validatorDir = new RequiredFieldValidator();
-        
-        FXPnombre.getValidators().add(validatorNombre);
-        validatorNombre.setMessage("Campo Obligatorio");
-        FXPnombre.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(!newValue){
-                FXPnombre.validate();
-            }
-        });
-        
-        FXPdir.getValidators().add(validatorDir);
-        validatorDir.setMessage("Campo Obligatorio");
-        FXPdir.focusedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-            if(!newValue){
-                FXPdir.validate();
-            }
-        });  
-    }    
-   
+        // TODO
+    }
+    
+    
 }
