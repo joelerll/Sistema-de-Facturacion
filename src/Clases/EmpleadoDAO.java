@@ -20,7 +20,7 @@ public class EmpleadoDAO {
     
     public static List<EmpleadoVO> empleados(){
         List <EmpleadoVO> empleados = new ArrayList<>();
-        String sql = "SELECT * FROM empleado";
+        String sql = "SELECT cedula, nombre,apellido,direccion,fecha_ing,horario_ent,horario_sal, sueldo, es_admin, telefono FROM empleado";
         try{
             DBconexion con = new DBconexion();
             PreparedStatement pd = con.getConnection().prepareCall(sql);

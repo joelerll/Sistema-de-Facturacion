@@ -48,7 +48,7 @@ CREATE TABLE empleado(
   horario_sal VARCHAR(30) NOT NULL,
   sueldo  DECIMAL(5,2) NOT NULL,
   es_admin INTEGER NOT NULL,
-  telefono VARCHAR(30), NOT NULL,
+  telefono VARCHAR(30) NOT NULL,
   usuario VARCHAR(30) NOT NULL,
   PRIMARY KEY (cedula)
 )ENGINE = InnoDB;
