@@ -39,23 +39,37 @@ public class FacturaDAO {
         return last;
     }
     
-    public static void setFactura(BigDecimal valor, Date fecha, String cedula_c, String cedula_empl) throws ParseException{
-        
-        Timestamp time = new Timestamp(fecha.getTime());
-        //String sql = "INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES ("+valor+","+ time+","+cedula_c+","+cedula_empl+")";
-        String sql = "INSERT INTO factura(valor,fecha,cedula_c,cedula_empl) VALUES (?,?,?,?)";
+    public static void setFactura(BigDecimal valor, Timestamp fecha, String cedula_c, String cedula_empl){
+        String sql = "INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES (?,?,?,?)";
         System.out.println(sql);
         try{
             DBconexion con = new DBconexion();
             PreparedStatement ps = con.getConnection().prepareStatement(sql);
             ps.setBigDecimal(1, valor);
-            ps.setTimestamp(2,time);
+            ps.setTimestamp(2,fecha);
             ps.setString(3, cedula_c);
             ps.setString(4, cedula_empl);
             ps.executeUpdate();
-            //con.desconetar();
+            con.desconetar();
+            System.out.println("Factura ha sido guardada");
         }catch(SQLException e){
             System.out.println(Colores.ANSI_RED + "ERROR Clases.FacturaDAO setFactura" + Colores.ANSI_RESET);
+        }
+    }
+    
+    public static void setProducto_Factura(String producto_id, int factura_id){
+        String sql = "INSERT INTO producto_factura (id_producto,id_factura) VALUES (?,?)";
+        System.out.println(sql);
+        try{
+            DBconexion con = new DBconexion();
+            PreparedStatement ps = con.getConnection().prepareStatement(sql);
+            ps.setString(1, producto_id);
+            ps.setInt(2, factura_id);
+            ps.executeUpdate();
+            con.desconetar();
+            System.out.println("Producto Factura ha sido guardado");
+        }catch(SQLException e){
+            System.out.println(Colores.ANSI_RED + "ERROR Clases.FacturaDAO setProducto_Factura" + Colores.ANSI_RESET);
         }
     }
 }

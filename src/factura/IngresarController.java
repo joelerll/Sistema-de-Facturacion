@@ -164,23 +164,28 @@ public class IngresarController implements Initializable {
 
     @FXML
     private void handleButtonFacturar(ActionEvent event) throws ParseException{
-        // tablas   factura, producto_factura
-        // textTotal
-        // clienteCedula
-        // Cedula empleado  <---- complicado
-        // setear fecha con formato correcto
-        System.out.println(date);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        String parseDate = dateFormat.format(date);
-        //System.out.println(date.toString());
-        System.out.println(parseDate);
-        Timestamp timestamp2 = new Timestamp(date.getTime());
-        //Date parsedDate2 = dateFormat.parse();
-        System.out.println(timestamp2);
-        FacturaDAO.setFactura(new BigDecimal(textTotal.getText()), date, comboBoxEmpleados.getValue().getCedula(), clienteCedula.getText());
-        // producto_factura
-        // coger los datos de la listra de productos_canasta_final
-        // setear uno a uno con la id de la factura
+        boolean bandera = true;
+        for (ProductosCanasta proo : productosCanastaFactura){
+            if(proo.getCantidad() == 0){
+                alertBox.crearErrorBox(" ", "", "Debe ingresar las cantidades de todos los productos");
+                bandera = false;
+                break;
+            }
+        }
+        if(bandera){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String parseDate = dateFormat.format(date);
+            Timestamp ts = Timestamp.valueOf(parseDate);
+            if(clienteCedula.getText().isEmpty()){
+                alertBox.crearErrorBox(" ", "", "Ingrese cliente primero");
+            }else{
+                FacturaDAO.setFactura(new BigDecimal(textTotal.getText()),ts,  clienteCedula.getText(),comboBoxEmpleados.getValue().getCedula());
+            }
+            for (ProductosCanasta pro : productosCanastaFactura){ 
+                FacturaDAO.setProducto_Factura(pro.getId(), siguienteIdFactura);
+            }
+            alertBox.crearAlertBox(" ", "", "La factura ha sido registrada");
+        }
     }
     
     @FXML
