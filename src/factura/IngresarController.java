@@ -11,11 +11,11 @@ import AlertBox.alertBox;
 import Clases.ClienteDAO;
 import Clases.ClienteVO;
 import Clases.EmpleadoDAO;
+import Clases.EmpleadoVO;
 import Clases.FacturaDAO;
 import Clases.ProductoDAO;
 import Clases.ProductoVO;
 import ProductoOpciones.ListaProductosController;
-import static ProductoOpciones.ListaProductosController.productosOB;
 import Utils.Colores;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -24,7 +24,9 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,21 +42,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -66,26 +60,8 @@ import javafx.util.Callback;
  */
 public class IngresarController implements Initializable {
     
-    /* @FXML
-    private TableColumn<ProductoVO, Integer> tableColumnNro;
-  */
-    /*@FXML
-    private TableColumn<ProductoVO, String> tableColumnCodigo;
-     */
-   /* @FXML
-    private TableColumn<ProductoVO, String> tableColumNombre;
-    */
-   /* @FXML
-    private TableColumn<ProductoVO, Integer> tableColumnStock;
-    
     @FXML
-    private TableColumn<ProductoVO, Integer> tableColumnCantidad;
-    
-   @FXML
-    private TableColumn<ProductoVO, BigDecimal> tableColumnPUnitario;
-    
-    @FXML
-    private TableColumn<ProductoVO, BigDecimal> tableColumnTotal;*/
+    private JFXComboBox<EmpleadoVO> comboBoxEmpleados;
     
     @FXML
     private JFXCheckBox consumidorFinal;
@@ -94,34 +70,53 @@ public class IngresarController implements Initializable {
     private JFXTextField clienteCedula,clienteApellido,clienteNombre,codigoProducto,nombreProducto,marcaProducto;
     
     @FXML
-    private Label codigoFactura,hora,fecha;
-
-    @FXML
-    private JFXComboBox comboBoxEmpleados;
+    private Label codigoFactura,fecha;
     
     @FXML
     private JFXButton btnCantidad;
-    
-    @FXML
-    private ImageView imagen;
-    
-    /*@FXML
-    private TableView<ProductoVO> tablaProductos;
-    */
+
     @FXML
     private TableView<ProductosCanasta> tablaProductos;
+    
+    @FXML
+    private Text textSubtotal,textIva, textTotal;
+    
+    @FXML
+    private JFXButton btnBorrarProducto;
     
     private Date date = new Date();
     private ClienteVO cliente;
     private int siguienteIdFactura;
     private List <ProductoVO> productos;
-      
     public static ProductoVO productoEscogido ;
     public static List<ProductoVO> productosCanasta = new ArrayList<>();
     public static List<ProductosCanasta> productosCanastaFactura = new ArrayList<>();
-    //private final ObservableList<ProductoVO> productosCanastaObservable = FXCollections.observableArrayList();
     private final ObservableList<ProductosCanasta> productosCanastaObservable = FXCollections.observableArrayList();
-    //private static final ObservableList<ProductoVO> productosCanasataObservable = FXCollections.observableArrayList(productosCanasta);
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // elimina la ultima celda por defecto
+        tablaProductos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
+        // Desabilitar los textField nombre y apellido de cliente, por solo busqueda por cedula
+        clienteNombre.setDisable(true);
+        clienteApellido.setDisable(true);
+        
+        //Set fecha label fecha
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	fecha.setText(dateFormat.format(date));
+        
+        // Combo box todos los empleados
+        comboBoxEmpleados.setValue(EmpleadoDAO.empleados().get(0));
+        comboBoxEmpleados.getItems().addAll(EmpleadoDAO.empleados());
+        
+        //Set factura ID siguiente del ultimo ingresado
+        siguienteIdFactura = FacturaDAO.getIdLast()+1;
+        codigoFactura.setText(""+siguienteIdFactura);
+        
+        // Setea los nombres de las celdad
+        setCeldasSinDatos();
+    }
     
     @FXML
     void regresarMenuFacturacion(ActionEvent event) throws IOException {
@@ -168,6 +163,27 @@ public class IngresarController implements Initializable {
     }
 
     @FXML
+    private void handleButtonFacturar(ActionEvent event) throws ParseException{
+        // tablas   factura, producto_factura
+        // textTotal
+        // clienteCedula
+        // Cedula empleado  <---- complicado
+        // setear fecha con formato correcto
+        System.out.println(date);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String parseDate = dateFormat.format(date);
+        //System.out.println(date.toString());
+        System.out.println(parseDate);
+        Timestamp timestamp2 = new Timestamp(date.getTime());
+        //Date parsedDate2 = dateFormat.parse();
+        System.out.println(timestamp2);
+        FacturaDAO.setFactura(new BigDecimal(textTotal.getText()), date, comboBoxEmpleados.getValue().getCedula(), clienteCedula.getText());
+        // producto_factura
+        // coger los datos de la listra de productos_canasta_final
+        // setear uno a uno con la id de la factura
+    }
+    
+    @FXML
     public void handleButtonBuscarProducto(ActionEvent event)
     {
         ProductoVO producto = new ProductoVO();
@@ -182,8 +198,25 @@ public class IngresarController implements Initializable {
             alertBox.crearAlertBox(" ", "" , "Ningun Producto Encontrado" );
         }else{
             // Para la lista de concidencias a ListaProductosController
-            ListaProductosController.productosOB = productos;
-            cargarFxmlProductos();
+            List <ProductoVO> productosTmp = new ArrayList<>();
+
+            for (ProductoVO pp : productos){
+                productosTmp.add(pp);
+            }
+
+            for (ProductoVO  p1 : productos){
+                for (ProductoVO p : productosCanastaFactura){
+                   if (p.getId().equals(p1.getId()))
+                       productosTmp.remove(p1);
+                }  
+            }
+
+            if (productosTmp.isEmpty()){
+                alertBox.crearAlertBox(" ", "", "No hay productos que mostrar");
+            }else{
+                ListaProductosController.productosOB = productosTmp;
+                cargarFxmlProductos();
+            }
         }
     }
   
@@ -212,45 +245,6 @@ public class IngresarController implements Initializable {
         }  
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // elimina la ultima celda por defecto
-        tablaProductos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
-        // Desabilitar los textField nombre y apellido de cliente, por solo busqueda por cedula
-        clienteNombre.setDisable(true);
-        clienteApellido.setDisable(true);
-        
-        //Set fecha label fecha
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-	fecha.setText(dateFormat.format(date));
-        
-        // Combo box todos los empleados
-        comboBoxEmpleados.setValue(EmpleadoDAO.empleados().get(0));
-        comboBoxEmpleados.getItems().addAll(EmpleadoDAO.empleados());
-        
-        //Set factura ID siguiente del ultimo ingresado
-        siguienteIdFactura = FacturaDAO.getIdLast()+1;
-        codigoFactura.setText(""+siguienteIdFactura);
-        /*
-        ProductoVO producto;
-        producto = ProductoDAO.buscarProducto();
-        System.out.println(producto);
-        System.out.println(producto.getImagen());
-        Image im = new Image(producto.getImagen());
-        
-        imagen.setImage(im);
-        */
-        /*ProductoVO vo = new ProductoVO();
-        vo.setId("sadsa");
-        productosCanasataObservable.add(vo);
-        tableColumnCodigo.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tablaProductos.setItems(productosCanasataObservable);*/
-        
-        // Setea los nombres de las celdad
-        setCeldasSinDatos();
-    }
-    
     private void setCeldasSinDatos(){
         TableColumn tableColumnNro = new TableColumn("Nro");
         TableColumn tableColumnCodigo = new TableColumn("CODIGO");
@@ -260,21 +254,27 @@ public class IngresarController implements Initializable {
         TableColumn tableColumnPUnitario = new TableColumn("P. UNITARIO");
         TableColumn tableColumnPTotal = new TableColumn("TOTAL");
         tablaProductos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tablaProductos.getColumns().addAll(tableColumnNro,tableColumnCodigo,tableColumNombre,tableColumnStock,tableColumnCantidad,tableColumnPUnitario);
+        tablaProductos.getColumns().addAll(tableColumnNro,tableColumnCodigo,tableColumNombre,tableColumnStock,tableColumnCantidad,tableColumnPUnitario,tableColumnPTotal);
     }
     
     public void setProductosTable(){
-        int cont = 1; // Coloca el numero de venta del producto
+        int cont = 1;
+        BigDecimal subtotal = new BigDecimal (0.00);
         for (ProductosCanasta p : productosCanastaFactura){
-            p.setNmr(cont);
+            p.setNmr(cont); // Coloca el numero de venta del producto
+            p.setTotal(p.getPrecio_venta().multiply(new BigDecimal(p.getCantidad()))); // Setea el total multiplicando
+            if (p.getTotal() != null || !p.getTotal().equals(new BigDecimal (0.00))){
+                subtotal = subtotal.add(p.getTotal());
+            }
             productosCanastaObservable.add(p);
-            cont ++;
+            cont ++;  
         }
-        //TableColumn codigo = new TableColumn("Codigo"); 
-       // ProductoVO vo = new ProductoVO();
-        //vo.setId("sadsa");
-        //productosCanastaObservable.add(vo);
-       Callback<TableColumn, TableCell> integerCellFactory = new Callback<TableColumn, TableCell>(){
+        
+        textSubtotal.setText(subtotal.toString());
+        textIva.setText("14 %");
+        textTotal.setText(subtotal.multiply(new BigDecimal(0.14)).add(subtotal).setScale(2,3).toString());
+        
+        Callback<TableColumn, TableCell> integerCellFactory = new Callback<TableColumn, TableCell>(){
            @Override
            public TableCell call(TableColumn p){
                MyIntegerTableCell cell = new MyIntegerTableCell();
@@ -301,7 +301,7 @@ public class IngresarController implements Initializable {
                
            }
         };
-        //tablaProductos.setEditable(true);
+
         TableColumn tableColumnNro = new TableColumn("Nro");
         tableColumnNro.setCellValueFactory(new PropertyValueFactory<>("nmr"));
         tableColumnNro.setCellFactory(integerCellFactory);
@@ -333,7 +333,6 @@ public class IngresarController implements Initializable {
         tableColumnPTotal.setCellFactory(bigDecimalCellFactory);
         
         tablaProductos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //tableColumNombre.prefWidthProperty().bind(tablaProductos.widthProperty().multiply(0.50));
         tableColumnNro.setMaxWidth( 1f * Integer.MAX_VALUE * 3 );
         tableColumnCodigo.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
         tableColumNombre.setMaxWidth( 1f * Integer.MAX_VALUE * 35 );
@@ -341,56 +340,10 @@ public class IngresarController implements Initializable {
         tableColumnCantidad.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
         tableColumnPUnitario.setMaxWidth( 1f * Integer.MAX_VALUE * 8 );
         tableColumnPTotal.setMaxWidth( 1f * Integer.MAX_VALUE * 5 );
-                
         tablaProductos.setItems(productosCanastaObservable);
-        //tablaProductos.getColumns().addAll(tableColumnNro,tableColumnCodigo,tableColumNombre,tableColumnStock,tableColumnCantidad,tableColumnPUnitario,tableColumnPTotal);
         tablaProductos.getColumns().addAll(tableColumnNro,tableColumnCodigo,tableColumNombre,tableColumnStock,tableColumnCantidad,tableColumnPUnitario,tableColumnPTotal);
-
     }
-    
-    @FXML
-    public void handleButtonBorrar(ActionEvent event){
-        limpiarCarritoObservable();
-        ProductoVO producto = new ProductoVO();
-        producto.setNombre("sadsads");
-        //productosCanastaObservable.add(producto);
-        //tableColumNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        tablaProductos.setItems(productosCanastaObservable);
-        System.out.println(productosCanastaFactura);//  <-----------------------------------------
-    }
-    
-   /* @FXML
-    public void handleButtonCantidad(ActionEvent event){
-        int cantidad = -1;
-        System.out.println("\n" + Colores.ANSI_CYAN + "Editar Cantidad");
-        cantidad = alertBox.textInputCantidadBox("CANTIDAD", "", "Ingresa la cantidad del producto");
-        
-        pCanastaEditarBorrar.setCantidad(cantidad);
-        System.out.println(pCanastaEditarBorrar);
-        limpiarTablasYNoAcumulen();
-        limpiarCarritoObservable();
-        ///setProductoEditadoCanasta();
-        setProductosTable();
-    }*/
-    
-   /* public void setProductoEditadoCanasta(){
-        int index = 0;
-        if (productosCanastaFactura.isEmpty()){
-        }else{
-            for (ProductosCanasta p : productosCanastaFactura){
-            if (pCanastaEditarBorrar.getId() == p.getId()){
-               System.out.println(productosCanastaFactura.indexOf(p));                
-               System.out.println(productosCanastaFactura.size());
-               productosCanastaFactura.remove(p);
-                System.out.println(productosCanastaFactura.size());
-               //imprimirCarrito();
-                //productosCanastaFactura.add(p);
-            }
-            index ++;
-            }
-        } 
-    }*/
-        
+      
     public void limpiarTablasYNoAcumulen(){
         tablaProductos.getColumns().clear();
     }
@@ -451,23 +404,49 @@ public class IngresarController implements Initializable {
         public void handle(MouseEvent t){
             TableCell c = (TableCell) t.getSource();
             int index = c.getIndex();
-            
+            System.out.println(index);
             System.out.println("\n" + Colores.ANSI_GREEN + "Producto escogido Para Borrar o Ingresar Cantidad");
             System.out.println(productosCanastaFactura.get(index).getId());
-            //System.out.println(productosOB.get(index).toString());
 
             // Agregar un producto a carrito
-            btnCantidad.setOnAction(new EventHandlerImpl(index));
+            try{
+                btnCantidad.setOnAction(new EventHandlerImpl(index));
+            }
+            catch(Exception ex){
+                System.out.println("ERRO por celda escogida sin productos");
+            }
             
-            // Ingresar imagen y ver 
-          /* try{
-                imagen.setVisible(true);
-                Image im = new Image(productosOB.get(index).getImagen());
-                imagen.setImage(im);
-            }catch(Exception e){
-                imagen.setVisible(false);
-                System.out.println(Colores.ANSI_RED + "No se encontro imagen");
-            } */   
+            try{
+               btnBorrarProducto.setOnAction(new EventHandlerBorrar(index));
+            }
+            catch(Exception ex){
+                System.out.println("ERRO por celda escogida sin productos");
+            }    
+        }
+        
+        private class EventHandlerBorrar implements EventHandler<ActionEvent> {
+            private final int index;
+            public EventHandlerBorrar(int index) {
+                 this.index = index;
+            }
+
+                @Override
+                public void handle(ActionEvent event) {
+                    System.out.println("\n" + Colores.ANSI_GREEN + "Escogido para borrar" + Colores.ANSI_RESET);
+                    alertBox.crearAlertBox(" ", "", "El productos se borro");
+                    int cont = 0;
+                    for (ProductosCanasta p : productosCanastaFactura){
+                        if(p.getId() == productosCanastaFactura.get(index).getId()){
+                            System.out.println(p.getId() + " Listo para borrar");
+                            productosCanastaFactura.remove(cont);
+                            break;
+                        }
+                        cont ++;
+                    }
+                    limpiarTablasYNoAcumulen();
+                    limpiarCarritoObservable();
+                    setProductosTable();
+                }
         }
 
         private class EventHandlerImpl implements EventHandler<ActionEvent> {
@@ -480,15 +459,18 @@ public class IngresarController implements Initializable {
 
             @Override
             public void handle(ActionEvent e) {
-                int cantidad = -1;
                 System.out.println("\n" + Colores.ANSI_CYAN + "Editar Cantidad");
-                cantidad = alertBox.textInputCantidadBox("CANTIDAD", "", "Ingresa la cantidad del producto");
+                int cantidad = alertBox.textInputCantidadBox("CANTIDAD", "", "Ingresa la cantidad del producto");
                 for (ProductosCanasta po : productosCanastaFactura){
                     if (productosCanastaFactura.get(index).getId() == po.getId() && productosCanastaFactura!= null && !productosCanastaFactura.isEmpty()){
-                       productosCanastaFactura.get(productosCanastaFactura.indexOf(po)).setCantidad(cantidad);
-                       limpiarTablasYNoAcumulen();
-                       limpiarCarritoObservable();
-                       setProductosTable();
+                        if(productosCanastaFactura.get(index).getStock() < cantidad || cantidad < 0){
+                            alertBox.crearErrorBox(" ", "", "El numero no es valido");
+                        }else{
+                            productosCanastaFactura.get(productosCanastaFactura.indexOf(po)).setCantidad(cantidad);
+                            limpiarTablasYNoAcumulen();
+                            limpiarCarritoObservable();
+                            setProductosTable();
+                        }
                     }
                     
                 }

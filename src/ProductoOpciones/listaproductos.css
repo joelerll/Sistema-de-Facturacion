@@ -2,6 +2,22 @@
  * Empty Stylesheet file.
  */
 
+.button {
+    -fx-background-color:
+        linear-gradient(#f0ff35, #a9ff00),
+        radial-gradient(center 50% -40%, radius 200%, #b8ee36 45%, #80c800 50%);
+}
+
+.table-view{
+   -fx-background-color: #f0ff35;
+   
+}
+
+.italic.table-cell { 
+  -fx-font-family: "Times New Roman"; 
+  -fx-font-style: italic; 
+}
+
 .mainFxmlClass {
 
 }

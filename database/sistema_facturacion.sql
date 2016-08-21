@@ -97,12 +97,12 @@ CREATE TABLE producto_grupos(
 )ENGINE = InnoDB;
 
 CREATE TABLE producto_factura(
-  id CHAR (30) NOT NULL,
+  id INTEGER AUTO_INCREMENT NOT NULL,
   id_producto CHAR(40) NOT NULL,
-  id_orden INT UNSIGNED NOT NULL,
+  id_factura INT UNSIGNED NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT FOREIGN KEY (id_producto) REFERENCES producto(id),
-  CONSTRAINT FOREIGN KEY (id_orden) REFERENCES factura(id)
+  CONSTRAINT FOREIGN KEY (id_factura) REFERENCES factura(id)
 )ENGINE = InnoDB;
 
 CREATE TABLE telefonos_cliente(

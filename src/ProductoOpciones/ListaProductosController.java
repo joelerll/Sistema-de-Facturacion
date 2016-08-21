@@ -45,21 +45,21 @@ public class ListaProductosController implements Initializable {
     
     @FXML
     private JFXButton btnSalir;
-
-    
+ 
     @FXML
     private JFXButton btnAgregar;
-  
-    private ProductoVO productoEscogido;
     
     public static List<ProductoVO> productosOB;
 
-    private ObservableList<ProductoVO> productosOBB = FXCollections.observableArrayList();
+    private final ObservableList<ProductoVO> productosOBB = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-       // Setear todos los productos en la tablewiew
+       printTabla();
+    }
+    
+    private void printTabla(){
+        // Setear todos los productos en la tablewiew
        for (ProductoVO p : productosOB){   
             productosOBB.add(p);
        }
@@ -114,8 +114,8 @@ public class ListaProductosController implements Initializable {
        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
        stock.setCellFactory(integerCellFactory);
        
+       // Customizar celdas
         productos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //tableColumNombre.prefWidthProperty().bind(tablaProductos.widthProperty().multiply(0.50));
         codigo.setMaxWidth( 1f * Integer.MAX_VALUE * 15 );
         nombre.setMaxWidth( 1f * Integer.MAX_VALUE * 35 );
         marca.setMaxWidth( 1f * Integer.MAX_VALUE * 10 );
@@ -124,7 +124,7 @@ public class ListaProductosController implements Initializable {
        
        // elimina la ultima celda por defecto
        productos.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-       
+
        // Ingresa los datos en cada celda determinada
        productos.setItems(productosOBB);
        
@@ -134,10 +134,11 @@ public class ListaProductosController implements Initializable {
     
     @FXML
     private void closeButtonAction(){
-    // get a handle to the stage
-    Stage stage = (Stage) btnSalir.getScene().getWindow();
-    // do what you have to do
-    stage.close();
+        // get a handle to the stage
+        Stage stage = (Stage) btnSalir.getScene().getWindow();
+        // do what you have to do
+        IngresarController.productosCanasta.clear();
+        stage.close();
     }
     
     class MyIntegerTableCell extends TableCell<ProductoVO,Integer>{
@@ -214,15 +215,25 @@ public class ListaProductosController implements Initializable {
             public void handle(ActionEvent e) {
                 ProductoVO p = new ProductoVO();
                 p.setId(productosOB.get(index).getId());
-                p.setNombre(productosOB.get(index).getNombre());
-                p.setMarca(productosOB.get(index).getMarca());
-                p.setStock(productosOB.get(index).getStock());
-                p.setPrecio_inicial(productosOB.get(index).getPrecio_inicial());
-                p.setPrecio_venta(productosOB.get(index).getPrecio_venta());
-                p.setImagen(productosOB.get(index).getImagen());
-                IngresarController.productosCanasta.add(p);
-                IngresarController.productosCanastaFactura.add(new ProductosCanasta(p));
-                alertBox.crearAlertBox(" ", "", "Producto Agregado a Carrito");
+                boolean b = true;
+                for (ProductoVO pr : IngresarController.productosCanasta)
+                {   
+                    if (pr.getId().equals(p.getId()))
+                        b = false;
+                }
+                if (b){
+                    p.setNombre(productosOB.get(index).getNombre());
+                    p.setMarca(productosOB.get(index).getMarca());
+                    p.setStock(productosOB.get(index).getStock());
+                    p.setPrecio_inicial(productosOB.get(index).getPrecio_inicial());
+                    p.setPrecio_venta(productosOB.get(index).getPrecio_venta());
+                    p.setImagen(productosOB.get(index).getImagen());
+                    IngresarController.productosCanasta.add(p);
+                    IngresarController.productosCanastaFactura.add(new ProductosCanasta(p));
+                    alertBox.crearAlertBox(" ", "", "Producto Agregado a Carrito");
+                }else{
+                    alertBox.crearErrorBox(" ", "", "El producto ya ha sido agregado");
+                }  
             }
         }
     }

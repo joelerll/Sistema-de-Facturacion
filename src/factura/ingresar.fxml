@@ -15,7 +15,7 @@
 <AnchorPane id="AnchorPane" prefHeight="728.0" prefWidth="1366.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.IngresarController">
     <children>
       <FlowPane prefHeight="33.0" prefWidth="456.0" />
-      <Text layoutX="1255.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
+      <Text layoutX="1235.0" layoutY="712.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Total" />
       <Pane layoutX="33.0" layoutY="183.0" prefHeight="470.0" prefWidth="1310.0" styleClass="panel-material">
          <children>
             <Pane layoutX="15.0" layoutY="14.0" prefHeight="56.0" prefWidth="1270.0">
@@ -28,7 +28,7 @@
                      <font>
                         <Font size="15.0" />
                      </font></JFXTextField>
-                  <JFXButton fx:id="btnBorrarProducto" layoutX="985.0" layoutY="8.0" onAction="#handleButtonBorrar" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BORRAR" />
+                  <JFXButton fx:id="btnBorrarProducto" layoutX="985.0" layoutY="8.0" prefHeight="40.0" prefWidth="120.0" styleClass="custom-button" text="BORRAR" />
                   <JFXTextField fx:id="marcaProducto" focusColor="#408ea8" layoutX="680.0" layoutY="12.0" maxWidth="621.0" minWidth="175.0" prefHeight="35.0" prefWidth="175.0" promptText="MARCA" styleClass="root-borde">
                      <font>
                         <Font size="15.0" />
@@ -52,16 +52,9 @@
             <DropShadow />
          </effect>
       </Pane>
-      <Text layoutX="1222.0" layoutY="695.0" strokeType="OUTSIDE" strokeWidth="0.0" text="50" wrappingWidth="110.0">
-         <font>
-            <Font size="48.0" />
-         </font>
-      </Text>
-      <JFXButton fx:id="button" layoutX="73.0" layoutY="678.0" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Facturar" />
-      <Text layoutX="1157.0" layoutY="715.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="IVA" />
-      <Text layoutX="866.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal con Descuento" />
-      <Text layoutX="738.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Descuento" />
-      <Text layoutX="625.0" layoutY="714.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal" />
+      <JFXButton fx:id="button" layoutX="73.0" layoutY="678.0" onAction="#handleButtonFacturar" prefHeight="38.0" prefWidth="110.0" styleClass="custom-button" text="Facturar" />
+      <Text layoutX="1065.0" layoutY="712.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="IVA 14%" />
+      <Text layoutX="899.0" layoutY="713.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="texto-informacion-factura" text="Subtotal" />
       <NumberValidator layoutX="608.0" layoutY="173.0" />
       <Pane layoutX="33.0" layoutY="46.0" prefHeight="120.0" prefWidth="1310.0" styleClass="panel-material">
          <effect>
@@ -101,5 +94,20 @@
          </children>
       </Pane>
       <JFXButton fx:id="btnRegresar" layoutX="17.0" layoutY="678.0" onAction="#regresarMenuFacturacion" prefHeight="18.0" prefWidth="29.0" styleClass="custom-button" text="A" />
+      <Text fx:id="textSubtotal" layoutX="907.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="89.7474365234375">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="textIva" layoutX="1069.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="63.7474365234375">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="textTotal" layoutX="1212.0" layoutY="686.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="89.7474365234375">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

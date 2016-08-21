@@ -160,7 +160,7 @@ public class Cliente {
         try{
             con=database.conectar();
             //INSERT INTO cliente VALUES(cedula, fecha, nombre, apellido, direccion, celular, convencional, email)
-            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO Cliente VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,cedula);
             preparedStatement.setString(2,fecha);
@@ -179,7 +179,7 @@ public class Cliente {
     }
     
     public static List <Cliente> buscarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
-        String query = "SELECT * FROM cliente WHERE ";
+        String query = "SELECT * FROM Cliente WHERE ";
         String query2 = "";
         List <Cliente>  listaClientes=new ArrayList<> ();
         
@@ -234,7 +234,7 @@ public class Cliente {
     }
     
     public static boolean eliminarCliente(String cedula){
-        String query = "DELETE FROM cliente WHERE Cedula_C = '" + cedula + "'";
+        String query = "DELETE FROM Cliente WHERE Cedula_C = '" + cedula + "'";
         try {
             con = database.conectar();
             PreparedStatement preparedStatement = con.prepareStatement(query);

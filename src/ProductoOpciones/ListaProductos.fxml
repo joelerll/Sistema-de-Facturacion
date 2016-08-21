@@ -22,7 +22,7 @@
       </JFXButton>
       <TableView fx:id="productos" layoutX="4.0" prefHeight="351.0" prefWidth="896.0" />
       <ImageView fx:id="imagen" fitHeight="292.0" fitWidth="222.0" layoutX="950.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="btnSalir" layoutX="1089.0" layoutY="8.0" onAction="#closeButtonAction" text="SALIR">
+      <JFXButton fx:id="btnSalir" layoutX="1111.0" layoutY="8.0" onAction="#closeButtonAction" text="SALIR">
          <font>
             <Font size="18.0" />
          </font>

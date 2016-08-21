@@ -85,7 +85,7 @@ public class IngresarItemController implements Initializable {
     public void setEmpleado(String Cedula_Empl, String Nombre_E, String Horario_Ent,String Horario_Sal,int Es_Admin, float Sueldo){
         try{
             conexion=database.conectar();
-            String query = "INSERT INTO Empleado VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO empleado VALUES(?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conexion.prepareStatement(query);
             preparedStatement.setString(1,Cedula_Empl);
             preparedStatement.setString(2,Nombre_E);

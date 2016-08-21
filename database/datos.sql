@@ -65,18 +65,18 @@ INSERT INTO grupos (id,nombre,descripcion) VALUES
 ('SELLO','SELLOS','SELLO DE TAM Y MARCA DIFERENTE');
 
 
-INSERT INTO Cliente (Cedula_C,Nombre_C,Apellido_C,Direccion_C) VALUES
-('092','JOEL','ROD','MAPASINGUE');
+/*INSERT INTO Cliente (Cedula_C,Nombre_C,Apellido_C,Direccion_C) VALUES
+('092','JOEL','ROD','MAPASINGUE');*/
 
 
 INSERT INTO empleado (cedula, nombre, apellido, direccion, fecha_ing, horario_ent, horario_sal, sueldo, es_admin, telefono, usuario) VALUES 
 ('0931823448','JOEL EDUARDO', 'RODRIGUEZ LLAMUCA', 'PUERTO AZUL', '2015-06-23', '06:00:00', '12:30:00', 340.00, 1, '0929746352', 'joelrell');
 
-INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES
+/*INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES
 (10335.6,'2014-01-06 17:03:10','092','0931823448'),
 (103.6,'2013-01-06 17:03:10','092','0931823448'),
 (235.36,'2012-01-06 17:03:10','092','0931823448'), 
-(10335.36,'2016-01-06 17:03:10','092','0931823448');
+(10335.36,'2016-01-06 17:03:10','092','0931823448');*/
 
 INSERT INTO item (id,precio,nombre,descripcion,fecha) VALUES
 (1,'5.00','AGUA','PAGO DEL AGUA','2016-5-20'),
