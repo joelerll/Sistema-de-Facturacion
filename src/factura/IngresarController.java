@@ -17,11 +17,16 @@ import Clases.ProductoDAO;
 import Clases.ProductoVO;
 import ProductoOpciones.ListaProductosController;
 import Utils.Colores;
+import Utils.PDF;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -53,6 +58,19 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
+import javax.imageio.ImageIO;
+//import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+//import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+//import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
+//import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
+
 
 /**
  *
@@ -189,6 +207,11 @@ public class IngresarController implements Initializable {
     }
     
     @FXML
+    public void handleButtonPdfFactura() throws IOException{
+        PDF.print(""+siguienteIdFactura,date,comboBoxEmpleados.getValue().getApellido(),cliente,productosCanastaFactura );
+    }
+
+    @FXML
     public void handleButtonBuscarProducto(ActionEvent event)
     {
         ProductoVO producto = new ProductoVO();
@@ -222,9 +245,9 @@ public class IngresarController implements Initializable {
                 ListaProductosController.productosOB = productosTmp;
                 cargarFxmlProductos();
             }
-        }
+        }      
     }
-  
+    
     public void cargarFxmlProductos()
     {
         try{
