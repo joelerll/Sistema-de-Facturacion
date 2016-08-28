@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.Alert;
 
 /**
  *
@@ -38,11 +37,11 @@ public class Cliente {
         List <Cliente>  clientes=new ArrayList<> ();
         
         String patron=String.format("");
-        String query=String.format("\"SELECT Nombre_C FROM Cliente WHERE Nombre_C REGEXP "+"'"+"(?i)"+name+"'"+"\"");
-        String query2=String.format("\"SELECT * FROM Cliente\"");
+        String query=String.format("\"SELECT Nombre_C FROM cliente WHERE Nombre_C REGEXP "+"'"+"(?i)"+name+"'"+"\"");
+        String query2=String.format("\"SELECT * FROM cliente\"");
         try {
             con=database.conectar();
-            ps = con.prepareCall(" SELECT * FROM Cliente WHERE Nombre_C REGEXP'"+name+"'");
+            ps = con.prepareCall(" SELECT * FROM cliente WHERE Nombre_C REGEXP'"+name+"'");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Cliente cliente=new Cliente();
@@ -160,7 +159,7 @@ public class Cliente {
         try{
             con=database.conectar();
             //INSERT INTO cliente VALUES(cedula, fecha, nombre, apellido, direccion, celular, convencional, email)
-            String query = "INSERT INTO Cliente VALUES(?,?,?,?,?,?,?,?)";
+            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,cedula);
             preparedStatement.setString(2,fecha);
@@ -179,7 +178,7 @@ public class Cliente {
     }
     
     public static List <Cliente> buscarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
-        String query = "SELECT * FROM Cliente WHERE ";
+        String query = "SELECT * FROM cliente WHERE ";
         String query2 = "";
         List <Cliente>  listaClientes=new ArrayList<> ();
         
@@ -234,20 +233,20 @@ public class Cliente {
     }
     
     public static boolean eliminarCliente(String cedula){
-        String query = "DELETE FROM Cliente WHERE Cedula_C = '" + cedula + "'";
+        String query = "DELETE FROM cliente WHERE Cedula_C = '" + cedula + "'";
         try {
             con = database.conectar();
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.executeUpdate();
             System.out.println("Se elimino el cliente!");
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("No se elimino el cliente!");
             return false;
-        }finally{
-            return true;
         }
     }
+    
     public static boolean editarCliente(String cedulaOriginal, String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
         String query = "UPDATE cliente SET ";
         query+="Cedula_C = '"+cedula+"', ";
@@ -264,11 +263,10 @@ public class Cliente {
             con = database.conectar();
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.executeUpdate();
+            return true;
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             return false;
-        }finally{
-            return true;
         }
     }
     

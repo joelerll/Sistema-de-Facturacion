@@ -19,7 +19,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-
 import javafx.stage.Stage;
 
 
@@ -28,8 +27,6 @@ public class ClienteCrearController implements Initializable {
     private static final DBconnection database=new DBconnection();
     private static Connection con;
     //ATRIBUTOS DE LA VENTANA
-    
-    
     @FXML
     private DatePicker date;
     @FXML
@@ -64,8 +61,7 @@ public class ClienteCrearController implements Initializable {
             AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Debes ingresar los campos obligatorios");
         }
         else{
-            if(!Cliente.revisarEmail(tfEmail.getText())){                           //VALIDA QUE EL EMAIL SEA VALIDO
-                
+            if(!Cliente.revisarEmail(tfEmail.getText())){                           //VALIDA EL EMAIL
                 AlertBox.alertBox.crearAlertBox("Warning Dialog", null,"No es un email valido");
             }
             else{
