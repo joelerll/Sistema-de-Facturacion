@@ -4,10 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -17,8 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -123,11 +119,13 @@ public class ClienteBuscarController implements Initializable {
     }
     
     @FXML
-    void editar(ActionEvent event) throws IOException {
+    void editar(ActionEvent event){
         if(revisarEdicion()){
-            if (Cliente.editarCliente(cedulaOriginal, tfVPCedula.getText(), tfVPFechaRegistro.getText(), tfVPNombre.getText(), tfVPApellido.getText(), tfVPDireccion.getText(), tfVPCelular.getText(), tfVPConvencional.getText(), tfVPEmail.getText())) 
-            {
+            Cliente cliente = new Cliente(tfVPCedula.getText(), tfVPFechaRegistro.getText(), tfVPNombre.getText(), tfVPApellido.getText(), tfVPDireccion.getText(), tfVPCelular.getText(), tfVPConvencional.getText(), tfVPEmail.getText());
+            if (Cliente.editarCliente2(cedulaOriginal,cliente)){
                 AlertBox.alertBox.crearAlertBox("Confirmation Dialog", null, "Cliente actualizado");
+            }else{
+                AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Cliente no se pudo actualizar");
             }
         }
     }
@@ -159,7 +157,7 @@ public class ClienteBuscarController implements Initializable {
 
     @FXML
     void eliminar(ActionEvent event) {
-        if(Cliente.eliminarCliente(tfVPCedula.getText())){
+        if(Cliente.eliminarCliente2(tfVPCedula.getText())){
             AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente eliminado");
         }else{
             AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "No se pudo eliminar");
@@ -197,7 +195,6 @@ public class ClienteBuscarController implements Initializable {
             
             cedulaOriginal = c.getCedula_C();
         }
-        
     }
     
      @FXML

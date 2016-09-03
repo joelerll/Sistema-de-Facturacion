@@ -66,7 +66,8 @@ public class ClienteCrearController implements Initializable {
             }
             else{
                 if(Cliente.buscarCliente(cedula, "", "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
-                    Cliente.ingresarCliente(tfCedula.getText(),fecha , tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+                    Cliente cliente = new Cliente(tfCedula.getText(),fecha , tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+                    Cliente.ingresarCliente2(cliente);
                     AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente creado");
                     encerarTF();
                 }

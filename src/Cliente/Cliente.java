@@ -2,6 +2,7 @@
 package Cliente;
 
 import database.DBconnection;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +32,31 @@ public class Cliente {
     private String Convencional_C;
     private String Email_C;
 
+    //CONSTRUCTOR
+
+    public Cliente(){
+        this.Cedula_C = null;
+        this.Fecha_C = null;
+        this.Nombre_C = null;
+        this.Apellido_C = null;
+        this.Direccion_C = null;
+        this.Celular_C = null;
+        this.Convencional_C = null;
+        this.Email_C = null;
+    }
+    
+    public Cliente(String Cedula_C, String Fecha_C, String Nombre_C, String Apellido_C, String Direccion_C, String Celular_C, String Convencional_C, String Email_C) {
+        this.Cedula_C = Cedula_C;
+        this.Fecha_C = Fecha_C;
+        this.Nombre_C = Nombre_C;
+        this.Apellido_C = Apellido_C;
+        this.Direccion_C = Direccion_C;
+        this.Celular_C = Celular_C;
+        this.Convencional_C = Convencional_C;
+        this.Email_C = Email_C;
+    }
+    
+    
     //METODOS
     
     public static List <Cliente> searchClientesByName(String name){
@@ -44,7 +70,7 @@ public class Cliente {
             ps = con.prepareCall(" SELECT * FROM cliente WHERE Nombre_C REGEXP'"+name+"'");
             rs = ps.executeQuery();
             while (rs.next()) {
-                Cliente cliente=new Cliente();
+                Cliente cliente= new Cliente();
                 cliente.setCedula_C(rs.getString(1));
                 cliente.setNombre_C(rs.getString(2));
                 cliente.setDireccion_C (rs.getString(3));
@@ -153,30 +179,6 @@ public class Cliente {
         }
         return false;
     }
-    
-    
-    public static void ingresarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
-        try{
-            con=database.conectar();
-            //INSERT INTO cliente VALUES(cedula, fecha, nombre, apellido, direccion, celular, convencional, email)
-            String query = "INSERT INTO cliente VALUES(?,?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,cedula);
-            preparedStatement.setString(2,fecha);
-            preparedStatement.setString(3,nombre);
-            preparedStatement.setString(4, apellido);
-            preparedStatement.setString(5, dir);
-            preparedStatement.setString(6, cel);
-            preparedStatement.setString(7, telf);
-            preparedStatement.setString(8, email);
-            preparedStatement.executeUpdate();
-            System.out.println("Se ingreso el cliente");
-        }catch (SQLException ex)
-        {
-            System.out.println("No se ingreso el cliente");
-        }
-    }
-    
     public static List <Cliente> buscarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
         String query = "SELECT * FROM cliente WHERE ";
         String query2 = "";
@@ -232,37 +234,33 @@ public class Cliente {
         return listaClientes;
     }
     
-    public static boolean eliminarCliente(String cedula){
-        String query = "DELETE FROM cliente WHERE Cedula_C = '" + cedula + "'";
+    public static void ingresarCliente2(Cliente cliente){
         try {
-            con = database.conectar();
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.executeUpdate();
-            System.out.println("Se elimino el cliente!");
-            return true;
+            con=database.conectar();
+            CallableStatement proc = con.prepareCall("{ call insertar_cliente(?, ?, ?, ?, ?, ?, ?, ?) }");
+            proc.setString(1, cliente.getCedula_C());
+            proc.setString(2, cliente.getFecha_C());
+            proc.setString(3, cliente.getNombre_C());
+            proc.setString(4, cliente.getApellido_C());
+            proc.setString(5, cliente.getDireccion_C());
+            proc.setString(6, cliente.getCelular_C());
+            proc.setString(7, cliente.getConvencional_C());
+            proc.setString(8, cliente.getEmail_C());
+            proc.execute();
+            System.out.println("Cliente ingresado a la base de datos");
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("No se elimino el cliente!");
-            return false;
         }
     }
     
-    public static boolean editarCliente(String cedulaOriginal, String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
-        String query = "UPDATE cliente SET ";
-        query+="Cedula_C = '"+cedula+"', ";
-        query+="Fecha_C = '"+fecha+"', ";
-        query+="Nombre_C = '"+nombre+"', ";
-        query+="Apellido_C = '"+apellido+"', ";
-        query+="Direccion_C = '"+dir+"', ";
-        query+="Celular_C = '"+cel+"', ";
-        query+="Convencional_C = '"+telf+"', ";
-        query+="Email_C = '"+email+"' ";
-        query+= "WHERE Cedula_C = '"+cedulaOriginal+"'";
-        
+    public static boolean eliminarCliente2(String cedula){
         try {
-            con = database.conectar();
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.executeUpdate();
+            con=database.conectar();
+            CallableStatement procedure = null;
+            procedure = con.prepareCall("{ call eliminar_cliente(?) }");
+            procedure.setString(1, cedula);
+            procedure.execute();
+            System.out.println("Cliente eliminado de la base de datos");
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
@@ -270,5 +268,27 @@ public class Cliente {
         }
     }
     
+    public static boolean editarCliente2(String cedulaOriginal, Cliente cliente){
+        try {
+            con=database.conectar();
+            CallableStatement procedure = null;
+            procedure = con.prepareCall("{ call editar_cliente(?, ?, ?, ?, ?, ?, ?, ?, ?) }");
+            procedure.setString(1, cliente.getCedula_C());
+            procedure.setString(2, cliente.getFecha_C());
+            procedure.setString(3, cliente.getNombre_C());
+            procedure.setString(4, cliente.getApellido_C());
+            procedure.setString(5, cliente.getDireccion_C());
+            procedure.setString(6, cliente.getCelular_C());
+            procedure.setString(7, cliente.getConvencional_C());
+            procedure.setString(8, cliente.getEmail_C());
+            procedure.setString(9, cedulaOriginal);
+            procedure.execute();
+            System.out.println("Cliente editado en la base de datos");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
     
 }
