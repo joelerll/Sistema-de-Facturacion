@@ -26,7 +26,7 @@ CREATE TABLE grupos(
   PRIMARY KEY (id)
 )ENGINE = InnoDB;
 
-CREATE TABLE Cliente(
+CREATE TABLE cliente(
   Cedula_C VARCHAR(15) NOT NULL UNIQUE,
   Fecha_C DATE,
   Nombre_C VARCHAR(30) NOT NULL,
