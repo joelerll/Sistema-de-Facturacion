@@ -109,6 +109,5 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <JFXButton layoutX="201.0" layoutY="676.0" onAction="#handleButtonPdfFactura" styleClass="custom-button" text="PDF" />
     </children>
 </AnchorPane>

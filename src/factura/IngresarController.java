@@ -104,6 +104,7 @@ public class IngresarController implements Initializable {
     
     private Date date = new Date();
     private ClienteVO cliente;
+    private BigDecimal subtotal;
     private int siguienteIdFactura;
     private List <ProductoVO> productos;
     public static ProductoVO productoEscogido ;
@@ -203,12 +204,12 @@ public class IngresarController implements Initializable {
                 FacturaDAO.setProducto_Factura(pro.getId(), siguienteIdFactura);
             }
             alertBox.crearAlertBox(" ", "", "La factura ha sido registrada");
+            try{
+                PDF.print(""+siguienteIdFactura,date,comboBoxEmpleados.getValue().getApellido(),cliente,productosCanastaFactura,subtotal );
+            }catch(Exception e){
+                System.out.println("ERROR no se pudo imprimir");
+            }
         }
-    }
-    
-    @FXML
-    public void handleButtonPdfFactura() throws IOException{
-        PDF.print(""+siguienteIdFactura,date,comboBoxEmpleados.getValue().getApellido(),cliente,productosCanastaFactura );
     }
 
     @FXML
@@ -287,7 +288,7 @@ public class IngresarController implements Initializable {
     
     public void setProductosTable(){
         int cont = 1;
-        BigDecimal subtotal = new BigDecimal (0.00);
+        subtotal = new BigDecimal (0.00);
         for (ProductosCanasta p : productosCanastaFactura){
             p.setNmr(cont); // Coloca el numero de venta del producto
             p.setTotal(p.getPrecio_venta().multiply(new BigDecimal(p.getCantidad()))); // Setea el total multiplicando
