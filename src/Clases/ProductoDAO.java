@@ -5,13 +5,14 @@
  */
 package Clases;
 
-import com.mysql.jdbc.Blob;
 import database.DBconexion;
+import factura.ProductosCanasta;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.CallableStatement;
 
 /**
  *
@@ -52,6 +53,9 @@ public class ProductoDAO {
             ResultSet rs = ps.executeQuery();
             while(rs.next())
             {
+                if(rs.getInt(5) == 0){
+                    continue;
+                }
                 ProductoVO producto  = new ProductoVO();
                 producto.setId(rs.getString(1));
                 producto.setNombre(rs.getString(2));
@@ -68,5 +72,36 @@ public class ProductoDAO {
             return null;
         }
         return productos;
+    }
+    
+    public static void ActualizarProducto (List<ProductosCanasta> productos){
+        int set;
+        String productoId= "";
+        try{
+            DBconexion con = new DBconexion();
+            
+            for(ProductosCanasta po : productos){
+                set = po.getStock();
+                String sql = "UPDATE producto SET stock =" + (set+1)+ "WHERE id = " + productoId;
+                PreparedStatement ps = con.getConnection().prepareStatement(sql);
+                ps.execute();
+            }
+            con.desconetar();
+        }catch(SQLException e){
+            System.out.println("Clases.ProductoDAO.ActualizarProducto ERROR");
+        }
+    }
+    
+     public static void actualizarProducto(String id_producto, int cantidad){
+        CallableStatement cs = null;
+        String sql = "{call actualizarProducto (?,?)}";
+        try {
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setString(1, id_producto);
+            cs.setInt(2, cantidad);
+            cs.executeQuery();
+        } catch (SQLException e) {
+        }
     }
 }

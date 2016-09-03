@@ -6,10 +6,10 @@
 package Clases;
 
 import database.DBconexion;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -24,7 +24,7 @@ public class ClienteDAO {
      */
     public static ClienteVO buscarCliente(ClienteVO clienteVO,String... arg){
         ClienteVO cliente = new ClienteVO();
-        String q = "SELECT * from "+ "Cliente" + " WHERE "+ arg[0] +  " = '"+clienteVO.getCedula_C()+"'";
+        String q = "SELECT * from "+ "cliente" + " WHERE "+ arg[0] +  " = '"+clienteVO.getCedula_C()+"'";
         try{
             DBconexion con= new DBconexion();
             System.out.println(q);
@@ -45,5 +45,23 @@ public class ClienteDAO {
             return null;  
         }
         return cliente;
+    }
+    
+    public static String buscarId(String id){
+        String nombre = null;
+        CallableStatement cs = null;
+        String sql = "{call getCliente_nombre_completo(?,?)}";
+        try {
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setString(1, id);
+            cs.executeQuery();
+            nombre = cs.getString(2);
+            cs.close();
+            con.desconetar();
+        } catch (SQLException e) {
+            System.out.println("ERROR ClienteDAO.buscarID");
+        }
+        return nombre;
     }
 }
