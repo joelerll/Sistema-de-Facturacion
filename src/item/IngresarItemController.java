@@ -9,13 +9,13 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import database.DBconexion;
 import database.DBconnection;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -82,24 +82,6 @@ public class IngresarItemController implements Initializable {
         app_stage.show(); 
     }
 
-    public void setEmpleado(String Cedula_Empl, String Nombre_E, String Horario_Ent,String Horario_Sal,int Es_Admin, float Sueldo){
-        try{
-            conexion=database.conectar();
-            String query = "INSERT INTO empleado VALUES(?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = conexion.prepareStatement(query);
-            preparedStatement.setString(1,Cedula_Empl);
-            preparedStatement.setString(2,Nombre_E);
-            preparedStatement.setString(3,Horario_Ent);
-            preparedStatement.setString(4,Horario_Sal);
-            preparedStatement.setInt(5,Es_Admin);
-            preparedStatement.setFloat(6,Sueldo);
-            preparedStatement.executeUpdate();
-        }catch (SQLException ex)
-        {
-            System.out.println("-------No se ha ingresado el Empleado--------");
-        }
-    }
-    
     @FXML
     private void guardar(ActionEvent event) {      
         String cedula = textFieldCedula.getCharacters().toString();
@@ -136,20 +118,21 @@ public class IngresarItemController implements Initializable {
                 b = 1;
             }else
             {
+                CallableStatement cs = null;
                 try{
-                    conexion = database.conectar();
-                    String query = "INSERT INTO item (precio,nombre,descripcion,fecha) VALUES(?, ?, ?, ?)";
-                    PreparedStatement preparedStatement = conexion.prepareStatement(query);
-                    preparedStatement.setBigDecimal(1, precio);
-                    preparedStatement.setString(2,nombre.toUpperCase());
-                    preparedStatement.setString(3,descripcion.toUpperCase());
-                    preparedStatement.setDate(4,java.sql.Date.valueOf(date));
-                    preparedStatement.executeUpdate();
+                    String sql = "{call guardarItem(?,?,?,?)}";
+                    DBconexion con = new DBconexion();
+                    cs = con.getConnection().prepareCall(sql);
+                    cs.setBigDecimal(1, precio);
+                    cs.setString(2,nombre.toUpperCase());
+                    cs.setString(3,descripcion.toUpperCase());
+                    cs.setDate(4,java.sql.Date.valueOf(date));
+                    cs.executeQuery();
+                    con.desconetar();
                     System.out.println("Item exitosamente ingresado");
                     alertWindow("Item","Item exitosamente ingresado");
                     textFieldPrecio.setText("");
                     textFieldDescripcion.setText("");
-                    //datePickerFecha.setValue('2');
                 }catch (SQLException ex)
                 {
                     System.out.println("-------No se ha ingresado el Item--------");
@@ -168,26 +151,17 @@ public class IngresarItemController implements Initializable {
     
     private String buscarCedulaEmpleado(String cedula){
         String ced = null;
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
-        ResultSet rs = null;
-        String c = null;
+        CallableStatement cs = null;
+        String sql = "{call buscarCedulaEmpleado(?,?)}";
         try{
-            conexion = database.conectar();
-            String q ="SELECT cedula FROM empleado WHERE "+ "cedula" +" LIKE ('%"+cedula+"%')";
-            System.out.println(q);
-            ps = conexion.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                c = rs.getString(1);
-                System.out.println(c);
-            }
-            ps.close();
-            conexion.close();
-            rs.close();
-            ced = c;
-        }catch(SQLException sql){
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setString(1, cedula);
+            cs.executeQuery();
+            ced = cs.getString(2);
+            cs.close();
+            con.desconetar();
+        }catch(SQLException s){
             System.out.println("Error en buscar cedula emplpeado");
             return null;
         }
@@ -197,26 +171,18 @@ public class IngresarItemController implements Initializable {
     //set e la tabla item_empleado id_item y cedula empl
     private int buscarUltimoItem()
     {
-        //select max(id) from item;
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
-        ResultSet rs = null;
         int itemx=0;
+        CallableStatement cs = null;
+        String sql = "{call buscarUltimoItem(?)}";
         try{
-            conexion = database.conectar();
-            String q ="SELECT max(id) FROM item";
-            System.out.println(q);
-            ps = conexion.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                itemx = rs.getInt(1);
-                System.out.println(itemx);
-            }
-            ps.close();
-            conexion.close();
-            rs.close();
-        }catch(SQLException sql){
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.executeQuery();
+            itemx = cs.getInt(1);
+            System.out.println(itemx);
+            cs.close();
+            con.desconetar();
+        }catch(SQLException s){
             System.out.println("Error en buscar item_empleado");
             return itemx = 0;
         }
@@ -224,20 +190,17 @@ public class IngresarItemController implements Initializable {
     }
     
     private void ingresarItem_empleado(int id_item,String cedula){
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
-        String q ="INSERT INTO  item_empleado (id_item,cedula_empl) VALUES (" + id_item  
-                    + ",'"+cedula+"')";
-       System.out.println(q);
+        CallableStatement cs = null;
+        String sql = "{call ingresarItem_empleado(?,?)}";
         try{
-            conexion = database.conectar();
-            ps = conexion.prepareStatement(q);
-            ps.execute();
-            conexion.close();
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setInt(1, id_item);
+            cs.setString(2, cedula);
+            cs.executeQuery();
             System.out.println("ingresado el item_empleado");
             alertWindow("Emplado","Ingresado el item empleado");
-        }catch(SQLException sql){
+        }catch(SQLException s){
             System.out.println("Item_empleado no ingresado");
             errorWindow("Emplado","NO Ingresado el item empleado");
         }

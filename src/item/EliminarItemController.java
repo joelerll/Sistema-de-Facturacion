@@ -146,8 +146,6 @@ public class EliminarItemController implements Initializable {
     private String buscarNombreEmpleado(String cedula){
         CallableStatement cs  = null;
         String c= null;
-        DBconnection database=new DBconnection();
-        Connection conexion;
         String sql = "{call buscarNombreEmplado(?,?)}";
         try{
             conexion = database.conectar();

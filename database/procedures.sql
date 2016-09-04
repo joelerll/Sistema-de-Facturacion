@@ -52,11 +52,6 @@ SELECT *
 FROM producto p WHERE id LIKE concat('%',`i_id`,'%') AND nombre LIKE concat('%',`i_nombre`,'%') AND marca LIKE concat('%',`i_marca`,'%');
 END :
 
-/*CREATE PROCEDURE actualizarProductoListJ(in `i_stock` INTEGER, in `i_id_producto` CHAR(40))
-BEGIN
-UPDATE producto SET stock = `i_stock` WHERE id = `i_id_producto`;
-END :*/
-
 /*Empleado*/
 CREATE PROCEDURE getAllEmpleadorJ(in `maximo` INTEGER, out `o_cedula` VARCHAR(30), out `o_nombre` VARCHAR(30), out `o_apellido` VARCHAR(30),out `o_direccion` VARCHAR(30), out `o_fecha_ing` DATE, out `o_horario_ent` VARCHAR(30), out `o_horario_sal` VARCHAR(30), out `o_sueldo` DECIMAL(5,2), out `o_es_admin` INTEGER, out `o_telefono` VARCHAR(30))
 BEGIN
@@ -107,6 +102,47 @@ END :
 CREATE PROCEDURE buscarItem_Empleado(in `id_item` INTEGER)
 BEGIN
 SELECT * FROM item_empleado WHERE id_item LIKE id_item LIMIT 1;
+END :
+
+CREATE PROCEDURE guardarItem(in `i_precio` DECIMAL(5,2), in `i_nombre` CHAR(30), in `i_descripcion` CHAR(30),in `i_fecha` DATE )
+BEGIN
+INSERT INTO item (precio,nombre,descripcion,fecha) VALUES (`i_precio`,`i_nombre`,`i_descripcion`,`i_fecha`);
+END :
+
+CREATE PROCEDURE buscarCedulaEmpleado(in `i_cedula` VARCHAR(30), out `o_cedula` VARCHAR(30))
+BEGIN
+SELECT cedula INTO `o_cedula` FROM empleado WHERE cedula = `i_cedula`;
+END :
+
+CREATE PROCEDURE buscarUltimoItem(out `o_max_item` INTEGER)
+BEGIN
+SELECT max(id) INTO `o_max_item` FROM item;
+END :
+
+CREATE PROCEDURE ingresarItem_empleado(in `i_id_item` INTEGER, in `i_cedula_empl` VARCHAR(30))
+BEGIN
+INSERT INTO item_empleado (id_item,cedula_empl) VALUES (`i_id_item`,`i_cedula_empl`);
+END :
+
+#item
+CREATE PROCEDURE eliminarItemSQL(in `i_id_item` INTEGER)
+BEGIN
+DELETE FROM item WHERE id = `i_id_item`;
+END :
+
+CREATE PROCEDURE editarItemSQL(in `i_id_item` INTEGER,in `i_precio` DECIMAL(5,2), in `i_nombre` CHAR(30), in `i_descripcion` CHAR(200), in `i_fecha` DATE)
+BEGIN
+UPDATE item SET precio = `i_precio`, nombre = `i_nombre`, descripcion = `i_descripcion`, fecha = `i_fecha` WHERE id = `i_id_item`;
+END :
+
+CREATE PROCEDURE searchItem(in `i_nombre` CHAR(30))
+BEGIN
+SELECT * FROM item WHERE nombre LIKE CONCAT('%',`i_nombre`,'%');
+END :
+
+CREATE PROCEDURE buscarPorFecha(in `i_fecha` CHAR(30))
+BEGIN
+SELECT * FROM item WHERE fecha LIKE CONCAT('%',`i_fecha`,'%');
 END :
 
 delimiter ;
