@@ -51,3 +51,5 @@ begin
 		Cedula_C = cedu_original;
 end
 //
+
+delimiter ;

@@ -40,11 +40,16 @@ BEGIN
 UPDATE producto SET producto.stock = producto.stock - `cantidad` WHERE producto.id = `id_producto`;
 END :
 
-CREATE PROCEDURE buscarProductoFormatoUnoJ(in `i_id` CHAR(40), in `i_nombre` CHAR(60), in `i_marca` CHAR(30), out `o_nombre` CHAR(60), out `o_marca` CHAR(30), out `o_imagen` VARCHAR(40), out `o_stock` INTEGER, out `o_precio_venta` DECIMAL(5,2), out `o_precio_inicial` DECIMAL(5,2))
+CREATE PROCEDURE buscarProductoFormatoUnoJ(in `i_id` CHAR(40), in `i_nombre` CHAR(60), in `i_marca` CHAR(30))
 BEGIN
-CREATE TABLE productosTmp LIKE produtos;
-SELECT * INTO productosTmp
-FROM producto p WHERE id LIKE `i_id`;
+if(`i_id` is null) then set `i_id` = '';
+end if;
+if(`i_nombre` is null) then set `i_nombre` = '';
+end if;
+if(`i_marca` is null) then set `i_marca` = '';
+end if;
+SELECT * 
+FROM producto p WHERE id LIKE concat('%',`i_id`,'%') AND nombre LIKE concat('%',`i_nombre`,'%') AND marca LIKE concat('%',`i_marca`,'%');
 END :
 
 /*CREATE PROCEDURE actualizarProductoListJ(in `i_stock` INTEGER, in `i_id_producto` CHAR(40))
