@@ -86,8 +86,28 @@ BEGIN
 INSERT INTO producto_factura(id_producto,id_factura) VALUES (`i_id_producto`,`i_id_factura`);
 END :
 
-/*Producto*/
+/*Item*/
+#Eliminar item
+CREATE PROCEDURE buscarItem(in `nombre` VARCHAR(50))
+BEGIN
+SELECT * FROM item WHERE nombre LIKE CONCAT('%',`nombre`,'%') LIMIT 1;
+END :
 
+#Empleado
+CREATE PROCEDURE buscarNombreEmplado(in `i_cedula` VARCHAR(15), out `o_nombre` VARCHAR(30))
+BEGIN
+SELECT nombre FROM empleado WHERE cedula LIKE CONCAT('%',`i_cedula`,'%') LIMIT 1;
+END :
+
+CREATE PROCEDURE eliminarItem_emplado(in `i_id_item` INTEGER, in `i_cedula_empl` VARCHAR(30))
+BEGIN
+DELETE FROM item_empleado WHERE id_item = `i_id_item` AND cedula_empl = `cedula_empl`;
+END :
+
+CREATE PROCEDURE buscarItem_Empleado(in `id_item` INTEGER)
+BEGIN
+SELECT * FROM item_empleado WHERE id_item LIKE id_item LIMIT 1;
+END :
 
 delimiter ;
 
