@@ -24,21 +24,25 @@ public class ClienteDAO {
      */
     public static ClienteVO buscarCliente(ClienteVO clienteVO,String... arg){
         ClienteVO cliente = new ClienteVO();
-        String q = "SELECT * from "+ "cliente" + " WHERE "+ arg[0] +  " = '"+clienteVO.getCedula_C()+"'";
+        CallableStatement cs = null;
+        String q = "{call buscarClienteJ(?,?,?,?,?,?,?,?,?)}";
         try{
             DBconexion con= new DBconexion();
-            System.out.println(q);
-            PreparedStatement ps = con.getConnection().prepareCall(q);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            cliente.setCedula_C(rs.getString(1));
-            cliente.setFecha_C(rs.getDate(2));
-            cliente.setNombre_C(rs.getString(3));
-            cliente.setApellido_C(rs.getString(4));
-            cliente.setDireccion_C(rs.getString(5));
-            cliente.setCelular_C(rs.getString(6));
-            cliente.setConvencional_C(rs.getString(7));
-            cliente.setEmail_C(rs.getString(8));
+            //System.out.println(q);
+            cs = con.getConnection().prepareCall(q);
+            //PreparedStatement ps = con.getConnection().prepareCall(q);
+            //ResultSet rs = ps.executeQuery();
+            //rs.next();
+            cs.setString(1, clienteVO.getCedula_C());
+            cs.executeQuery();
+            cliente.setCedula_C(cs.getString(2));
+            cliente.setFecha_C(cs.getDate(3));
+            cliente.setNombre_C(cs.getString(4));
+            cliente.setApellido_C(cs.getString(5));
+            cliente.setDireccion_C(cs.getString(6));
+            cliente.setCelular_C(cs.getString(7));
+            cliente.setConvencional_C(cs.getString(8));
+            cliente.setEmail_C(cs.getString(8));
             con.desconetar();
         }catch(SQLException e){
             System.out.println("ClienteDAO.buscarPesona ERROR");
