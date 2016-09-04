@@ -95,7 +95,8 @@ public class ClienteBuscarController implements Initializable {
 
     @FXML
     void buscar(ActionEvent event) {
-        listaClientes = Cliente.buscarCliente(tfCedula.getText(), tfFechaRegistro.getText(), tfNombres.getText(), tfApellido.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+        Cliente cliente = new Cliente(tfCedula.getText(),tfFechaRegistro.getText() , tfNombres.getText(), tfApellido.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
+        listaClientes = Cliente.buscarCliente2(cliente);
         index = 0;
         if(!listaClientes.isEmpty()){
             Cliente c = listaClientes.get(0);
@@ -142,8 +143,9 @@ public class ClienteBuscarController implements Initializable {
     }
     
     public boolean revisarEdicion(){
-        System.out.println(Cliente.buscarCliente(tfVPCedula.getText(), "", "", "", "", "", "", "").size());
-         if(Cliente.buscarCliente(tfVPCedula.getText(),"", "", "", "", "", "", "").size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
+        Cliente cliente = new Cliente(tfVPCedula.getText(), "", "", "", "", "", "", "");
+        System.out.println(Cliente.buscarCliente2(cliente).size());
+         if(Cliente.buscarCliente2(cliente).size()>1){      //Busca en la BD si existe otro registro con la misma cedula ingresada en el TextField
                //Tiene que ser >1 porque al buscar en la BD, si va a encontrar una coincidencia.
              AlertBox.alertBox.crearAlertBox("Warning Dialog", null, "Ya existe otro cliente con esa cedula!");
              return false;

@@ -65,7 +65,8 @@ public class ClienteCrearController implements Initializable {
                 AlertBox.alertBox.crearAlertBox("Warning Dialog", null,"No es un email valido");
             }
             else{
-                if(Cliente.buscarCliente(cedula, "", "", "", "", "", "", "").isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
+                Cliente c2 = new Cliente(cedula, "", "", "", "", "", "", "");
+                if(Cliente.buscarCliente2(c2).isEmpty()){    //Si no existe ese cliente con esa cedula en la base de datos
                     Cliente cliente = new Cliente(tfCedula.getText(),fecha , tfNombres.getText(), tfApellidos.getText(), tfDireccion.getText(), tfCelular.getText(), tfConvencional.getText(), tfEmail.getText());
                     Cliente.ingresarCliente2(cliente);
                     AlertBox.alertBox.crearAlertBox("Information Dialog", null, "Cliente creado");
