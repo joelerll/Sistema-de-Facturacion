@@ -179,60 +179,6 @@ public class Cliente {
         }
         return false;
     }
-    public static List <Cliente> buscarCliente(String cedula, String fecha, String nombre, String apellido, String dir, String cel, String telf, String email){
-        String query = "SELECT * FROM cliente WHERE ";
-        String query2 = "";
-        List <Cliente>  listaClientes=new ArrayList<> ();
-        
-        if(!cedula.equals("")){
-            query+="Cedula_C = '"+cedula+"' AND ";
-        }
-        if(!fecha.equals("")){
-            query+="Fecha_C = '"+fecha+"' AND ";
-        }
-        if(!nombre.equals("")){
-            query+="Nombre_C = '"+nombre+"' AND ";
-        }
-        if(!apellido.equals("")){
-            query+="Apellido_C = '"+apellido+"' AND ";
-        }
-        if(!dir.equals("")){
-            query+="Direccion_C = '"+dir+"' AND ";
-        }
-        if(!cel.equals("")){
-            query+="Celular_C = '"+cel+"' AND ";
-        }
-        if(!telf.equals("")){
-            query+="Convencional_C = '"+telf+"' AND ";
-        }
-        if(!email.equals("")){
-            query+="Email_C = '"+email+"' AND ";
-        }
-        query2 = query.substring(0, query.length()-4);
-        try {
-            con=database.conectar();
-            ps = con.prepareCall(query2);
-            rs = ps.executeQuery();
-            while (rs.next()){
-                Cliente cliente=new Cliente();
-                cliente.setCedula_C(rs.getString(1));
-                cliente.setFecha_C(rs.getString(2));
-                cliente.setNombre_C(rs.getString(3));
-                cliente.setApellido_C(rs.getString(4));
-                cliente.setDireccion_C (rs.getString(5));
-                cliente.setCelular_C(rs.getString(6));
-                cliente.setConvencional_C(rs.getString(7));
-                cliente.setEmail_C(rs.getString(8));
-                listaClientes.add(cliente);
-            }
-            ps.close();
-            con.close();
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listaClientes;
-    }
     
     public static void ingresarCliente2(Cliente cliente){
         try {
@@ -288,6 +234,43 @@ public class Cliente {
         } catch (SQLException ex) {
             Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             return false;
+        }
+    }
+    
+    public static List <Cliente> buscarCliente2(Cliente cliente){
+        List <Cliente>  listaClientes = new ArrayList<> ();
+        try {
+            con = database.conectar();
+            CallableStatement procedure = con.prepareCall("{call buscar_cliente(?, ?, ?, ?, ?, ?, ?, ?)}");
+            procedure.setString(1, cliente.getCedula_C());
+            procedure.setString(2, cliente.getFecha_C());
+            procedure.setString(3, cliente.getNombre_C());
+            procedure.setString(4, cliente.getApellido_C());
+            procedure.setString(5, cliente.getDireccion_C());
+            procedure.setString(6, cliente.getCelular_C());
+            procedure.setString(7, cliente.getConvencional_C());
+            procedure.setString(8, cliente.getEmail_C());
+            procedure.execute();
+            
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    Cliente c = new Cliente();
+                    c.setCedula_C(resultSet.getString(1));
+                    c.setFecha_C(resultSet.getString(2));
+                    c.setNombre_C(resultSet.getString(3));
+                    c.setApellido_C(resultSet.getString(4));
+                    c.setDireccion_C (resultSet.getString(5));
+                    c.setCelular_C(resultSet.getString(6));
+                    c.setConvencional_C(resultSet.getString(7));
+                    c.setEmail_C(resultSet.getString(8));
+                    listaClientes.add(c);
+                }
+            }
+            return listaClientes;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
     
