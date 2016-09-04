@@ -26,6 +26,11 @@ from cliente
 where cliente.Cedula_C = `i_Cedula_C`;
 end :
 
+create procedure buscarClienteJ(in `i_Cedula_C` VARCHAR(15), out `o_Cedula_C` VARCHAR(15), out `o_Fecha` DATE, out `o_Nombre_C` VARCHAR(30),out `o_Apellido_C` VARCHAR(30), out `o_Direccion` VARCHAR(30), out `o_Celular` VARCHAR(30), out `o_Convencional` VARCHAR(30), out `o_Email` VARCHAR(30))
+begin
+select c.Cedula_C,c.Fecha_C,c.Nombre_C,c.Apellido_C,c.Direccion_C,c.Celular_C,c.Convencional_C,c.Email_C INTO `o_Cedula_C`,`o_Fecha`,`o_Nombre_C`, `o_Apellido_C`,`o_Direccion`,`o_Celular`,`o_Convencional`,`o_Email` 
+from cliente c 	WHERE c.Cedula_C = `i_Cedula_C`;
+END :
 /*Productos*/
 CREATE PROCEDURE actualizarProducto(in `id_producto` CHAR(40), in `cantidad` INTEGER)
 BEGIN
@@ -33,3 +38,4 @@ UPDATE producto SET producto.stock = producto.stock - `cantidad` WHERE producto.
 END :
 
 delimiter ;
+
