@@ -47,6 +47,16 @@ public class FacturacionMenuController implements Initializable {
         app_stage.show(); 
     }
     
+    @FXML
+    void eliminar(ActionEvent event) throws IOException {
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("EliminarFXML.fxml"));
+        Scene home_page_scene = new Scene(home_page_parent);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.hide(); //optional
+        app_stage.setScene(home_page_scene);
+        app_stage.show(); 
+    }
+    
    @FXML
     void menu(ActionEvent event) throws IOException {
         Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));

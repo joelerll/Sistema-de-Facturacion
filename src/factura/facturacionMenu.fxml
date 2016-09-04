@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.FacturacionMenuController">
    <children>
-      <JFXButton fx:id="facturacion" layoutX="240.0" layoutY="107.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Ingresar">
+      <JFXButton fx:id="facturacion" layoutX="240.0" layoutY="131.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Ingresar">
          <font>
             <Font size="20.0" />
          </font>
@@ -20,12 +20,7 @@
             <Font size="22.0" />
          </font>
       </Label>
-      <JFXButton fx:id="facturacion1" layoutX="240.0" layoutY="200.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Eliminar">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </JFXButton>
-      <JFXButton fx:id="facturacion2" layoutX="239.0" layoutY="288.0" onAction="#facturacion" prefHeight="48.0" prefWidth="122.0" styleClass="custom-button" stylesheets="@borders.css" text="Modificar">
+      <JFXButton fx:id="facturacion1" layoutX="211.0" layoutY="242.0" onAction="#eliminar" prefHeight="48.0" prefWidth="180.0" styleClass="custom-button" stylesheets="@borders.css" text="Eliminar y Buscar">
          <font>
             <Font size="20.0" />
          </font>

@@ -22,11 +22,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.sql.Timestamp;
@@ -58,19 +54,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Callback;
-import javax.imageio.ImageIO;
-//import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-//import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
-//import org.apache.pdfbox.pdmodel.graphics.xobject.PDJpeg;
-//import org.apache.pdfbox.pdmodel.graphics.xobject.PDXObjectImage;
-
 
 /**
  *
@@ -104,8 +87,9 @@ public class IngresarController implements Initializable {
     
     private Date date = new Date();
     private ClienteVO cliente;
+    private BigDecimal subtotal;
     private int siguienteIdFactura;
-    private List <ProductoVO> productos;
+    private List <ProductoVO> productos = null;
     public static ProductoVO productoEscogido ;
     public static List<ProductoVO> productosCanasta = new ArrayList<>();
     public static List<ProductosCanasta> productosCanastaFactura = new ArrayList<>();
@@ -134,6 +118,8 @@ public class IngresarController implements Initializable {
         
         // Setea los nombres de las celdad
         setCeldasSinDatos();
+        
+        productosCanastaFactura.clear();
     }
     
     @FXML
@@ -152,17 +138,25 @@ public class IngresarController implements Initializable {
     private void consumidorFinalCheck(ActionEvent event) {
         boolean selected = consumidorFinal.isSelected();
         if(selected){
-            clienteNombre.setText("Consumidor Final");
-            clienteApellido.setText("");
-            clienteCedula.setText("XXXXXXXXXXXXXXXX");
+            cliente = null;
+            cliente = new ClienteVO();
+            clienteNombre.setText("Consumidor");
+            clienteApellido.setText("Final");
+            clienteCedula.setText("XXXXXXX");
             clienteNombre.setDisable(true);
             clienteCedula.setDisable(true);
             clienteApellido.setDisable(true);
+            cliente.setNombre_C("Consumidor");
+            cliente.setApellido_C("Final");
+            cliente.setCedula_C("XXXXXXX");
+            cliente.setDireccion_C("");
+            cliente.setConvencional_C("");
         }else{
             clienteNombre.setText("");
             clienteCedula.setText("");
             clienteApellido.setText("");
             clienteCedula.setDisable(false);
+            cliente = null;
         }        
     }
 
@@ -191,24 +185,31 @@ public class IngresarController implements Initializable {
             }
         }
         if(bandera){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
             String parseDate = dateFormat.format(date);
             Timestamp ts = Timestamp.valueOf(parseDate);
             if(clienteCedula.getText().isEmpty()){
                 alertBox.crearErrorBox(" ", "", "Ingrese cliente primero");
             }else{
                 FacturaDAO.setFactura(new BigDecimal(textTotal.getText()),ts,  clienteCedula.getText(),comboBoxEmpleados.getValue().getCedula());
+                alertBox.crearAlertBox(" ", "", "La factura ha sido registrada");
             }
             for (ProductosCanasta pro : productosCanastaFactura){ 
                 FacturaDAO.setProducto_Factura(pro.getId(), siguienteIdFactura);
+                ProductoDAO.actualizarProducto(pro.getId(), pro.getCantidad());
             }
-            alertBox.crearAlertBox(" ", "", "La factura ha sido registrada");
+            
+            try{
+                PDF.print(""+siguienteIdFactura,date,comboBoxEmpleados.getValue().getApellido(),cliente,productosCanastaFactura,subtotal );
+                limpiarCarritoObservable();
+                productosCanastaFactura.clear();
+                clienteCedula.clear();clienteApellido.clear();clienteNombre.clear();codigoProducto.clear();nombreProducto.clear();marcaProducto.clear();
+                siguienteIdFactura = FacturaDAO.getIdLast()+1;
+                codigoFactura.setText(""+siguienteIdFactura);
+            }catch(Exception e){
+                System.out.println("ERROR no se pudo imprimir");
+            }
         }
-    }
-    
-    @FXML
-    public void handleButtonPdfFactura() throws IOException{
-        PDF.print(""+siguienteIdFactura,date,comboBoxEmpleados.getValue().getApellido(),cliente,productosCanastaFactura );
     }
 
     @FXML
@@ -287,7 +288,7 @@ public class IngresarController implements Initializable {
     
     public void setProductosTable(){
         int cont = 1;
-        BigDecimal subtotal = new BigDecimal (0.00);
+        subtotal = new BigDecimal (0.00);
         for (ProductosCanasta p : productosCanastaFactura){
             p.setNmr(cont); // Coloca el numero de venta del producto
             p.setTotal(p.getPrecio_venta().multiply(new BigDecimal(p.getCantidad()))); // Setea el total multiplicando
@@ -433,9 +434,12 @@ public class IngresarController implements Initializable {
             TableCell c = (TableCell) t.getSource();
             int index = c.getIndex();
             System.out.println(index);
-            System.out.println("\n" + Colores.ANSI_GREEN + "Producto escogido Para Borrar o Ingresar Cantidad");
-            System.out.println(productosCanastaFactura.get(index).getId());
-
+            System.out.println("\n" + Colores.ANSI_GREEN + "Producto escogido Para Borrar o Ingresar Cantidad"+ Colores.ANSI_RESET);
+            try {
+                System.out.println(productosCanastaFactura.get(index).getId());
+            } catch (Exception e) {
+                System.out.println("ERROR celda escogida sin productos");
+            }
             // Agregar un producto a carrito
             try{
                 btnCantidad.setOnAction(new EventHandlerImpl(index));

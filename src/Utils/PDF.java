@@ -27,11 +27,10 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
  * @author joelerll
  */
 public class PDF {
-    public static void print(String nFactura, Date fecha, String empleado, ClienteVO cliente, List<ProductosCanasta> productos) throws IOException{
+    public static void print(String nFactura, Date fecha, String empleado, ClienteVO cliente, List<ProductosCanasta> productos, BigDecimal subtotal) throws IOException{
         DateFormat dateAnio = new SimpleDateFormat("yyyy");
         DateFormat dateMes = new SimpleDateFormat("MM");
         DateFormat dateDia = new SimpleDateFormat("dd");
-        //String direccion = "facturas/dir";
         String direccion = "facturas"+"/"+dateAnio.format(fecha)+ "/"+ dateMes.format(fecha)+"/"+dateDia.format(fecha);
         File dir = new File(direccion);
         if(dir.exists()){
@@ -39,7 +38,7 @@ public class PDF {
         }else{
             dir.mkdirs();
         }
-        DateFormat dateF = new SimpleDateFormat("dd-MM-yyyy_hh-mm-ss");
+        DateFormat dateF = new SimpleDateFormat("kk-mm-ss_dd-MM-yyyy");
         String fileName = direccion + "/"+ dateF.format(fecha) + ".pdf";
 	String imagem = "bill-512.png";
 	System.out.println("Se creo su factura");
@@ -195,8 +194,7 @@ public class PDF {
         content.newLineAtOffset(515, 515);
         content.showText("Importe" );
         content.endText();
-        
-        // max x pagina 595 x 841.8898
+
         int cont = 1;
         int vertical = 490;
         // Productos
@@ -239,6 +237,53 @@ public class PDF {
             cont ++;
             vertical -=20;
         }
+        
+        // max x pagina 595 x 841.8898
+        content.setNonStrokingColor(Color.BLUE); // total
+        content.addRect(0, 60, 595, 1);
+        content.fill();
+        
+        /// TOTAL
+        content.beginText();
+        content.setNonStrokingColor(Color.BLACK);
+        content.setFont(PDType1Font.COURIER_BOLD, 20);
+        content.newLineAtOffset(500,35);
+        content.showText(subtotal.multiply(new BigDecimal(0.14)).add(subtotal).setScale(2,3).toString());
+        content.endText();
+        
+        content.beginText();
+        content.newLineAtOffset(510,20);
+        content.setFont(PDType1Font.COURIER_BOLD, 15);
+        content.showText("TOTAL");
+        content.endText();
+        
+        // IVA
+        content.beginText();
+        content.setNonStrokingColor(Color.BLACK);
+        content.setFont(PDType1Font.COURIER_BOLD, 20);
+        content.newLineAtOffset(430,35);
+        content.showText("" + 14 + "%");
+        content.endText();
+        
+        content.beginText();
+        content.newLineAtOffset(430,20);
+        content.setFont(PDType1Font.COURIER_BOLD, 15);
+        content.showText("IVA");
+        content.endText();
+        
+        // Subtotal
+        content.beginText();
+        content.setNonStrokingColor(Color.BLACK);
+        content.setFont(PDType1Font.COURIER_BOLD, 20);
+        content.newLineAtOffset(300,35);
+        content.showText(subtotal.toString());
+        content.endText();
+        
+        content.beginText();
+        content.newLineAtOffset(300,20);
+        content.setFont(PDType1Font.COURIER_BOLD, 15);
+        content.showText("SUBTOTAL");
+        content.endText();
         
 	content.close();
 	doc.save(fileName);

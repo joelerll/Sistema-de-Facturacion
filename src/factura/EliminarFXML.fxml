@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@borders.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="factura.EliminarFXMLController">
+   <children>
+      <Label layoutX="133.0" layoutY="39.0" text="Eliminar y Buscar Factura">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="codigoBuscar" layoutX="133.0" layoutY="129.0" maxWidth="236.0" minWidth="204.0" prefHeight="39.0" prefWidth="236.0" promptText="Ingrese codigo factura">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="codigo" layoutX="30.0" layoutY="212.0" maxWidth="220.0" minWidth="185.0" prefHeight="39.0" prefWidth="185.0" promptText="codigo">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="fecha" layoutX="242.0" layoutY="212.0" maxWidth="297.0" minWidth="227.0" prefHeight="39.0" prefWidth="297.0" promptText="fecha">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField fx:id="cliente" layoutX="26.0" layoutY="281.0" maxWidth="424.0" minWidth="227.0" prefHeight="39.0" prefWidth="424.0" promptText="cliente">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnBuscar" layoutX="391.0" layoutY="129.0" onAction="#handleButtonBuscarFactura" styleClass="custom-button" stylesheets="@borders.css" text="Buscar">
+         <font>
+            <Font size="18.0" />
+         </font></JFXButton>
+      <JFXButton fx:id="btnEliminar" layoutX="263.0" layoutY="346.0" onAction="#handleButtonEliminar" styleClass="custom-button" text="Anular" />
+      <JFXButton fx:id="btnAtras" layoutX="26.0" layoutY="346.0" onAction="#handleButtonRegresar" styleClass="custom-button-regreso" text="Atras" />
+      <JFXButton fx:id="btnPDF" layoutX="456.0" layoutY="284.0" onAction="#handeButtonBuscarPDF" styleClass="custom-button" text="ABRIR PDF">
+         <font>
+            <Font size="18.0" />
+         </font></JFXButton>
+   </children>
+</AnchorPane>

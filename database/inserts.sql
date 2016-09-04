@@ -32,12 +32,14 @@ INSERT INTO cliente VALUES ("0980872103", "2016-08-05", "Madelyne Carolina", "Ve
 INSERT INTO cliente VALUES ("0978528211", "2016-08-01", "Lucrecia Beatriz", "Vintimilla Cardenas", "Guayaquil", "0930255560", "045889965", ""); 
 INSERT INTO cliente VALUES ("0957839585", "2016-08-01", "jose Antonio", "Viteri Cuenca", "Guayaquil", "0986475090", "", ""); 
 INSERT INTO cliente VALUES ("0924781166", "2016-08-01", "Erasmo Israel", "Zurita Barahona", "Guayaquil", "0953680843", "", ""); 
+INSERT INTO cliente(Cedula_C,Nombre_C,Apellido_C,Direccion_C) VALUES ("XXXXXXX","Consumidor", "Final", "Desconocida"); 
 
 /*INSERT INTO empleado VALUES ("0931823447", "Joel", "Rodriguez", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "joel");*/
 INSERT INTO empleado VALUES ("0929858736", "Fernando", "Sanchez", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "ferissan");
 INSERT INTO empleado VALUES ("0928412469", "Israel", "Plascencia", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "israel");
 INSERT INTO empleado VALUES ("1", "nombrePrueba", "apellidoPrueba", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 1, "", "admin");
 INSERT INTO empleado VALUES ("0", "nombrePrueba2", "apellidoPrueba2", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 0, "", "empleado");
+INSERT INTO empleado VALUES ("5", "0", "0", "Guayaquil", "2016-08-18", "7:30", "14:30", 600, 0, "", "5");
 /*INGRESOS A ITEM*/
 #INSERT INTO item VALUES (id INT, precio DECIMAL, nombre CHAR, descripcion CHAR, fecha DATE);
 insert into item values (null, 15.00, "Agua", "Gastos de agua del mes de Agosto del 2016", "2016-08-28");
