@@ -21,12 +21,14 @@ import java.sql.CallableStatement;
 public class ProductoDAO {
     
     public static List <ProductoVO> buscarProductoFacturaFormato(String id,String nombre, String marca){
+        CallableStatement cs = null;
         List <ProductoVO> productos = new ArrayList<>();
         String sql = "SELECT * FROM producto WHERE ";
         boolean idBandera = false,nombreBandera = false;
         if (!"".equals(id)){
             idBandera = true;
-            sql = sql + "id LIKE '%"+ id + "%'";
+            sql = "{call buscarProductoFormatoUnoJ(?,?,?,?,?,?)}";
+            //sql = sql + "id LIKE '%"+ id + "%'";
         }
         if (!"".equals(nombre)){
             nombreBandera = true;
@@ -74,23 +76,26 @@ public class ProductoDAO {
         return productos;
     }
     
-    public static void ActualizarProducto (List<ProductosCanasta> productos){
+   /* public static void ActualizarProducto (List<ProductosCanasta> productos){
         int set;
+        CallableStatement cs = null;
         String productoId= "";
+        String sql = "{call actualizarProductoListJ(?,?)}";
         try{
             DBconexion con = new DBconexion();
-            
+            cs = con.getConnection().prepareCall(sql);
             for(ProductosCanasta po : productos){
                 set = po.getStock();
-                String sql = "UPDATE producto SET stock =" + (set+1)+ "WHERE id = " + productoId;
-                PreparedStatement ps = con.getConnection().prepareStatement(sql);
-                ps.execute();
+                //String sql = "UPDATE producto SET stock =" + (set+1)+ "WHERE id = " + productoId;
+                cs.setInt(1, set+1);
+                cs.setString(2, productoId);
+                cs.executeUpdate();
             }
             con.desconetar();
         }catch(SQLException e){
             System.out.println("Clases.ProductoDAO.ActualizarProducto ERROR");
         }
-    }
+    }*/
     
      public static void actualizarProducto(String id_producto, int cantidad){
         CallableStatement cs = null;

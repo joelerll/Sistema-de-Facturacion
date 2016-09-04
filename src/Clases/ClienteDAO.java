@@ -28,11 +28,7 @@ public class ClienteDAO {
         String q = "{call buscarClienteJ(?,?,?,?,?,?,?,?,?)}";
         try{
             DBconexion con= new DBconexion();
-            //System.out.println(q);
             cs = con.getConnection().prepareCall(q);
-            //PreparedStatement ps = con.getConnection().prepareCall(q);
-            //ResultSet rs = ps.executeQuery();
-            //rs.next();
             cs.setString(1, clienteVO.getCedula_C());
             cs.executeQuery();
             cliente.setCedula_C(cs.getString(2));
