@@ -96,7 +96,7 @@ public class BuscarEmpleadoController implements Initializable {
     //METODOS
     @FXML
     void atras(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/empleado/EmpleadoOpciones.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/MenuPrincipal/menuPrincipal.fxml"));
         Scene home_page_scene = new Scene(home_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.hide(); //optional

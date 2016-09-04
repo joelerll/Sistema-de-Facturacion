@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedor.IngresarProveedorController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="proveedor.IngresarProveedorController">
    <children>
       <JFXButton fx:id="menuButton" layoutX="43.0" layoutY="323.0" onAction="#menuPrincipal" prefHeight="39.0" prefWidth="116.0" text="Menu Principal" />
       <JFXTextField fx:id="FXPnombre" layoutX="196.0" layoutY="153.0" promptText="Nombre" />
@@ -17,6 +21,5 @@
          </font>
       </Text>
       <JFXButton fx:id="ingresarButton" layoutX="455.0" layoutY="326.0" onAction="#ingresarProveedor" prefHeight="39.0" prefWidth="97.0" text="Ingresar" />
-      <JFXButton fx:id="atrasButton" layoutX="28.0" layoutY="29.0" onAction="#atras" prefHeight="32.0" prefWidth="78.0" text="Atras" />
    </children>
 </AnchorPane>

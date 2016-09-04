@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Producto.ProductoCrearController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Producto.ProductoCrearController">
     <children>
       <Pane layoutX="-3.0" prefHeight="400.0" prefWidth="606.0">
          <children>
@@ -31,7 +31,7 @@
             <JFXTextField fx:id="tfStockProducto" layoutX="140.0" layoutY="263.0" maxWidth="267.0" minWidth="251.0" onAction="#IngresarStockProducto" prefHeight="37.0" prefWidth="261.0" />
             <Label layoutX="43.0" layoutY="148.0" text="Marca" />
             <JFXTextField fx:id="tfMarcaProducto" layoutX="137.0" layoutY="140.0" maxWidth="261.0" minWidth="261.0" onAction="#IngresarMarcaProducto" prefHeight="37.0" prefWidth="261.0" promptText="marca del producto" />
-            <JFXButton fx:id="btIngresarProducto" buttonType="RAISED" layoutX="105.0" layoutY="319.0" onAction="#IngresarProducto" text="Ingresar" />
+            <JFXButton fx:id="btIngresarProducto" buttonType="RAISED" defaultButton="true" layoutX="105.0" layoutY="319.0" onAction="#IngresarProducto" text="Ingresar" />
             <JFXButton fx:id="btMenuPrincipal" buttonType="RAISED" layoutX="369.0" layoutY="319.0" onAction="#RegresarMenuPrincipal" text="Menu Principal" />
          </children>
       </Pane>
