@@ -137,6 +137,7 @@ select * from empleado where
 end
 //
 
+delimiter ;
 
 #delimiter ;
 #use facturacion;

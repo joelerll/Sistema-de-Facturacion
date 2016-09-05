@@ -3,3 +3,5 @@ source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/databa
 source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/database/datos.sql
 source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/database/procedures.sql
 source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/database/spCliente.sql
+source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/database/spEmpleado.sql
+source /home/joelerll/Documents/2_Espol_2016/Bases/Sistema-de-Facturacion/database/spproveedor.sql
