@@ -36,6 +36,8 @@ public class IngresarProveedorController implements Initializable {
     private static Connection con;
     
     //JFXTextField
+        @FXML
+    private JFXTextField tfTelefono;
     @FXML
     private JFXTextField FXPnombre;
     @FXML
@@ -62,7 +64,8 @@ public class IngresarProveedorController implements Initializable {
             alert.showAndWait();
         }else{
             Proveedor p = new Proveedor(FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
-            Proveedor.ingresarProveedor2(p);
+            
+            Proveedor.ingresarProveedor2(p,tfTelefono.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);

@@ -5,9 +5,11 @@ use facturacion;
 delimiter //
 create procedure ingresar_proveedor
 (in nombre varchar(30),
- in direccion varchar(30))
+ in direccion varchar(30), 
+ in telefono varchar(30))
 begin
 	insert into proveedor (nombre, direccion) values (nombre, direccion);
+    insert into telefono_proveedor(telefono) values(telefono);
 end
 //
 
@@ -15,7 +17,9 @@ delimiter //
 create procedure eliminar_proveedor
 (in id int(11))
 begin
-	delete from proveedor where proveedor.id = id;
+	delete from telefono_proveedor where telefono_proveedor.id_proveedor = id;
+    delete from proveedor where proveedor.id = id;
+    
 end
 //
 
@@ -65,6 +69,6 @@ select * from proveedor where
 end
 //
 
-#delimiter ;
+delimiter ;
 #use facturacion;
 #select * from empleado;
