@@ -153,7 +153,7 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     void buscarProveedor(ActionEvent event) throws IOException {
-        Parent home_page_parent = FXMLLoader.load(getClass().getResource("proveedor/BuscarProveedor.fxml"));
+        Parent home_page_parent = FXMLLoader.load(getClass().getResource("/proveedor/BuscarProveedor.fxml"));
         Scene scene = new Scene(home_page_parent);
         Stage stage = (Stage) mnuBar.getScene().getWindow();
         stage.hide();

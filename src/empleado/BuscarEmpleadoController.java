@@ -11,6 +11,7 @@ import database.DBconnection;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -104,54 +107,77 @@ public class BuscarEmpleadoController implements Initializable {
         app_stage.show(); 
     }
     
-    public Empleado buscarEmpleado(String campo,String nombreBuscar){
+    
+    public Empleado buscarEmpleado(String nombreBuscar){
+        Empleado e = new Empleado();
         try{
             con = database.conectar();
-            String q ="SELECT * FROM empleado WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')"+"LIMIT 1";
-            System.out.println(q);
-            ps = con.prepareCall(q);
-            rs = ps.executeQuery();
-            rs.next();
-            this.empleado.setEcedula(rs.getString(1));
-            this.empleado.setEnombre(rs.getString(2));
-            this.empleado.setEapellido(rs.getString(3));
-            this.empleado.setEdireccion(rs.getString(4));
-            this.empleado.setEfecha_ing(rs.getString(5));
-            this.empleado.setEhorario_ent(rs.getString(6));
-            this.empleado.setEhorario_sal(rs.getString(7));
-            this.empleado.setEsueldo(new BigDecimal(rs.getString(8)));
-            this.empleado.setEes_admin(rs.getInt(9));
-            this.empleado.setEtelefono(rs.getString(10));
-            this.empleado.setEuser(rs.getString(11));
-            ps.close();
-            con.close();
-            rs.close();
-            System.out.println("Encontrado empleado\n"+empleado.toString());
+            CallableStatement procedure = con.prepareCall("{call buscar_empleado_nombre(?)}");
+            procedure.setString(1,nombreBuscar);
+            procedure.execute();
+            
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    e.setEcedula(resultSet.getString(1));
+                    e.setEnombre(resultSet.getString(2));
+                    e.setEapellido(resultSet.getString(3));
+                    e.setEdireccion(resultSet.getString(4));
+                    e.setEfecha_ing(resultSet.getString(5));
+                    e.setEhorario_ent(resultSet.getString(6));
+                    e.setEhorario_sal(resultSet.getString(7));
+                    e.setEsueldo(resultSet.getBigDecimal(8));
+                    e.setEes_admin(resultSet.getInt(9));
+                    e.setEtelefono(resultSet.getString(10));
+                    e.setEuser(resultSet.getString(11));
+                    }
+            }
+                
+            
+            
+            System.out.println("Encontrado empleado\n"+ e.toString());
             // Limpiar ComboBox por cada busqueda
             if (CBnombre != null){
                 CBnombre.getSelectionModel().clearSelection();
                 CBnombre.getItems().clear();
             }
-        }catch(SQLException sql){
-            System.out.println("Error en buscar empleado");
-            Lerror.setText("Ninguna coincidencia encontrada");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return this.empleado;
+        
+        return e;
     }
     
-    public void buscarProveedorNombre(ActionEvent event){
-        String campo = "nombre";
+    public void buscarEmpleadoNombre(ActionEvent event){
         String nombreBuscar= TFbuscar_nombre.getCharacters().toString().toUpperCase();
         if (nombreBuscar.equals("")){
             errorWindow("Error","No ingreso nombre");
         }else{
-            Empleado e = buscarEmpleado(campo,nombreBuscar);
-            if (e == null){
+            Empleado e = buscarEmpleado(nombreBuscar);
+            if (e.getEcedula() == null){
                 System.out.println("No encontro ninguna coincidencia");
+                TFcedula.setText("");
+                TFnombre.setText("");
+                TFapellido.setText("");
+                TFdir.setText("");
+                TFfecha_ing.setText("");
+                TFhorario_ent.setText("");
+                TFhorario_sal.setText("");
+                TFsueldo.setText("");
+                TFes_admin.setText("");
+                TFuser.setText("");
+                TFtelefono.setText("");
+                CBnombre.setValue("");
+                // Limpiar ComboBox por cada busqueda
+                if (CBnombre != null){
+                    CBnombre.setValue("No se encontró ninguna coincidencia");
+                    CBnombre.getSelectionModel().clearSelection();
+                    CBnombre.getItems().clear();
+                }
             }else{
             setCamposEnTextField(e);
-                this.empleados =Empleado.searchEmpleado("nombre", nombreBuscar);
+                this.empleados =Empleado.buscarEmpleado2(e);
                 CBnombre.setValue(this.empleados.get(0));
                 CBnombre.getItems().addAll(this.empleados);
             }
@@ -167,17 +193,18 @@ public class BuscarEmpleadoController implements Initializable {
     }
     
     @FXML
-    public void eliminarEmpleado(ActionEvent event){
-        if(this.empleado.getEcedula().equals(""))
+    public void eliminarEmpleado(ActionEvent event){ // TFcedula.getText().equals("")
+        if(TFcedula.getText().equals("")) //this.empleado.getEcedula().equals("")
         {
             alertWindow("Ingrese campos","No ha ingresado ningun campo");
-        }else
-        {
+        }else{
+            String key = TFcedula.getText();
             Alert alert = confirmationWindow("Eliminar","Esta de Acuerdo con eliminar empleado");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
-                List <String>  vacio = new ArrayList <>(); 
-                Empleado.eliminarEmpleadoSQL(this.empleado);
+                List <String>  vacio = new ArrayList <>();
+                Empleado.eliminarEmpleado2(key); //OJO
+                TFcedula.setText("");
                 TFnombre.setText("");
                 TFapellido.setText("");
                 TFdir.setText("");
@@ -197,7 +224,8 @@ public class BuscarEmpleadoController implements Initializable {
     @FXML
     public void editarEmpleado(ActionEvent event){
         Empleado em = new Empleado();
-        em.setEcedula(this.empleado.getEcedula());
+        String  key = TFcedula.getText();
+        em.setEcedula(key);
         Alert alert = confirmationWindow("Editar","Esta de Acuerdo con editar proveedor");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){
@@ -212,7 +240,7 @@ public class BuscarEmpleadoController implements Initializable {
                 em.setEes_admin(Integer.parseInt(TFes_admin.getText()));
                 em.setEtelefono(TFtelefono.getText().toUpperCase());
                 em.setEuser(TFuser.getText().toUpperCase());
-                Empleado.editarEmpleadoSQL(em);
+                Empleado.editarEmpleado2(em, key); //OJO
                 alertWindow("Editado","Se ha editado el empleado correctamente");
             }catch(Exception e){
                 errorWindow("Error","Ingrese correctamente los campos");

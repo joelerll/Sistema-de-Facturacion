@@ -61,7 +61,8 @@ public class IngresarProveedorController implements Initializable {
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            Proveedor.ingresarProveedor(FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
+            Proveedor p = new Proveedor(FXPnombre.getText().toUpperCase(), FXPdir.getText().toUpperCase());
+            Proveedor.ingresarProveedor2(p);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);

@@ -96,7 +96,8 @@ public class IngresarEmpleadoController implements Initializable {
             alert.setContentText("Debes completar los campos obligatorios");
             alert.showAndWait();
         }else{
-            empleado.Empleado.ingresarEmpleado(cedula, nombre.toUpperCase(), apellido.toUpperCase(), dir.toUpperCase(), fecha_ing, hora_ent, hora_sal, sueldo, es_admin, telefono,user);
+            Empleado e = new Empleado(cedula, nombre.toUpperCase(), apellido.toUpperCase(), dir.toUpperCase(), fecha_ing, hora_ent, hora_sal, sueldo, es_admin, telefono,user);
+            empleado.Empleado.ingresarEmpleado2(e);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation Dialog");
             alert.setHeaderText(null);

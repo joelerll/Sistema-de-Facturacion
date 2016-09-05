@@ -6,12 +6,15 @@
 package proveedor;
 
 import database.DBconnection;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -66,76 +69,76 @@ public class Proveedor {
     public void setPDireccion(String PDireccion) {
         this.PDireccion = PDireccion;
     }
-    
-    public static void ingresarProveedor(String nombre, String dir){
+
+    public static void ingresarProveedor2(Proveedor proveedor){
         try{
             con=database.conectar();
-            String query = "INSERT INTO proveedor (nombre,direccion) VALUES(?,?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,nombre);
-            preparedStatement.setString(2,dir);
-            preparedStatement.executeUpdate();
-        }catch (SQLException ex)
-        {
-            System.out.println("No se ingreso el Proveedor");
-        }finally{
-            System.out.println("Se ingreso el Proveedor");
+            CallableStatement procedure = con.prepareCall("{ call ingresar_proveedor(?, ?) }");          
+            procedure.setString(1,proveedor.getPNombre());
+            procedure.setString(2,proveedor.getPDireccion());
+            procedure.execute();
+            System.out.println("Proveedor ingresado con éxito");
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    } 
     
-    public static List <Proveedor> searchProveedor(String campo,String nombreBuscar){
-        rs = null;
+    public static List <Proveedor> buscarProveedor2(Proveedor proveedor){
         List <Proveedor>  proveedores = new ArrayList<> ();
         try{
-            con = database.conectar();
-            String q ="SELECT * FROM proveedor WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')";
-            System.out.println(q);
-            ps = con.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Proveedor proveedor = new Proveedor();
-                proveedor.setPId(rs.getInt(1));
-                proveedor.setPNombre(rs.getString(2).toUpperCase());
-                proveedor.setPDireccion(rs.getString(3).toUpperCase());
-                proveedores.add(proveedor);
-            }ps.close();
-            con.close();
-            rs.close();
-        }catch(SQLException sql){
-            System.out.println("Error en buscar item para eliminar");
-        }
-        return proveedores;
-    }
-    
-    public static void eliminarProveedorSQL(Proveedor proveedor){
-        try{
-            con = database.conectar();
-            String q ="DELETE FROM proveedor WHERE id = " + proveedor.getPId(); 
-            System.out.println(q);
-            ps = con.prepareStatement(q);
-            ps.execute();
-            con.close();
-            System.out.println("Borrado el proveedor seleccionado");
-        }catch(SQLException sql){
-            System.out.println("Error al tratar de eliminar proveedor");
+            con=database.conectar();
+            CallableStatement procedure = con.prepareCall("{ call buscar_proveedor(?, ?, ?) }");
+            procedure.setInt(1,proveedor.getPId());
+            procedure.setString(2,proveedor.getPNombre());
+            procedure.setString(3,proveedor.getPDireccion());
+            procedure.execute();
+                        
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    Proveedor p = new Proveedor();
+                    p.setPId(resultSet.getInt(1));
+                    p.setPNombre(resultSet.getString(2));
+                    p.setPDireccion(resultSet.getString(3));
+                    proveedores.add(p);
+                }
+            }
+            return proveedores;
+            } catch (SQLException ex) {
+            Logger.getLogger(Proveedor.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
     
-    public static void editarProveedorSQL(Proveedor proveedor){
-        String q = "UPDATE proveedor SET nombre = '"+ proveedor.getPNombre() + "', direccion = '" + proveedor.getPDireccion() +
-                "' WHERE id = "+ proveedor.getPId();
-        try{
-            con = database.conectar();
-            System.out.println(q);
-            ps = con.prepareStatement(q);
-            ps.execute();
-            con.close();
-            System.out.println("Editado el proveedor seleccionado");
-        }catch(SQLException sql){
-            System.out.println("Error al tratar de editar el proveedor");
+   
+    public static void eliminarProveedor2(Integer id){
+        try {
+            con=database.conectar();
+            CallableStatement procedure = con.prepareCall("{ call eliminar_proveedor(?) }");
+            procedure.setInt(1, id);
+            procedure.execute();
+            System.out.println("Proveedor eliminado exitosamente");
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedor.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
+    public static void editarProveedor2(Proveedor proveedor, Integer idOriginal){
+        try {
+            con=database.conectar();
+            CallableStatement procedure = con.prepareCall("{ call editar_proveedor(?, ?, ?, ?) }");
+            procedure.setInt(1,proveedor.getPId());
+            procedure.setString(2,proveedor.getPNombre());
+            procedure.setString(3,proveedor.getPDireccion());
+            procedure.setInt(4, idOriginal);
+            procedure.execute();
+            System.out.println("Proveedor editado con éxito");
+        } catch (SQLException ex) {
+            Logger.getLogger(Proveedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     
     //Modificado para el ListBox
     @Override
     public String toString() {
