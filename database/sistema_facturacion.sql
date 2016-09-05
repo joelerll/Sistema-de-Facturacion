@@ -1,3 +1,6 @@
+CREATE USER 'facturas';
+GRANT ALL ON facturacion.* TO 'facturas';
+
 CREATE DATABASE facturacion;
 USE facturacion;
 

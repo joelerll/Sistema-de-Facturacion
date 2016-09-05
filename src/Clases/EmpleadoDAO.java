@@ -7,8 +7,6 @@ package Clases;
 
 import database.DBconexion;
 import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,6 @@ public class EmpleadoDAO {
             cs2.executeQuery();
             max = cs2.getInt(1);
             cs2.close();
-            System.out.println(max);
             cs = con.getConnection().prepareCall(sql);
             while(count < max){
                 cs.setInt(1, count);

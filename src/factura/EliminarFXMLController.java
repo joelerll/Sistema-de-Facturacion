@@ -56,7 +56,7 @@ public class EliminarFXMLController implements Initializable {
     private JFXButton btnEliminar;
 
     @FXML
-    private JFXTextField codigoBuscar;
+    private JFXTextField codigoBuscar,cedulaBuscar;
 
     @FXML
     private JFXButton btnBuscar,btnPDF;

@@ -9,8 +9,6 @@ import Utils.Colores;
 import database.DBconexion;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -89,7 +87,7 @@ public class FacturaDAO {
             factura.setFecha(cs.getTimestamp(4));
             factura.setCedula_C(cs.getString(5));
             factura.setCedula_empl(cs.getString(6));
-            factura.setAnulada(cs.getInt(7) == 0 ? false : true);
+            factura.setAnulada((cs.getInt(7) != 0));
             factura.setActualizada(cs.getTimestamp(8));
             cs.close();
             con.desconetar();
