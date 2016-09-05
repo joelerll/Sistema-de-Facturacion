@@ -32,6 +32,8 @@ public class ClienteDAO {
             cs.setString(1, clienteVO.getCedula_C());
             cs.executeQuery();
             cliente.setCedula_C(cs.getString(2));
+            if(cliente.getCedula_C().equals(""))
+                return null;
             cliente.setFecha_C(cs.getDate(3));
             cliente.setNombre_C(cs.getString(4));
             cliente.setApellido_C(cs.getString(5));

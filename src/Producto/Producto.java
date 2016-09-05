@@ -54,7 +54,7 @@ public class Producto {
     public void save(Producto p){
         try{
             con=database.conectar();
-            String query = "INSERT INTO Producto VALUES(?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO producto VALUES(?, ?, ?, ?, ?, ?)";
             preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,p.getId_Producto());
             preparedStatement.setString(2,p.getNombre_Producto());
@@ -151,7 +151,7 @@ public class Producto {
     public static void ingresarProducto(String id,String nombre,String marca, Blob Imagen, int Stock, float Precio_Venta, float Precio_Inicial){
         try{
             con=database.conectar();
-            String query = "INSERT INTO Producto VALUES(?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO producto VALUES(?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setString(1,id);
             preparedStatement.setString(2,null);
@@ -218,10 +218,7 @@ public class Producto {
     }
     
     public static boolean editarProducto(String IdOriginal, String Nombre, String Id){
-        String query = "UPDATE producto SET ";
-        query+="id = '"+Id+"', ";
-        query+="nombre = '"+Nombre+"', ";
-        query+= "WHERE id = '"+IdOriginal+"'";
+        String query = "UPDATE producto SET "+"id = '"+Id+"', "+"nombre = '"+Nombre+"', " +"WHERE id = '"+IdOriginal+"'";
         try {
             con = database.conectar();
             PreparedStatement preparedStatement = con.prepareStatement(query);

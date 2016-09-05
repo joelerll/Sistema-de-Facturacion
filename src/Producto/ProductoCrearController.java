@@ -1,4 +1,3 @@
-
 package Producto;
 
 import com.jfoenix.controls.JFXButton;

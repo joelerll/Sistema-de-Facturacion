@@ -162,15 +162,19 @@ public class IngresarController implements Initializable {
 
     @FXML
     private void handleButtonBuscarCliente(ActionEvent event){
-       ClienteVO cliente;
-       cliente = ClienteDAO.buscarCliente(new ClienteVO(clienteCedula.getText()),"Cedula_C");
+       ClienteVO cliente = null;
+       try{
+            cliente = ClienteDAO.buscarCliente(new ClienteVO(clienteCedula.getText()),"Cedula_C");
+       }catch(Exception e){
+           alertBox.crearErrorBox("","","No fue encontrado el cliente");
+       }
        if (cliente != null){
            clienteNombre.setText(cliente.getNombre_C());
            clienteApellido.setText(cliente.getApellido_C());
            clienteCedula.setText(cliente.getCedula_C());
            this.cliente = cliente;
        }else{
-           alertBox.crearErrorBox("","","No fue encontrado el cliente");
+          // alertBox.crearErrorBox("","","No fue encontrado el cliente");
        }
     }
 

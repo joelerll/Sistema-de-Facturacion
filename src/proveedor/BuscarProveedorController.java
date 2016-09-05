@@ -181,6 +181,7 @@ public class BuscarProveedorController implements Initializable {
             pv.setPNombre(TFnombre.getText().toUpperCase());
             pv.setPDireccion(TFdir.getText().toUpperCase());
             Proveedor.editarProveedor2(pv, pv.getPId());
+                System.out.println(proveedor.toString());
             alertWindow("Editado","Se ha editado el proveedor correctamente");
             }catch(Exception e){
                 errorWindow("Error","Ingrese correctamente los campos");
