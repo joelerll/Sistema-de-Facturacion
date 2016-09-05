@@ -84,7 +84,7 @@ public class ProductoBuscarController implements Initializable {
             int i = index + 1;
             lblActual.setText(""+i);
             lbltotal.setText(""+listaProductos.size()); 
-            enableTextFields();
+           // enableTextFields();
         }else{
             AlertBox.alertBox.crearAlertBox("Information Dialog", null, "No se encontraron coincidencias");
         }
