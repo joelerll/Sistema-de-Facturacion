@@ -11,8 +11,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.math.BigDecimal;
+import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -143,124 +146,141 @@ public class Empleado {
         this.Euser = Euser;
     }
     
-    public void juan(){
-        
-    }
-    
-    public static void ingresarEmpleado(String cedula, String nombre, String apellido, String dir, String fecha_ing, String horario_ent, String horario_sal, BigDecimal sueldo, int es_admin, String telefono, String user){
-        try{
+    public static void ingresarEmpleado2(Empleado empleado){
+        try {
             con=database.conectar();
-            String query = "INSERT INTO empleado VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,cedula);
-            preparedStatement.setString(2,nombre);
-            preparedStatement.setString(3,apellido);
-            preparedStatement.setString(4,dir);
-            preparedStatement.setString(5, fecha_ing);
-            preparedStatement.setString(6,horario_ent);
-            preparedStatement.setString(7,horario_sal);
-            preparedStatement.setBigDecimal(8, sueldo);
-            preparedStatement.setInt(9, es_admin);
-            preparedStatement.setString(10,telefono);
-            preparedStatement.setString(11,user);
-            preparedStatement.executeUpdate();
-        }catch (SQLException ex){
-            System.out.println("No se ingreso el Empleado");
-        }finally{
-            System.out.println("Se ingreso el Empleado");
+            CallableStatement procedure = con.prepareCall("{ call ingresar_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
+            procedure.setString(1,empleado.getEcedula());
+            procedure.setString(2,empleado.getEnombre());
+            procedure.setString(3,empleado.getEapellido());
+            procedure.setString(4,empleado.getEdireccion());
+            procedure.setString(5,empleado.getEfecha_ing());
+            procedure.setString(6,empleado.getEhorario_ent());
+            procedure.setString(7,empleado.getEhorario_sal());
+            procedure.setBigDecimal(8,empleado.getEsueldo());
+            procedure.setInt(9,empleado.getEes_admin());
+            procedure.setString(10,empleado.getEtelefono());
+            procedure.setString(11,empleado.getEuser());
+            procedure.execute();
+            System.out.println("Empleado ingresado con éxito");
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public static List <Empleado> searchEmpleado(String campo,String nombreBuscar){
-        rs = null;
-        List <Empleado>  empleados = new ArrayList<> ();
-        try{
+
+    public static List <Empleado> buscarEmpleado2(Empleado empleado){
+        List <Empleado>  listaEmpleados = new ArrayList<> ();
+        try {
             con = database.conectar();
-            String q ="SELECT * FROM empleado WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')";
-            System.out.println(q);
-            ps = con.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Empleado empleado = new Empleado();
-                empleado.setEcedula(rs.getString(1));
-                empleado.setEnombre(rs.getString(2));
-                empleado.setEapellido(rs.getString(3));
-                empleado.setEdireccion(rs.getString(4));
-                empleado.setEfecha_ing(rs.getString(5));
-                empleado.setEhorario_ent(rs.getString(6));
-                empleado.setEhorario_sal(rs.getString(7));
-                empleado.setEsueldo(new BigDecimal(rs.getString(8)));
-                empleado.setEes_admin(rs.getInt(9));
-                empleado.setEtelefono(rs.getString(10));
-                empleado.setEuser(rs.getString(11));
-                empleados.add(empleado);
+            CallableStatement procedure = con.prepareCall("{call buscar_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            procedure.setString(1,empleado.getEcedula());
+            procedure.setString(2,empleado.getEnombre());
+            procedure.setString(3,empleado.getEapellido());
+            procedure.setString(4,empleado.getEdireccion());
+            procedure.setString(5,empleado.getEfecha_ing());
+            procedure.setString(6,empleado.getEhorario_ent());
+            procedure.setString(7,empleado.getEhorario_sal());
+            procedure.setBigDecimal(8,empleado.getEsueldo());
+            procedure.setInt(9,empleado.getEes_admin());
+            procedure.setString(10,empleado.getEtelefono());
+            procedure.setString(11,empleado.getEuser());
+            procedure.execute();
+            
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    Empleado e = new Empleado();
+                    e.setEcedula(resultSet.getString(1));
+                    e.setEnombre(resultSet.getString(2));
+                    e.setEapellido(resultSet.getString(3));
+                    e.setEdireccion(resultSet.getString(4));
+                    e.setEfecha_ing(resultSet.getString(5));
+                    e.setEhorario_ent(resultSet.getString(6));
+                    e.setEhorario_sal(resultSet.getString(7));
+                    e.setEsueldo(resultSet.getBigDecimal(8));
+                    e.setEes_admin(resultSet.getInt(9));
+                    e.setEtelefono(resultSet.getString(10));
+                    e.setEuser(resultSet.getString(11));
+                    listaEmpleados.add(e);
+                }
             }
-            ps.close();
-            con.close();
-            rs.close();
-        }catch(SQLException sql){
-            System.out.println("Error en buscar empleado para eliminar");
+            return listaEmpleados;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return empleados;
     }
     
     public static List<Empleado> buscarPorUsuario(String usuario){
-        List <Empleado>  empleados = new ArrayList<> ();
-        try{
+        List <Empleado>  listaEmpleados = new ArrayList<> ();
+        try {
             con = database.conectar();
-            String q ="SELECT * FROM empleado WHERE usuario = '"+usuario+"'";
-            ps = con.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Empleado empleado = new Empleado();
-                empleado.setEcedula(rs.getString(1));
-                empleado.setEnombre(rs.getString(2));
-                empleado.setEapellido(rs.getString(3));
-                empleado.setEdireccion(rs.getString(4));
-                empleado.setEfecha_ing(rs.getString(5));
-                empleado.setEhorario_ent(rs.getString(6));
-                empleado.setEhorario_sal(rs.getString(7));
-                empleado.setEsueldo(new BigDecimal(rs.getString(8)));
-                empleado.setEes_admin(rs.getInt(9));
-                empleado.setEtelefono(rs.getString(10));
-                empleado.setEuser(rs.getString(11));
-                empleados.add(empleado);
+            CallableStatement procedure = con.prepareCall("{call buscar_empleado_user(?)}");
+            procedure.setString(1,usuario);
+            procedure.execute();
+            
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    Empleado e = new Empleado();
+                    e.setEcedula(resultSet.getString(1));
+                    e.setEnombre(resultSet.getString(2));
+                    e.setEapellido(resultSet.getString(3));
+                    e.setEdireccion(resultSet.getString(4));
+                    e.setEfecha_ing(resultSet.getString(5));
+                    e.setEhorario_ent(resultSet.getString(6));
+                    e.setEhorario_sal(resultSet.getString(7));
+                    e.setEsueldo(resultSet.getBigDecimal(8));
+                    e.setEes_admin(resultSet.getInt(9));
+                    e.setEtelefono(resultSet.getString(10));
+                    e.setEuser(resultSet.getString(11));
+                    listaEmpleados.add(e);
+                }
             }
-            ps.close();
-            con.close();
-            rs.close();
+            return listaEmpleados;
+            
         }catch(SQLException sql){
             System.out.println("Error de busqueda");
         }
-        return empleados;
+        return listaEmpleados;
     }
     
-    public static void eliminarEmpleadoSQL(Empleado empleado){
-        try{
-            con = database.conectar();
-            String q ="DELETE FROM empleado WHERE cedula = " + empleado.getEcedula(); 
-            System.out.println(q);
-            ps = con.prepareStatement(q);
-            ps.execute();
-            con.close();
-            System.out.println("Borrado el empleado seleccionado");
-        }catch(SQLException sql){
-            System.out.println("Error al tratar de eliminar empleado");
+    public static void eliminarEmpleado2(String cedula){
+        try {
+            con=database.conectar();
+            CallableStatement procedure = con.prepareCall("{ call eliminar_empleado(?) }");
+            procedure.setString(1, cedula);
+            procedure.execute();
+            System.out.println("Empleado eliminado exitosamente");
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
-    public static void editarEmpleadoSQL(Empleado empleado){
-        String q = "UPDATE empleado SET nombre = '"+ empleado.getEnombre() + "', apellido = '" + empleado.getEapellido() + "', direccion = '" + empleado.getEdireccion() + "', fecha_ing = '" + empleado.getEfecha_ing() + "', horario_ent = '" + empleado.getEhorario_ent() + "', horario_sal = '" + empleado.getEhorario_sal() + "', sueldo = '" + empleado.getEsueldo() + "', es_admin = '" + empleado.getEes_admin().toString() + "', telefono = '" + empleado.getEtelefono() + "', usuario = '" + empleado.getEuser() +
-                "' WHERE cedula = '"+ empleado.getEcedula() + "'";
-        try{
-            con = database.conectar();
-            System.out.println(q);
-            ps = con.prepareStatement(q);
-            ps.execute();
-            con.close();
-            System.out.println("Editado el empleado seleccionado");
-        }catch(SQLException sql){
-            System.out.println("Error al tratar de editar el empleado");
+    public static boolean editarEmpleado2(Empleado empleado, String cedulaOriginal){
+        try {
+            con=database.conectar();
+            CallableStatement procedure = null;
+            procedure = con.prepareCall("{ call editar_empleado(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
+            procedure.setString(1,empleado.getEcedula());
+            procedure.setString(2,empleado.getEnombre());
+            procedure.setString(3,empleado.getEapellido());
+            procedure.setString(4,empleado.getEdireccion());
+            procedure.setString(5,empleado.getEfecha_ing());
+            procedure.setString(6,empleado.getEhorario_ent());
+            procedure.setString(7,empleado.getEhorario_sal());
+            procedure.setBigDecimal(8,empleado.getEsueldo());
+            procedure.setInt(9,empleado.getEes_admin());
+            procedure.setString(10,empleado.getEtelefono());
+            procedure.setString(11,empleado.getEuser());
+            procedure.setString(12, cedulaOriginal);
+            procedure.execute();
+            System.out.println("Empleado Editado con éxito");
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
     }
     
@@ -269,10 +289,7 @@ public class Empleado {
     public String toString() {
         return " NOMBRE "+ Enombre + " CEDULA " +  Ecedula;
     }
-    
-    
-    
-    
+   
     
  }
    

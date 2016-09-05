@@ -17,7 +17,7 @@ public class DBconexion {
     public Connection conexion = null;
     private final String url = "jdbc:mysql://localhost:3306/"; //por ser el puerto por defecto
     private final String root= "root";
-    private final String password = "199596979899";//<----Ingresar la clase de root
+    private final String password = "260695";//<----Ingresar la clase de root
     String unicode= "?useUnicode=yes&characterEncoding=UTF-8";
     private final String bd = "facturacion";
     public DBconexion () throws SQLException {

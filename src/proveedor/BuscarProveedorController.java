@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXTextField;
 import database.DBconnection;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,48 +86,57 @@ public class BuscarProveedorController implements Initializable {
         app_stage.show(); 
     }
     
-    public Proveedor buscarProveedor(String campo,String nombreBuscar){
+    public Proveedor buscarProveedor(String nombreBuscar){
+        Proveedor p = new Proveedor();
         try{
-            con = database.conectar();
-            String q ="SELECT * FROM proveedor WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')"+"LIMIT 1";
-            System.out.println(q);
-            ps = con.prepareCall(q);
-            rs = ps.executeQuery();
-            rs.next();
-            this.proveedor.setPId(rs.getInt(1));
-            this.proveedor.setPNombre(rs.getString(2));
-            this.proveedor.setPDireccion(rs.getString(3));
-            ps.close();
-            con.close();
-            rs.close();
-            System.out.println("Encontrado proveedor\n"+proveedor.toString());
+           con = database.conectar();
+            CallableStatement procedure = con.prepareCall("{call buscar_proveedor_nombre(?)}");
+            procedure.setString(1,nombreBuscar);
+            procedure.execute();
+            
+            try (ResultSet resultSet = procedure.getResultSet()) {
+                while (resultSet.next()){
+                    p.setPId(resultSet.getInt(1));
+                    p.setPNombre(resultSet.getString(2));
+                    p.setPDireccion(resultSet.getString(3));
+                    }
+            }
+            
+            System.out.println("Encontrado proveedor\n"+ p.toString());
             // Limpiar ComboBox por cada busqueda
             if (CBnombre != null){
                 CBnombre.getSelectionModel().clearSelection();
                 CBnombre.getItems().clear();
             }
-        }catch(SQLException sql){
-            System.out.println("Error en buscar proveedor");
-            Lerror.setText("Ninguna coincidencia encontrada");
+         } catch (SQLException ex) {
+            Logger.getLogger(Proveedor.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
-        return this.proveedor;
+        return p;
     }
-    
+     
     public void buscarProveedorNombre(ActionEvent event){
-        String campo = "nombre";
+        List <Proveedor>  listaproveedores = null;
         String nombreBuscar= TFbuscar_nombre.getCharacters().toString().toUpperCase();
         if (nombreBuscar.equals("")){
             errorWindow("Error","No ingreso nombre");
         }else{
-            Proveedor p= buscarProveedor(campo,nombreBuscar);
-            if (p == null){
+            Proveedor p = buscarProveedor(nombreBuscar);
+            if (p.getPId() == 0){
                 System.out.println("No encontro ninguna coincidencia");
+                TFnombre.setText("");
+                TFdir.setText("");
+                // Limpiar ComboBox por cada busqueda
+                if (CBnombre != null){
+                    CBnombre.setValue("No se encontró ninguna coincidencia");
+                    CBnombre.getSelectionModel().clearSelection();
+                    CBnombre.getItems().clear();
+                }
             }else{
             setCamposEnTextField(p);
-                this.proveedores =Proveedor.searchProveedor("nombre", nombreBuscar);
-                CBnombre.setValue(this.proveedores.get(0));
-                CBnombre.getItems().addAll(this.proveedores);
+                listaproveedores = Proveedor.buscarProveedor2(p); //AQUI ES
+                CBnombre.setValue(listaproveedores.get(0));
+                CBnombre.getItems().addAll(listaproveedores);
             }
         }
     }
@@ -139,7 +151,8 @@ public class BuscarProveedorController implements Initializable {
     
     @FXML
     public void eliminarProveedor(ActionEvent event){
-        if(this.proveedor.getPId() == 0)
+        Proveedor p = buscarProveedor(TFnombre.getText());
+        if(TFnombre.getText().equals(""))
         {
             alertWindow("Ingrese campos","No ha ingresado ningun campo");
         }else
@@ -148,7 +161,7 @@ public class BuscarProveedorController implements Initializable {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 List <String>  vacio = new ArrayList <>(); 
-                Proveedor.eliminarProveedorSQL(this.proveedor);
+                Proveedor.eliminarProveedor2(p.getPId());
                 TFnombre.setText("");
                 TFdir.setText("");
                 CBnombre.setValue("");
@@ -167,7 +180,7 @@ public class BuscarProveedorController implements Initializable {
             try{
             pv.setPNombre(TFnombre.getText().toUpperCase());
             pv.setPDireccion(TFdir.getText().toUpperCase());
-            Proveedor.editarProveedorSQL(pv);
+            Proveedor.editarProveedor2(pv, pv.getPId());
             alertWindow("Editado","Se ha editado el proveedor correctamente");
             }catch(Exception e){
                 errorWindow("Error","Ingrese correctamente los campos");

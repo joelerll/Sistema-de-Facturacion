@@ -13,8 +13,8 @@ import java.sql.*;
 public class DBconnection {
     public Connection conexion;
     private final String url = "jdbc:mysql://localhost:3306/"; //por ser el puerto por defecto
-    private final String root= "facturas";
-    private final String password = "";//<----Ingresar la clase de root
+    private final String password = "199596979899";//<----Ingresar la clase de root
+    private final String root= "root";
     String unicode= "?useUnicode=yes&characterEncoding=UTF-8";
     private final String bd = "facturacion";
     public Connection conectar() throws SQLException{
