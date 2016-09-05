@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -74,46 +76,44 @@ public class EstadisticasController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        ObservableList<Label> months = FXCollections.observableArrayList(enero, febrero, marzo, abril, mayo, junio, julio, agosto, septiembre, octubre, noviembre, diciembre);
+        lvMonthList.setItems(months);
+        
+        lvMonthList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Label>(){
+            @Override
+            public void changed(ObservableValue<? extends Label> observable, Label oldValue, Label newValue) {
+                month = newValue.getText();
+                crearPieChart(year, month);
+            }
+        });
         for(int i =2010; i<2019; i++){
             lvYearList.getItems().add(new Label (""+ i));
         }
-        
         ObservableList<Label> yList = lvYearList.getItems();
         for(Label lbl : yList){
             lbl.setOnMouseClicked(yearHandler);
         }
-        
-        lvMonthList.getItems().add(enero);
-        lvMonthList.getItems().add(febrero);
-        lvMonthList.getItems().add(marzo);
-        lvMonthList.getItems().add(abril);
-        lvMonthList.getItems().add(mayo);
-        lvMonthList.getItems().add(junio);
-        lvMonthList.getItems().add(julio);
-        lvMonthList.getItems().add(agosto);
-        lvMonthList.getItems().add(septiembre);
-        lvMonthList.getItems().add(octubre);
-        lvMonthList.getItems().add(noviembre);
-        lvMonthList.getItems().add(diciembre);
-        
-        enero.setOnMouseClicked(myHandler);
-        febrero.setOnMouseClicked(myHandler);
-        marzo.setOnMouseClicked(myHandler);
-        abril.setOnMouseClicked(myHandler);
-        mayo.setOnMouseClicked(myHandler);
-        junio.setOnMouseClicked(myHandler);
-        julio.setOnMouseClicked(myHandler);
-        agosto.setOnMouseClicked(myHandler);
-        septiembre.setOnMouseClicked(myHandler);
-        octubre.setOnMouseClicked(myHandler);
-        noviembre.setOnMouseClicked(myHandler);
-        diciembre.setOnMouseClicked(myHandler);
-        
+       
     } 
     
     public void crearPieChart(String yearPC, String mesPC){
         double x;
-        List<Item> resultado = item.Item.buscarPorFecha(yearPC, mesPC, "01");
+        String mesesNumeros[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        //buscar el numero del mes
+        int numMes = 0;
+        for(int i = 0; i<mesesNumeros.length; i++){
+            if(mesesNumeros[i].equals(mesPC)){
+                numMes = i+1;
+            }
+        }
+        String mes1 = ""+numMes;
+        if(numMes<10){
+            mes1 = "0"+ numMes;
+        }
+        
+       // System.out.println(year + "-" + mes1);
+        List<Item> resultado = item.Item.buscarPorFecha(yearPC, mes1, "01");
+        
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         for(Item i:resultado){
             valor = i.getPrecio();
@@ -123,69 +123,13 @@ public class EstadisticasController implements Initializable {
         pieChartMes.setData(pieChartData);
         pieChartMes.setTitle("Gastos del mes de " + month + " del " + year);
         
-        //DoubleBinding total = Bindings.createDoubleBinding(() -> pieChartData.stream().collect(Collectors.summingDouble(PieChart.Data::getPieValue)), pieChartData);
-               
         pieChartData.forEach(data ->
             data.nameProperty().bind(
                 Bindings.concat(data.getName(), " $", data.pieValueProperty())
             )
         );
     }
-    
-    final EventHandler<MouseEvent> myHandler = new EventHandler<MouseEvent>(){
-        @Override
-        public void handle(MouseEvent event) {
-            Label lbl = (Label) event.getSource();
-            if(event.getSource()== enero){
-                month = "enero";
-                crearPieChart(year, "01");
-            }
-            if(event.getSource()== febrero){
-                month = "febrero";
-                crearPieChart(year, "02");
-            }
-            if(event.getSource()== marzo){
-                month = "marzo";
-                crearPieChart(year, "03");
-            }
-            if(event.getSource()== abril){
-                month = "abril";
-                crearPieChart(year, "04");
-            }
-            if(event.getSource()== mayo){
-                month = "mayo";
-                crearPieChart(year, "05");
-            }
-            if(event.getSource()== junio){
-                month = "junio";
-                crearPieChart(year, "06");
-            }
-            if(event.getSource()== julio){
-                month = "julio";
-                crearPieChart(year, "07");
-            }
-            if(event.getSource()== agosto){
-                month = "agosto";
-                crearPieChart(year, "08");
-            }
-            if(event.getSource()== septiembre){
-                month = "septiembre";
-                crearPieChart(year, "09");
-            }
-            if(event.getSource()== octubre){
-                month = "octubre";
-                crearPieChart(year, "10");
-            }
-            if(event.getSource()== noviembre){
-                month = "noviembre";
-                crearPieChart(year, "11");
-            }
-            if(event.getSource()== diciembre){
-                month = "diciembre";
-                crearPieChart(year, "12");
-            }
-        }
-    };
+
     
     final EventHandler<MouseEvent> yearHandler = new EventHandler<MouseEvent>(){
             @Override
