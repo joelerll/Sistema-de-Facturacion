@@ -21,5 +21,6 @@
          </font>
       </Text>
       <JFXButton fx:id="ingresarButton" layoutX="455.0" layoutY="326.0" onAction="#ingresarProveedor" prefHeight="39.0" prefWidth="97.0" text="Ingresar" />
+      <JFXTextField fx:id="tfTelefono" layoutX="196.0" layoutY="272.0" promptText="Telefono" />
    </children>
 </AnchorPane>

@@ -70,12 +70,14 @@ public class Proveedor {
         this.PDireccion = PDireccion;
     }
 
-    public static void ingresarProveedor2(Proveedor proveedor){
+    public static void ingresarProveedor2(Proveedor proveedor, String ptelefono){
         try{
             con=database.conectar();
-            CallableStatement procedure = con.prepareCall("{ call ingresar_proveedor(?, ?) }");          
+            CallableStatement procedure = con.prepareCall("{ call ingresar_proveedor(?, ?, ?) }");          
             procedure.setString(1,proveedor.getPNombre());
             procedure.setString(2,proveedor.getPDireccion());
+            procedure.setString(3,ptelefono);
+            
             procedure.execute();
             System.out.println("Proveedor ingresado con éxito");
         } catch (SQLException ex) {

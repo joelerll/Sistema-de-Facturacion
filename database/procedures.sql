@@ -83,9 +83,9 @@ END :
 
 /*Item*/
 #Eliminar item
-CREATE PROCEDURE buscarItem(in `nombre` VARCHAR(50))
+CREATE PROCEDURE buscarItem(in `i_nombre` VARCHAR(50))
 BEGIN
-SELECT * FROM item WHERE nombre LIKE CONCAT('%',`nombre`,'%') LIMIT 1;
+SELECT * FROM item WHERE nombre LIKE `i_nombre`;
 END :
 
 #Empleado

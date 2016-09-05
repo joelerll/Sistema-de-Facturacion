@@ -20,9 +20,9 @@
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="380.0" layoutY="140.0" pickOnBounds="true" preserveRatio="true" />
             <Label layoutX="239.0" layoutY="242.0" text="Vista Previa" />
             <Label layoutX="57.0" layoutY="290.0" text="Nobre" />
-            <JFXTextField fx:id="tfNombreProductoEncontrar" editable="false" layoutX="143.0" layoutY="282.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
+            <JFXTextField fx:id="tfNombreProductoEncontrar" layoutX="143.0" layoutY="282.0" maxWidth="237.0" minWidth="237.0" onAction="#NombrePorductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
             <Label layoutX="52.0" layoutY="343.0" text="Código:" />
-            <JFXTextField fx:id="tfCodigoProductoEncontrar" editable="false" layoutX="146.0" layoutY="335.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
+            <JFXTextField fx:id="tfCodigoProductoEncontrar" layoutX="146.0" layoutY="335.0" maxWidth="237.0" minWidth="237.0" onAction="#CodigoProductoEncontrar" prefHeight="37.0" prefWidth="237.0" />
             <Button fx:id="btEditarProducto" layoutX="111.0" layoutY="393.0" mnemonicParsing="false" onAction="#EditarProducto" text="Editar" />
             <Button fx:id="btEliminarProducto" layoutX="348.0" layoutY="393.0" mnemonicParsing="false" onAction="#EliminarProducto" text="Eliminar" />
             <Button fx:id="btBuscarProducto" defaultButton="true" layoutX="111.0" layoutY="184.0" mnemonicParsing="false" onAction="#BuscarProducto" text="Buscar" />

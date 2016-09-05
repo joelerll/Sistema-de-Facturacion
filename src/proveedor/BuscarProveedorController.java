@@ -133,7 +133,10 @@ public class BuscarProveedorController implements Initializable {
                     CBnombre.getItems().clear();
                 }
             }else{
-            setCamposEnTextField(p);
+                proveedor.setPId(p.getPId());
+                proveedor.setPNombre(p.getPNombre());
+                proveedor.setPDireccion(p.getPDireccion());
+                setCamposEnTextField(p);
                 listaproveedores = Proveedor.buscarProveedor2(p); //AQUI ES
                 CBnombre.setValue(listaproveedores.get(0));
                 CBnombre.getItems().addAll(listaproveedores);
@@ -173,7 +176,8 @@ public class BuscarProveedorController implements Initializable {
     @FXML
     public void editarProveedor(ActionEvent event){
         Proveedor pv = new Proveedor();
-        pv.setPId(this.proveedor.getPId());
+        //System.out.println(proveedor.getPId());
+        pv.setPId(proveedor.getPId());
         Alert alert = confirmationWindow("Editar","Esta de Acuerdo con editar proveedor");
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){

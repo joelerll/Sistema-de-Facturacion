@@ -211,10 +211,12 @@ public class EliminarItemController implements Initializable {
     public void buscarItemNombre(ActionEvent event){
         String campo = "nombre";
         String nombreBuscar= textFieldBuscarNombre.getCharacters().toString().toUpperCase();
+        System.out.println("dsfd"+ nombreBuscar);
         if ("".equals(nombreBuscar)){
             errorWindow("Error","No ingreso nombre");
         }else{
             Item item= buscarItem(campo,nombreBuscar);
+            System.out.println(item);
             if (item == null){
                 System.out.println("No encontro ninguna coincidencia");
             }else{

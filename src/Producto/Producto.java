@@ -3,6 +3,7 @@ package Producto;
 
 import database.DBconnection;
 import java.sql.Blob;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -149,25 +150,20 @@ public class Producto {
     //METODOS DE QUERIES
     
     public static void ingresarProducto(String id,String nombre,String marca, Blob Imagen, int Stock, float Precio_Venta, float Precio_Inicial){
-        try{
+        try {
             con=database.conectar();
-            String query = "INSERT INTO producto VALUES(?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,id);
-            preparedStatement.setString(2,null);
-            
-            preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1,id);
-            preparedStatement.setString(2,nombre);
-            preparedStatement.setString(3,marca);
-            preparedStatement.setBlob(4,Imagen);
-            preparedStatement.setInt(5,Stock);
-            preparedStatement.setFloat(6,Precio_Venta);
-            preparedStatement.setFloat(7,Precio_Inicial);
-            preparedStatement.executeUpdate();
-        }catch (SQLException ex)
-        {
-            System.out.println("-------Error al ingresar Producto--------");
+            CallableStatement proc = con.prepareCall("{ call insertar_producto(?, ?, ?, ?, ?, ?, ?) }");
+            proc.setString(1, "idprueba");
+            proc.setString(2, nombre);
+            proc.setString(3, marca);
+            proc.setBlob(4, Imagen);
+            proc.setInt(5, Stock);
+            proc.setFloat(6, Precio_Venta);
+            proc.setFloat(7, Precio_Inicial);
+            proc.execute();
+            System.out.println("Producto ingresado a la base de datos");
+        } catch (SQLException ex) {
+            System.out.println("Producto NO ingresado");
         }
     }
     
@@ -203,29 +199,34 @@ public class Producto {
     }
     
     public static boolean eliminarProducto(String Id){
-        String query = "DELETE FROM producto WHERE id = '" + Id + "'";
-        try {
-            con = database.conectar();
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.executeUpdate();
-            System.out.println("Se elimino el producto!");
+         try {
+            con=database.conectar();
+            CallableStatement procedure = null;
+            procedure = con.prepareCall("{ call eliminar_producto(?) }");
+            procedure.setString(1, Id);
+            procedure.execute();
+            System.out.println("Prodcuto eliminado de la base de datos");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("No se elimino el Producto!");
+             System.out.println("Producto NO eliminado");
             return false;
         }
+        
     }
     
     public static boolean editarProducto(String IdOriginal, String Nombre, String Id){
-        String query = "UPDATE producto SET "+"id = '"+Id+"', "+"nombre = '"+Nombre+"', " +"WHERE id = '"+IdOriginal+"'";
         try {
-            con = database.conectar();
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.executeUpdate();
+            con=database.conectar();
+            CallableStatement procedure = null;
+            procedure = con.prepareCall("{ call editar_producto(?, ?, ?) }");
+            procedure.setString(1, IdOriginal);
+            procedure.setString(2, Id);
+            procedure.setString(3, Nombre);
+            procedure.execute();
+            System.out.println("Producto editado en la base de datos");
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(Producto.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Producto NO editado");
             return false;
         }
     }

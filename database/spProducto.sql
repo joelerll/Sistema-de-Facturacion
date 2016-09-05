@@ -1,4 +1,6 @@
 use facturacion;
+drop procedure insertar_producto;
+
 delimiter //
 create procedure insertar_producto
 (in id varchar(40),
@@ -10,7 +12,7 @@ create procedure insertar_producto
  in precio_inicial decimal(5,2)
  )
 begin
-	insert into producto values (null, nombre, marca, imagen, stock, precio_venta, precio_inicial);
+	insert into producto values (id, nombre, marca, null, stock, precio_venta, precio_inicial);
 end
 //
 
@@ -32,7 +34,7 @@ create procedure editar_producto
  )
 begin
 	update producto set
-		id = pId and
+		id = pId,
         nombre = pNombre
 	where
 		id = pIdOriginal;
