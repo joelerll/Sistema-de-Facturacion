@@ -22,13 +22,14 @@ public class FacturaDAO {
     
     public static int getIdLast(){
         int last=0;
-        String sql = "SELECT max(id) FROM factura";
+        CallableStatement cs = null;
+        String sql = "{call getIdLastFacturaJ(?)}";
         try{
             DBconexion con = new DBconexion();
-            PreparedStatement ps = con.getConnection().prepareCall(sql);
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            last = rs.getInt(1);
+            cs = con.getConnection().prepareCall(sql);
+            cs.executeQuery();
+            last = cs.getInt(1);
+            cs.close();
             con.desconetar();
         }catch(SQLException e){
             System.out.println("Clases.FacturaDAO.getIdLast ERROR");
@@ -38,16 +39,17 @@ public class FacturaDAO {
     }
     
     public static void setFactura(BigDecimal valor, Timestamp fecha, String cedula_c, String cedula_empl){
-        String sql = "INSERT INTO factura (valor,fecha,cedula_c,cedula_empl) VALUES (?,?,?,?)";
-        System.out.println(sql);
+        CallableStatement cs = null;
+        String sql = "{call setFacturaJ(?,?,?,?)}";
         try{
             DBconexion con = new DBconexion();
-            PreparedStatement ps = con.getConnection().prepareStatement(sql);
-            ps.setBigDecimal(1, valor);
-            ps.setTimestamp(2,fecha);
-            ps.setString(3, cedula_c);
-            ps.setString(4, cedula_empl);
-            ps.executeUpdate();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setBigDecimal(1, valor);
+            cs.setTimestamp(2,fecha);
+            cs.setString(3, cedula_c);
+            cs.setString(4, cedula_empl);
+            cs.executeQuery();
+            cs.close();
             con.desconetar();
             System.out.println("Factura ha sido guardada");
         }catch(SQLException e){
@@ -56,14 +58,15 @@ public class FacturaDAO {
     }
     
     public static void setProducto_Factura(String producto_id, int factura_id){
-        String sql = "INSERT INTO producto_factura (id_producto,id_factura) VALUES (?,?)";
-        System.out.println(sql);
+        CallableStatement cs = null;
+        String sql = "{call setProducto_FacturaJ(?,?)}";
         try{
             DBconexion con = new DBconexion();
-            PreparedStatement ps = con.getConnection().prepareStatement(sql);
-            ps.setString(1, producto_id);
-            ps.setInt(2, factura_id);
-            ps.executeUpdate();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setString(1, producto_id);
+            cs.setInt(2, factura_id);
+            cs.executeQuery();
+            cs.close();
             con.desconetar();
             System.out.println("Producto Factura ha sido guardado");
         }catch(SQLException e){

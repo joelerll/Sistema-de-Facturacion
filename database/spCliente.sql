@@ -53,7 +53,6 @@ begin
 end
 //
 
-
 delimiter //
 create procedure buscar_cliente
 (in ced varchar(15),
@@ -97,4 +96,4 @@ end
 #delimiter ;
 #use facturacion;
 #select * from cliente;
-
+delimiter ;

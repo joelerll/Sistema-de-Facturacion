@@ -21,75 +21,44 @@ import java.sql.CallableStatement;
 public class ProductoDAO {
     
     public static List <ProductoVO> buscarProductoFacturaFormato(String id,String nombre, String marca){
+        CallableStatement cs = null;
         List <ProductoVO> productos = new ArrayList<>();
-        String sql = "SELECT * FROM producto WHERE ";
-        boolean idBandera = false,nombreBandera = false;
-        if (!"".equals(id)){
-            idBandera = true;
-            sql = sql + "id LIKE '%"+ id + "%'";
-        }
-        if (!"".equals(nombre)){
-            nombreBandera = true;
-            if (idBandera){
-                sql = sql + " AND ";
-            }
-            sql = sql + "nombre LIKE '%" + nombre + "%'";
-        }
-        if (!"".equals(marca)){
-            if (nombreBandera || idBandera){
-                sql = sql + " AND ";
-            }
-            sql = sql + "marca LIKE '%" + marca + "%'";
-        }
-        
         // No ingreso ningun dato
-        if ("SELECT * FROM producto WHERE ".equals(sql)){
+        if (id.equals("") && nombre.equals("") && marca.equals("")){
             return null;
         }
-        System.out.println(sql);
+        String sql = "{call buscarProductoFormatoUnoJ(?,?,?)}";
         try{
             DBconexion con = new DBconexion();
-            PreparedStatement ps = con.getConnection().prepareCall(sql);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next())
-            {
-                if(rs.getInt(5) == 0){
-                    continue;
+            cs = con.getConnection().prepareCall(sql);
+            cs.setString(1, id);
+            cs.setString(2, nombre);
+            cs.setString(3, marca);
+            cs.executeQuery();
+            try(ResultSet rset = cs.getResultSet()){
+                while(rset.next())
+                {
+                    if(rset.getInt(5) == 0){
+                        continue;
+                    }
+                    ProductoVO producto  = new ProductoVO();
+                    producto.setId(rset.getString(1));
+                    producto.setNombre(rset.getString(2));
+                    producto.setMarca(rset.getString(3));
+                    producto.setImagen(rset.getString(4));
+                    producto.setStock(rset.getInt(5));
+                    producto.setPrecio_inicial(rset.getBigDecimal(6));
+                    producto.setPrecio_venta(rset.getBigDecimal(7));
+                    productos.add(producto);
                 }
-                ProductoVO producto  = new ProductoVO();
-                producto.setId(rs.getString(1));
-                producto.setNombre(rs.getString(2));
-                producto.setMarca(rs.getString(3));
-                producto.setImagen(rs.getString(4));
-                producto.setStock(rs.getInt(5));
-                producto.setPrecio_inicial(rs.getBigDecimal(6));
-                producto.setPrecio_venta(rs.getBigDecimal(7));
-                productos.add(producto);
             }
             con.desconetar();
+            cs.close();
         }catch(SQLException e){
             System.out.println("Clases.ProductoDAO.buscarProductoFacturaFormato ERROR");
             return null;
         }
         return productos;
-    }
-    
-    public static void ActualizarProducto (List<ProductosCanasta> productos){
-        int set;
-        String productoId= "";
-        try{
-            DBconexion con = new DBconexion();
-            
-            for(ProductosCanasta po : productos){
-                set = po.getStock();
-                String sql = "UPDATE producto SET stock =" + (set+1)+ "WHERE id = " + productoId;
-                PreparedStatement ps = con.getConnection().prepareStatement(sql);
-                ps.execute();
-            }
-            con.desconetar();
-        }catch(SQLException e){
-            System.out.println("Clases.ProductoDAO.ActualizarProducto ERROR");
-        }
     }
     
      public static void actualizarProducto(String id_producto, int cantidad){

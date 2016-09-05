@@ -6,6 +6,7 @@
 package Clases;
 
 import database.DBconexion;
+import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,26 +20,39 @@ import java.util.List;
 public class EmpleadoDAO {
     
     public static List<EmpleadoVO> empleados(){
+        CallableStatement cs = null;
+        CallableStatement cs2 = null;
         List <EmpleadoVO> empleados = new ArrayList<>();
-        String sql = "SELECT cedula, nombre,apellido,direccion,fecha_ing,horario_ent,horario_sal, sueldo, es_admin, telefono FROM empleado";
+        String sql = "{call getAllEmpleadorJ(?,?,?,?,?,?,?,?,?,?,?)}";
+        String sqlmax = "{call maxEmpleadosJ(?)}";
+        int max = 0;
+        int count = 0;
         try{
             DBconexion con = new DBconexion();
-            PreparedStatement pd = con.getConnection().prepareCall(sql);
-            ResultSet rs = pd.executeQuery();
-            while(rs.next()){
+            cs2 = con.getConnection().prepareCall(sqlmax);
+            cs2.executeQuery();
+            max = cs2.getInt(1);
+            cs2.close();
+            System.out.println(max);
+            cs = con.getConnection().prepareCall(sql);
+            while(count < max){
+                cs.setInt(1, count);
+                cs.executeQuery();
                 EmpleadoVO empleado = new EmpleadoVO();
-                empleado.setCedula(rs.getString(1));
-                empleado.setNombre(rs.getString(2));
-                empleado.setApellido(rs.getString(3));
-                empleado.setDireccion(rs.getString(4));
-                empleado.setFecha_ing(rs.getDate(5));
-                empleado.setHorario_ent(rs.getString(6));
-                empleado.setHorario_sal(rs.getString(7));
-                empleado.setSueldo(rs.getBigDecimal(8));
-                empleado.setEs_admin(rs.getInt(9));
-                empleado.setTelefono(rs.getString(10));
+                empleado.setCedula(cs.getString(2));
+                empleado.setNombre(cs.getString(3));
+                empleado.setApellido(cs.getString(4));
+                empleado.setDireccion(cs.getString(5));
+                empleado.setFecha_ing(cs.getDate(6));
+                empleado.setHorario_ent(cs.getString(7));
+                empleado.setHorario_sal(cs.getString(8));
+                empleado.setSueldo(cs.getBigDecimal(9));
+                empleado.setEs_admin(cs.getInt(10));
+                empleado.setTelefono(cs.getString(11));
                 empleados.add(empleado);
+                count ++;
             }
+            cs.close();
             con.desconetar();
         }catch(SQLException e){
             System.out.println("Clases.EmpleadoDAO ERROR");

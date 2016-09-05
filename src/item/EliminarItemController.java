@@ -7,10 +7,12 @@ package item;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import database.DBconexion;
 import database.DBconnection;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -109,29 +111,31 @@ public class EliminarItemController implements Initializable {
     Item item = new Item();
     //busca item por nombre y campo
     public Item buscarItem(String campo,String nombreBuscar){
+        CallableStatement cs = null;
+        String sql = "{call buscarItem(?)}";
         try{
             comboBoxNombre.setVisible(true);
             conexion = database.conectar();
-            String q ="SELECT * FROM item WHERE "+ campo +" LIKE ('%"+nombreBuscar+"%')"+"LIMIT 1";
-            System.out.println(q);
-            ps = conexion.prepareCall(q);
-            rs = ps.executeQuery();
-            rs.next();
-            this.item.setId(rs.getInt(1));
-            this.item.setPrecio(rs.getBigDecimal(2));
-            this.item.setNombre(rs.getString(3));
-            this.item.setDescripcion(rs.getString(4));
-            this.item.setFecha(rs.getDate(5));
-            ps.close();
+            cs = conexion.prepareCall(sql);
+            cs.setString(1, nombreBuscar);
+            cs.executeQuery();
+            try(ResultSet rset = cs.getResultSet()){
+                rset.next();
+                this.item.setId(rset.getInt(1));
+                this.item.setPrecio(rset.getBigDecimal(2));
+                this.item.setNombre(rset.getString(3));
+                this.item.setDescripcion(rset.getString(4));
+                this.item.setFecha(rset.getDate(5));
+            }
+            cs.close();
             conexion.close();
-            rs.close();
             System.out.println("Encontrado item\n"+item.toString());
             // limpiar combo box por cada busqueda
             if (comboBoxNombre != null){
                 comboBoxNombre.getSelectionModel().clearSelection();
                 comboBoxNombre.getItems().clear();
             }
-        }catch(SQLException sql){
+        }catch(SQLException s){
             System.out.println("Error en buscar item");
             errorWindow("No encontrado","Ninguna coincidencia encontrada");
             return null;
@@ -140,25 +144,18 @@ public class EliminarItemController implements Initializable {
     }
     
     private String buscarNombreEmpleado(String cedula){
+        CallableStatement cs  = null;
         String c= null;
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
-        ResultSet rs = null;
+        String sql = "{call buscarNombreEmplado(?,?)}";
         try{
             conexion = database.conectar();
-            String q ="SELECT nombre FROM empleado WHERE "+ "cedula" +" LIKE ('%"+cedula+"%') limit 1";
-            System.out.println(q);
-            ps = conexion.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                c = rs.getString(1);
-                System.out.println(c);
-            }
-            ps.close();
+            cs = conexion.prepareCall(sql);
+            cs.setString(1, cedula);
+            cs.executeQuery();
+            c = cs.getString(2);
+            cs.close();
             conexion.close();
-            rs.close();
-        }catch(SQLException sql){
+        }catch(SQLException s){
             System.out.println("Error en buscar nombre empleado");
             return null;
         }
@@ -167,44 +164,43 @@ public class EliminarItemController implements Initializable {
     
     private void eliminarItem_emplado(int id_item,String cedula_empl)
     {
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
+        CallableStatement cs = null;
+        System.out.println("sdsdsds"+id_item + "  " + cedula_empl);
+        String sql = "{call eliminarItem_emplado(?,?)}";
         try{
-            conexion = database.conectar();
-            String q ="DELETE FROM item_empleado WHERE id_item = " + id_item + " AND cedula_empl = " +cedula_empl; 
-            System.out.println(q);
-            ps = conexion.prepareStatement(q);
-            ps.execute();
-            conexion.close();
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setInt(1, id_item);
+            cs.setString(2, cedula_empl);
+            cs.executeQuery();
+            cs.close();
+            con.desconetar();
             System.out.println("Borrado el item empleado seleccionado");
-        }catch(SQLException sql){
+        }catch(SQLException s){
             System.out.println("Error al tratar de eliminar item_emplado");
         }
     }
     
     private Item_empleado buscarItem_Empleado(int id_item)
     {
+        CallableStatement cs = null;
         Item_empleado item_empleado = new Item_empleado();
-        DBconnection database=new DBconnection();
-        Connection conexion;
-        PreparedStatement ps;
-        ResultSet rs = null;
+        String sql = "{call  buscarItem_Empleado(?)}";
         try{
-            conexion = database.conectar();
-            String q ="SELECT * FROM item_empleado WHERE "+ "id_item" +" LIKE ('%"+id_item+"%') limit 1";
-            System.out.println(q);
-            ps = conexion.prepareCall(q);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                item_empleado.setId(rs.getInt(1));
-                item_empleado.setId_item(rs.getInt(2));
-                item_empleado.setCedula_empl(rs.getString(3));
+            DBconexion con = new DBconexion();
+            cs = con.getConnection().prepareCall(sql);
+            cs.setInt(1, id_item);
+            cs.executeQuery();
+            try(ResultSet rset = cs.getResultSet())
+            {
+                rset.next();
+                item_empleado.setId(rset.getInt(1));
+                item_empleado.setId_item(rset.getInt(2));
+                item_empleado.setCedula_empl(rset.getString(3));
             }
-            ps.close();
-            conexion.close();
-            rs.close();
-        }catch(SQLException sql){
+            con.desconetar();
+            cs.close();
+        }catch(SQLException s){
             System.out.println("Error en buscar item empleado, cedula");
             return null;
         }
@@ -231,7 +227,7 @@ public class EliminarItemController implements Initializable {
     }
 
     @FXML
-    public void getComboBoxOpcion(ActionEvent event){
+    public void getComboBoxOpcion(){
         Item_empleado item_empleado = new Item_empleado();
         this.item = null;
         this.item =(Item) comboBoxNombre.getValue();
@@ -244,15 +240,18 @@ public class EliminarItemController implements Initializable {
     @FXML
     public void eliminarItem(ActionEvent event){
         int error;
+        
         if(this.item.getId() == 0)
         {
             alertWindow("Ingrese campos","No ha ingresado ningun campo");
         }else
         {
+            getComboBoxOpcion();
              Alert alert = confirmationWindow("Eliminar","Esta de Acuerdo con eliminar item");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
                 List <String>  vacio = new ArrayList <>();
+                System.out.println("");
                 eliminarItem_emplado(this.item.getId(),buscarItem_Empleado(this.item.getId()).getCedula_empl());
                 error = Item.eliminarItemSQL(this.item);
                 if (error != 1451){
